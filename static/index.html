@@ -135,6 +135,7 @@
                   </template>
 
 
+<<<<<<< HEAD
             <v-btn text v-on:click="page ='signup'">Sign-Up</v-btn>
 
 
@@ -150,12 +151,16 @@
 
             <!--Log In-->
             <v-btn text v-on:click="page ='login'">Login</v-btn>
+=======
+            <v-btn text v-on:click="signup()'">Sign-Up</v-btn>
+            <v-btn text v-on:click="login()'">Login</v-btn>
+>>>>>>> 07007b7bba6d09af6569f1d275ff31cfc473fe70
           </v-toolbar-items>
         </v-app-bar>
-        <v-navigation-drawer app v-model="drawer" class="pt-5 d-flex justify-end flex-column">
-          <v-spacer></v-spacer>
-          <v-list>
 
+        <!-- Side Bar -->
+        <v-navigation-drawer app v-model="drawer" class="pt-5 d-flex justify-end flex-column">
+          <v-list>
             <v-list-item class="pt-5">
               <v-btn class="sideButton">
                 <v-list-item-title>Calendar</v-list-item-title>
@@ -183,13 +188,30 @@
 
           </v-list>
         </v-navigation-drawer>
+<<<<<<< HEAD
 
         
+=======
+        <!-- End of Side Bar -->
+
+        <!-- Home Page -->
+>>>>>>> 07007b7bba6d09af6569f1d275ff31cfc473fe70
         <v-container>
           <v-card>
             <v-card-title>Hi</v-card-title>
           </v-card>
         </v-container>
+
+        <!-- End of Home Page -->
+
+
+        <!-- Calendar Page -->
+
+        <!-- End of Calendar Page -->
+
+        <!-- List Page -->
+
+        <!-- End of List Page -->
 
       </v-main>
     </v-app>
