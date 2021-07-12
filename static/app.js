@@ -6,6 +6,9 @@ var app = new Vue({
   data: {
     page: "home",
     drawer: false,
+    login: false,
+    signup: false,
+
     new_message_type: "",
     new_message_destinationNum: "",
     new_message_destinationAddr: "",
@@ -60,60 +63,18 @@ var app = new Vue({
         //this is where we would reset input feilds
       });
     },
-
-    deleteMessage: function (message_id) {
-      fetch(this.server_url + "/message/" + message_id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then(function () {
-        app.getMessages();
-      });
-    },
-
-    getPosts: function (message_id) {
-      fetch(this.server_url + "/message/" + message_id)
-        .then(function (res) {
-          res.json().then(function (data) {
-            app.postings = data;
-            console.log(data);
-          });
-        })
-        .then(function () {
-          app.page = "posts";
-        });
-    },
-
-    createPost: function (message_id) {
-      var new_post = {
-        message_id: message_id,
-        author: this.new_post_author,
-        body: this.new_post_body,
-      };
-      fetch(this.server_url + "/message", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(new_post),
-      }).then(function () {
-        app.getPosts(message_id);
-        app.new_post_author = "";
-        app.new_post_body = "";
-      });
-    },
-    deletePost: function (post) {
-      fetch(this.server_url + "/post/" + post.message_id + "/" + post._id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then(function () {
-        app.getPosts(post.message_id);
-      });
-    },
   },
+  deleteMessage: function (message_id) {
+    fetch(this.server_url + "/message/" + message_id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(function () {
+      app.getMessages();
+    });
+  },
+
   computed: {
     sorted_messages: function () {
       if (this.selected_category == "all") {
