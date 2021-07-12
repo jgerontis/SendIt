@@ -5,7 +5,6 @@ const express = require("express");
 const { Model } = require("mongoose");
 const cors = require("cors")
 
-const saveM = require("./saveManager");
 const app = express();
 const {store,Todo} = require("./model");
 
