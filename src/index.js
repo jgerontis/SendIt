@@ -7,7 +7,8 @@ const persist = require("./persist");
 const background = require("./background")
 
 //define a port
-const portNumber = process.argv[2] || process.env.PORT || 8080;
+//const portNumber = process.argv[2] || process.env.PORT || 8080;
+const portNumber = process.argv[2] || 8080;
 console.log(portNumber)
 persist.connect(()=>{
     //start the server
