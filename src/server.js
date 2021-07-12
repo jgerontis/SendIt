@@ -13,14 +13,14 @@ app.use(cors())
 app.use(express.static("static"))
 app.use(express.json({}));
 
-propertyList = {userId:"", type:"", destinationNum:0, destinationAddr: "", sendTime: Date.now(), body:"", createdAt: Date.now()}
+propertyList = {userId:"", type:"", destinationNum:0, destinationAddr: "", sendTime: Date.now(), body:""}
 
 app.use((req,res,next)=>{
     console.log(" | Time: ", Date.now(), " | Method: ", req.method, " | Path: ", req.originalUrl, " | Body: ", req.body, " | ");
     next();
 })
 
-app.get("/messages", (req, res)=>{
+app.get("/message", (req, res)=>{
     res.setHeader("Content-Type", "application/json");
     console.log("doing a get all");    
     
@@ -36,7 +36,7 @@ app.get("/messages", (req, res)=>{
     })
 })
 
-app.get('/messages/:id', (req,res)=>{
+app.get('/message/:id', (req,res)=>{
     res.setHeader("Content-Type", "application/json");
     console.log("doing a get one");  
 
@@ -58,7 +58,7 @@ app.get('/messages/:id', (req,res)=>{
 
 });
 
-app.post('/messages', (req, res) => {
+app.post('/message', (req, res) => {
     res.setHeader("Content-Type", "application/json");
     console.log(`this is a thing body`, req.body);
     Message.create({
@@ -78,7 +78,7 @@ app.post('/messages', (req, res) => {
 
 });
 
-app.delete('/messages/:id', (req, res) => {
+app.delete('/message/:id', (req, res) => {
     console.log(req.params.id);
     res.setHeader("Content-Type", "application/json");
     
@@ -94,7 +94,7 @@ app.delete('/messages/:id', (req, res) => {
 
 })
 // Patch - update
-app.patch('/messages/:id', (req, res) => {
+app.patch('/message/:id', (req, res) => {
 
     let updateMessage = {}
 
@@ -108,8 +108,6 @@ app.patch('/messages/:id', (req, res) => {
         }
         console.log(updateMessage);
     }
-
-    //patch(store[req.params.id],req.body);
 
     Message.updateOne({_id: req.params.id}, {$set: updateMessage}, (err, updateOneResponse)=>{
         if(err){
@@ -130,3 +128,7 @@ app.patch('/messages/:id', (req, res) => {
 
 
 module.exports = app;
+
+//post user
+//get by date
+//patch for user
