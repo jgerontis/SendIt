@@ -13,7 +13,7 @@ app.use(cors())
 app.use(express.static("static"))
 app.use(express.json({}));
 
-propertyList = {userId:"", type:"", destinationNum:0, destinationAddr: "", sendTime: Date.now(), body:"", createdAt: Date.now()}
+propertyList = {userId:"", type:"", destinationNum:0, destinationAddr: "", sendTime: Date.now(), body:""}
 
 app.use((req,res,next)=>{
     console.log(" | Time: ", Date.now(), " | Method: ", req.method, " | Path: ", req.originalUrl, " | Body: ", req.body, " | ");
@@ -109,8 +109,6 @@ app.patch('/messages/:id', (req, res) => {
         console.log(updateMessage);
     }
 
-    //patch(store[req.params.id],req.body);
-
     Message.updateOne({_id: req.params.id}, {$set: updateMessage}, (err, updateOneResponse)=>{
         if(err){
             console.log(`unable to patch`)
@@ -130,3 +128,7 @@ app.patch('/messages/:id', (req, res) => {
 
 
 module.exports = app;
+
+//post user
+//get by date
+//patch for user
