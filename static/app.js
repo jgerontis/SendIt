@@ -24,6 +24,7 @@ var app = new Vue({
     selected_message_id: "",
 
     messages: [],
+    users: [],
 
     server_url: "http://localhost:8080",
   },
@@ -39,6 +40,7 @@ var app = new Vue({
         });
       });
     },
+    /*
     getMessage: function () {
       fetch(this.server_url + "/message/" + this.selected_message_id).then(
         function (res) {
@@ -47,7 +49,7 @@ var app = new Vue({
           });
         }
       );
-    },
+    },*/
 
     postMessage: function () {
       var new_message = {
@@ -63,16 +65,51 @@ var app = new Vue({
         //this is where we would reset input feilds
       });
     },
-  },
-  deleteMessage: function (message_id) {
-    fetch(this.server_url + "/message/" + message_id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(function () {
-      app.getMessages();
-    });
+    deleteMessage: function (message_id) {
+        fetch(this.server_url + "/message/" + message_id, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then(function () {
+          app.getMessages();
+        });
+    },
+
+    getUsers: function(){
+        fetch(this.server_url + "/user").then(function (res) {
+            res.json().then(function (data) {
+              app.users = data;
+            });
+          });
+    },
+    /*getUser: function(){
+
+    }*/
+    postUser: function(){
+        var new_user = {
+            //put the v-model inputs here
+          };
+          fetch(this.server_url + "user", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(new_user),
+          }).then(function () {
+            //this is where we would reset input feilds
+          });
+    },
+    deleteUser: function (user_id) {
+        fetch(this.server_url + "/user/" + user_id, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then(function () {
+          app.getUsers();
+        });
+    }
   },
 
   computed: {
