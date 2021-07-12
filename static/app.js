@@ -8,6 +8,7 @@ var app = new Vue({
     drawer: false,
     login: false,
     signup: false,
+    dialog: false,
 
     new_message_type: "",
     new_message_destinationNum: "",
