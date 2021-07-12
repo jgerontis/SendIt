@@ -6,82 +6,77 @@ var app = new Vue ( {
     vuetify: new Vuetify(),
     data:{
         page:"blog",
-        drawer:false,
-        selected_category:"all",
-        categories:[
-            "all",
-            "clothing",
-            "hunting",
-            "books",
-            "cards",
-            "coins",
-            "keychains",
-            "comic books",
-            "misc.",
-        ],
-        threads:[],
 
-        postings:[],
+        new_message_type: "",
+        new_message_destinationNum: "",
+        new_message_destinationAddr: "",
+        new_message_sendTime: Date.now(),
+        new_message_body: "",
 
-        //for a new thread
-        new_name:"",
-        new_author:"",
-        new_description:"",
-        new_category:"all",
+        new_user_fname: "",
+        new_user_lname: "",
+        new_user_pNumber: "",
+        new_user_emailAddr: "",
+        new_user_password: "",
 
-        //for a new post on a thread
-        new_post_body:"",
-        new_post_author:"",
+        selected_message_id: "",
 
-        server_url:"http://forum2021.codeschool.cloud"
+        messages = [],
+
+        server_url:"http://localhost:8080"
     }, 
     created:function(){
-        this.getThreads();
+        this.getMessages();
     },
     methods:{
-        getThreads:function(){
-            fetch(this.server_url+"/thread").then(function(res){
+        
+        // message section WOWZA
+        getMessages:function(){
+            fetch(this.server_url+"/message").then(function(res){
                 res.json().then(function(data){
                     app.threads= data;
                 })
             });
         },
+        getMessage:function(){
+            fetch(this.server_url+"/message/"+this.selected_message_id).then(function(res){
+                res.json().then(function(data){
+                    app.messages = data;
+                })
+            })
+        },
 
-        createThread:function(){
-            var new_thread={
-                name:this.new_name,
-                author:this.new_author,
-                description:this.new_description,
-                category:this.new_category,
-            };
-            fetch(this.server_url+"/thread",{
+        postMessage:function(){
+            var new_message={
+                //put the v-model inputs here
+            }
+            fetch(this.server_url+"message", {
                 method: "POST",
-				headers: {
+                headers: {
 					"Content-Type": "application/json"
                 },
-                body:JSON.stringify(new_thread)
+                body:JSON.stringify(new_message)
             }).then(function() {
-                app.getThreads();
-                app.new_name="";
-                app.new_author="";
-                app.category="all";
-                app.new_description="";
-                app.page="blog";
-
+                //this is where we would reset input feilds
             });
         },
-        deleteThread:function(thread_id){
-            fetch(this.server_url+"/thread/"+thread_id,{
+
+        deleteMessage:function(message_id){
+            fetch(this.server_url+"/message/"+message_id,{
                 method:"DELETE",
                 headers:{
                     "Content-Type":"application/json"
                 }
             }).then(function(){
-                app.getThreads()})
+                app.getMessages()})
         },
+
+        
+
+
         
         getPosts:function(thread_id){
-            fetch(this.server_url+"/thread/"+thread_id).then(function(res){
+            fetch(this.server_url+"/message/"+thread_id).then(function(res){
                 res.json().then(function(data){
                     app.postings= data;
                     console.log(data)
@@ -97,7 +92,7 @@ var app = new Vue ( {
                 author:this.new_post_author,
                 body:this.new_post_body
             };
-            fetch(this.server_url+"/post",{
+            fetch(this.server_url+"/message",{
                 method: "POST",
 				headers: {
 					"Content-Type": "application/json"
