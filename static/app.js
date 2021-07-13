@@ -116,7 +116,7 @@ var app = new Vue({
         }).then(function () {
           app.getUsers();
         });
-    }
+    },
   },
 
   computed: {
