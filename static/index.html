@@ -207,7 +207,7 @@
         <v-navigation-drawer app v-model="drawer" class="pt-5 d-flex justify-end flex-column">
           <v-list>
             <v-list-item class="pt-5">
-              <v-btn class="sideButton">
+              <v-btn class="sideButton" @click="page = 'calendar'">
                 <v-list-item-title>Calendar</v-list-item-title>
                 <v-icon> mdi-calendar-edit </v-icon>
               </v-btn>
@@ -236,9 +236,11 @@
         <!-- End of Side Bar -->
 
         <!-- Home Page -->
-        <v-container>
+      
+        <v-container v-if="page == 'home'">
           <v-card>
-            <v-card-title>Hi</v-card-title>
+            <v-card-title>Subject Line</v-card-title>
+            <v-card-text> Maecenas nulla nunc, ornare vitae neque ac, bibendum laoreet magna. Donec ut imperdiet diam. Sed pulvinar elit eget neque placerat viverra. Integer vestibulum aliquet nunc non malesuada. Pellentesque commodo dui at tincidunt tempus. Donec et vehicula nunc.</v-card-text>
           </v-card>
         </v-container>
 
@@ -246,6 +248,43 @@
 
 
         <!-- Calendar Page -->
+        <v-container v-else-if="page == 'calendar'">
+          <template>
+            <v-row class="fill-height">
+              <v-col>
+                <v-sheet height="600">
+                  <v-calendar
+                    ref="calendar"
+                    v-model="value"
+                    color="primary"
+                    type="4day"
+                    :events="events"
+                    :event-color="getEventColor"
+                    :event-ripple="false"
+                    @change="getEvents"
+                    @mousedown:event="startDrag"
+                    @mousedown:time="startTime"
+                    @mousemove:time="mouseMove"
+                    @mouseup:time="endDrag"
+                    @mouseleave.native="cancelDrag"
+                  >
+                    <template v-slot:event="{ event, timed, eventSummary }">
+                      <div
+                        class="v-event-draggable"
+                        v-html="eventSummary()"
+                      ></div>
+                      <div
+                        v-if="timed"
+                        class="v-event-drag-bottom"
+                        @mousedown.stop="extendBottom(event)"
+                      ></div>
+                    </template>
+                  </v-calendar>
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </template>
+        </v-container>
 
         <!-- End of Calendar Page -->
 
@@ -259,6 +298,17 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <script src="app.js" type="module"></script>
+
+<!-- CALENDAR STYLING -->
+
+
+
+
+
+
+  <!-- CALENDAR SCRIPT -->
+
+
 </body>
 
 </html>
