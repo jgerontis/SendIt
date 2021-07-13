@@ -10,6 +10,10 @@ var app = new Vue({
     signup: false,
     signupDialog: false,
     loginDialog: false,
+    dialog: false,
+    notifications: false,
+    sound: true,
+    widgets: false,
 
     new_message_type: "",
     new_message_destinationNum: "",
