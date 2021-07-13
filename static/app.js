@@ -14,6 +14,7 @@ var app = new Vue({
     notifications: false,
     sound: true,
     widgets: false,
+    
 
     new_message_type: "",
     new_message_destinationNum: "",

@@ -207,7 +207,7 @@
         <v-navigation-drawer app v-model="drawer" class="pt-5 d-flex justify-end flex-column">
           <v-list>
             <v-list-item class="pt-5">
-              <v-btn class="sideButton" @click="page = 'calendar'">
+              <v-btn class="sideButton" @click="page = 'home'">
                 <v-list-item-title>Calendar</v-list-item-title>
                 <v-icon> mdi-calendar-edit </v-icon>
               </v-btn>
@@ -237,7 +237,7 @@
 
         <!-- Home Page -->
       
-        <v-container v-if="page == 'home'">
+        <v-container v-else-if="page == 'message'">
           <v-card>
             <v-card-title>Subject Line</v-card-title>
             <v-card-text> Maecenas nulla nunc, ornare vitae neque ac, bibendum laoreet magna. Donec ut imperdiet diam. Sed pulvinar elit eget neque placerat viverra. Integer vestibulum aliquet nunc non malesuada. Pellentesque commodo dui at tincidunt tempus. Donec et vehicula nunc.</v-card-text>
@@ -248,7 +248,7 @@
 
 
         <!-- Calendar Page -->
-        <v-container v-else-if="page == 'calendar'">
+        <v-container v-if="page == 'home'">
           <template>
             <v-row class="fill-height">
               <v-col>
@@ -400,6 +400,8 @@
 
   <!-- CALENDAR SCRIPT -->
 
+  
+  <!-- END CALENDAR SCRIPT-->
 
 </body>
 
