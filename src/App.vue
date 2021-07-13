@@ -3,6 +3,7 @@
     <v-main>
       <NavBar />
       <MyCalendar />
+      <MyList />
     </v-main>
   </v-app>
 </template>
@@ -12,6 +13,7 @@
 // import Test from "./components/Test";
 import MyCalendar from "./components/Calendar.vue";
 import NavBar from "./components/NavBar.vue";
+import MyList from "./components/List.vue";
 
 export default {
   name: "App",
@@ -19,10 +21,11 @@ export default {
   components: {
     MyCalendar,
     NavBar,
+    MyList,
   },
 
   data: () => ({
-    page: "caldendar",
+    page: "calendar",
   }),
 };
 </script>
