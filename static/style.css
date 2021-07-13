@@ -6,3 +6,33 @@
     align-content: center;
 }
 
+.hero-title{
+    display:flex;
+    align-items: left;
+    padding-top:100px;
+    padding-bottom:30px;
+    font-size:50px;
+    padding-left:100px;
+    font-weight: 900;
+
+}
+.hero-text{
+display:flex;
+align-items: left;
+max-width: 600px;
+padding-left:100px;
+font-size:20px;
+line-height: 30px;
+}
+#hero-button{
+    display:flex;
+    align-items: left;
+    margin-top:10px; 
+    margin-left: 110px;
+
+}
+
+#hero-image{
+    display:flex;
+    align-content:right;
+}
