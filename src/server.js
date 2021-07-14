@@ -4,25 +4,27 @@ const { application } = require("express");
 const express = require("express");
 const { Model } = require("mongoose");
 const cors = require("cors")
-
+ 
+const googleCon = require("./google-util")
+ 
 const app = express();
 const {Message,User} = require("./model");
-
+ 
 app.use(cors())
-
+ 
 app.use(express.static("static"))
 app.use(express.json({}));
-
+ 
 propertyList = {userId:"", type:"", destinationNum:0, destinationAddr: "", sendTime: Date.now(), body:""}
 userPropertyList = {fName:"", lName:"", pNumber:"", emailAddr:"", password:""}
-
+ 
 app.use((req,res,next)=>{
     console.log(" | Time: ", Date.now(), " | Method: ", req.method, " | Path: ", req.originalUrl, " | Body: ", req.body, " | ");
     next();
 })
-
+ 
 // Message things
-
+ 
 app.get("/message", (req, res)=>{
     res.setHeader("Content-Type", "application/json");
     console.log("doing a get all for messages");    
@@ -38,13 +40,13 @@ app.get("/message", (req, res)=>{
         res.status(200).send(messages);
     })
 })
-
+ 
 app.get('/message/:id', (req,res)=>{
     res.setHeader("Content-Type", "application/json");
     console.log("doing a get one for message");  
-
+ 
     console.log(`${req.params._id}`);
-
+ 
     Message.findById(req.params._id, (err, message)=>{
         if(err){
             console.log(`there was an error finding a message with id ${req.params._id}`, err)
@@ -58,9 +60,15 @@ app.get('/message/:id', (req,res)=>{
         }
         res.status(200).json(message);
     });
-
+ 
 });
-
+ 
+app.get('/loginsuccess', (req,res)=>{
+    res.setHeader("Content-Type", "application/json");
+    console.log(req.query.code);
+    googleCon.getGoogleAccountFromCode(req.query.code)
+})
+ 
 app.post('/message', (req, res) => {
     res.setHeader("Content-Type", "application/json");
     console.log(`creating a message`);
@@ -79,59 +87,59 @@ app.post('/message', (req, res) => {
         }
         res.status(201).json(message)
     });
-
+ 
 });
-
+ 
 app.delete('/message/:id', (req, res) => {
     console.log(`deleting message with id ${req.params.id}`)
     res.setHeader("Content-Type", "application/json");
     
-
+ 
     Message.findByIdAndDelete(req.params.id,(err, message)=>{
         if (err){
             console.log(`unable to delete message`)
             res.status(500).json({errMessage: `Unable to delete message`, error: err})
         }
         res.status(202).json(message);
-
+ 
     })
-
+ 
 })
 // Patch - update
 app.patch('/message/:id', (req, res) => {
-
+ 
     let updateMessage = {}
-
+ 
     Message.findById(req.params.id, (err, message)=>{
         updateMessage = message;
     })
-
+ 
     for(const property in propertyList){
         if (req.body[property] !== null && req.body[property] !== undefined){
             updateMessage[property] = req.body[property]
         }
         console.log(updateMessage);
     }
-
+ 
     Message.updateOne({_id: req.params.id}, {$set: updateMessage}, (err, updateOneResponse)=>{
         if(err){
             console.log(`unable to patch`)
             res.status(500).json({message: `Unable to patch message`, error: err})
-
+ 
             return;
         }
         if(updateOneResponse.n === 0){
             res.status(404).json({message: `Unable to patch message: not found`, error: err})
-
+ 
             return;
         }
         res.status(203).json(`${updateOneResponse.nModified} were modified`);
     })
-
+ 
 })
-
+ 
 // User things
-
+ 
 app.get("/user", (req, res)=>{
     res.setHeader("Content-Type", "application/json");
     console.log("doing a get all for user");    
@@ -147,13 +155,13 @@ app.get("/user", (req, res)=>{
         res.status(200).send(users);
     })
 })
-
+ 
 app.get('/user/:id', (req,res)=>{
     res.setHeader("Content-Type", "application/json");
     console.log("doing a get one for user");  
-
+ 
     console.log(`${req.params._id}`);
-
+ 
     User.findById(req.params._id, (err, user)=>{
         if(err){
             console.log(`there was an error finding a user with id ${req.params._id}`, err)
@@ -167,9 +175,9 @@ app.get('/user/:id', (req,res)=>{
         }
         res.status(200).json(user);
     });
-
+ 
 });
-
+ 
 app.post('/user', (req, res) => {
     res.setHeader("Content-Type", "application/json");
     console.log(`creating a user`);
@@ -187,59 +195,60 @@ app.post('/user', (req, res) => {
         }
         res.status(201).json(user)
     });
-
+ 
 });
-
+ 
 app.delete('/user/:id', (req, res) => {
     console.log(`deleting user with id ${req.params.id}`)
     res.setHeader("Content-Type", "application/json");
     
-
+ 
     User.findByIdAndDelete(req.params.id,(err, user)=>{
         if (err){
             console.log(`unable to delete user`)
             res.status(500).json({errMessage: `Unable to delete user`, error: err})
         }
         res.status(202).json(user);
-
+ 
     })
-
+ 
 })
 // Patch - update
 app.patch('/user/:id', (req, res) => {
-
+ 
     let updateUser = {}
-
+ 
     User.findById(req.params.id, (err, user)=>{
         updateUser = user;
     })
-
+ 
     for(const property in userPropertyList){
         if (req.body[property] !== null && req.body[property] !== undefined){
             updateUser[property] = req.body[property]
         }
         console.log(updateUser);
     }
-
+ 
     User.updateOne({_id: req.params.id}, {$set: updateUser}, (err, updateOneResponse)=>{
         if(err){
             console.log(`unable to patch`)
             res.status(500).json({message: `Unable to patch user`, error: err})
-
+ 
             return;
         }
         if(updateOneResponse.n === 0){
             res.status(404).json({message: `Unable to patch user: not found`, error: err})
-
+ 
             return;
         }
         res.status(203).json(`${updateOneResponse.nModified} were modified`);
     })
-
+ 
 })
-
+ 
 module.exports = app;
-
+ 
 //post user
 //get by date
 //patch for user
+ 
