@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: "MyCalendar",
+  name: "CalendarPage",
   data: () => ({
     value: "",
     events: [],
