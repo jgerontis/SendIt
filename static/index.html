@@ -15,9 +15,9 @@
       <v-main>
 
       <!-- HEADER -->
-        <v-app-bar color="orange darken-1" fixed app>
+        <v-app-bar dense color="orange darken-1" fixed app>
           <v-app-bar-nav-icon @click="drawer =!drawer"></v-app-bar-nav-icon>
-          <v-toolbar-title>SendIt</v-toolbar-title>
+          <v-toolbar-title id="nav-bar" @click="page = 'home'">SendIt</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
 
@@ -198,7 +198,7 @@
                     </v-dialog>
                   </v-row>
                 </template>
-
+        
 
 
 
@@ -206,11 +206,13 @@
           </v-toolbar-items>
         </v-app-bar>
                     <!-- GENERAL HOMEPAGE -->
-                    <v-container fluid v-if="page == 'home'">
+                  
+                    <v-container class="hero-container" fluid v-if="page == 'home'">
+                      
                         <v-card id="hero-section">
-                            <v-img id="hero-image" src="https://i.ibb.co/7WqZQDj/mockup.png" alt="mockup">
+                            <v-img id="hero-image" src="https://i.ibb.co/GxxpbMY/office-sendit.png" alt="mockup">
                             </v-card>
-                            <v-card-title class="hero-title">Message Scheduler</v-card-title>
+                            <v-card-title class="hero-title">Message<br class="mobile-break"><br class="mobile-break"> Scheduler</v-card-title>
                             <v-card-text class="hero-text"> Say "hello" to a different messaging experience.<br> Being able to send automated messages, so your clients and friends will always be in the loop! </v-card-text>
 
                             <template>
@@ -328,9 +330,20 @@
                               </v-row>
                             </template>
                           </v-card>
-                        </v-container>
+                        
 
+              <div id="card-section">
+                <v-card fluid>
+                    <v-img src="https://i.ibb.co/n164jK1/Nonprofit503-876fb51a00d7d9de8a2c23f94394278191947bd56a8048df5d0138cde497332f.png" alt="mockup">
 
+                </v-card>
+                
+                <v-card>
+                    <v-img src="https://i.ibb.co/5LDHsHX/No-Ads-3d8c77d5daeadd4c02fd3f4343745812fd4f79406a01b4924cf53549957297e0.png" alt="mockup">
+
+                </v-card>
+              </div>
+            </v-container>
         <!-- Side Bar -->
         <v-navigation-drawer app v-model="drawer" class="pt-5 d-flex justify-end flex-column">
           <v-list>
@@ -342,7 +355,7 @@
             </v-list-item>
 
             <v-list-item class="pt-5">
-              <v-btn class="sideButton">
+              <v-btn class="sideButton" @click="page = 'home'">
                 <v-list-item-title>List</v-list-item-title>
                 <v-icon> mdi-format-list-bulleted </v-icon>
               </v-btn>
@@ -365,7 +378,7 @@
 
         <!-- Home Page -->
       
-        <v-container v-else-if="page == 'message'">
+        <v-container v-if="page == 'message'">
           <v-card>
             <v-card-title>Subject Line</v-card-title>
             <v-card-text> Maecenas nulla nunc, ornare vitae neque ac, bibendum laoreet magna. Donec ut imperdiet diam. Sed pulvinar elit eget neque placerat viverra. Integer vestibulum aliquet nunc non malesuada. Pellentesque commodo dui at tincidunt tempus. Donec et vehicula nunc.</v-card-text>
@@ -376,7 +389,7 @@
 
 
         <!-- Calendar Page -->
-        <v-container v-if="page == 'calendar'">
+        <v-container v-else-if="page == 'calendar'">
           <template>
             <v-row class="fill-height">
               <v-col>
