@@ -116,7 +116,6 @@ line-height: 30px;
 }
 
 hr.rounded {
-    
     border-top: 2px solid rgb(83, 83, 83);
     border-radius: 1px;
   }
@@ -130,4 +129,8 @@ hr.rounded {
     text-align: center;
     justify-content: space-around;
     word-break: break-word;
+}
+.adjusted-height{
+    height: 350px;
+    
 }
