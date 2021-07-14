@@ -26,9 +26,9 @@ line-height: 30px;
 }
 #hero-button{
     display:flex;
-    align-items: left;
     margin-top:10px; 
     margin-left: 80px;
+    margin-bottom:30px;
 
 }
 
@@ -55,12 +55,49 @@ line-height: 30px;
     flex-direction: row;
     
 }
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     #card-section {
+        padding-top:20px;
         display:flex;
         flex-direction: column; 
         justify-content: center;
-        max-width: 1600px;
-        max-height: 1600px;
+        max-width: 600px;
+        max-height: 600px;
+    }  
+
+}
+@media (min-width: 1600px) {
+    #card-section {
+      display: none;
     }  
 }
+
+#card-section2{
+    padding-top:30px;
+    display:flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    
+}
+@media (max-width: 900px) {
+    #card-section2 {
+        padding-top:20px;
+        display:flex;
+        flex-direction: column; 
+        justify-content: center;
+        max-width: 600px;
+        max-height: 600px;
+    }  
+
+}
+@media (min-width: 1600px) {
+    #card-section2 {
+      display: none;
+    }  
+}
+
+#card-text{
+    font-size: 50px;
+
+}
+

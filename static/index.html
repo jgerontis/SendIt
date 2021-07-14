@@ -333,16 +333,23 @@
                         
 
               <div id="card-section">
-                <v-card fluid>
-                    <v-img src="https://i.ibb.co/n164jK1/Nonprofit503-876fb51a00d7d9de8a2c23f94394278191947bd56a8048df5d0138cde497332f.png" alt="mockup">
-
-                </v-card>
-                
                 <v-card>
-                    <v-img src="https://i.ibb.co/5LDHsHX/No-Ads-3d8c77d5daeadd4c02fd3f4343745812fd4f79406a01b4924cf53549957297e0.png" alt="mockup">
-
+                    <v-img src="https://i.ibb.co/n164jK1/Nonprofit503-876fb51a00d7d9de8a2c23f94394278191947bd56a8048df5d0138cde497332f.png" alt="mockup">
                 </v-card>
+                <v-card>
+                <v-card-text id="card=text">Send Messages around the globe completely free, Get started and schedule messages today!</v-card-text>
+              </v-card>
+            </div>
+            <div id="card-section2">
+                <v-card>
+                  <v-card-text id="card-text2">There are no ads, no affiliate marketers, and no creepy tracking in Send It. So focus on sending the messages that matter with the people who matter to you.</v-card-text>
+                </v-card>
+                <v-card>
+                  <v-img src="https://i.ibb.co/5LDHsHX/No-Ads-3d8c77d5daeadd4c02fd3f4343745812fd4f79406a01b4924cf53549957297e0.png" alt="mockup">
+              </v-card>
               </div>
+
+              
             </v-container>
         <!-- Side Bar -->
         <v-navigation-drawer app v-model="drawer" class="pt-5 d-flex justify-end flex-column">
@@ -355,7 +362,7 @@
             </v-list-item>
 
             <v-list-item class="pt-5">
-              <v-btn class="sideButton" @click="page = 'home'">
+              <v-btn class="sideButton" @click="page = 'loginSuccess'">
                 <v-list-item-title>List</v-list-item-title>
                 <v-icon> mdi-format-list-bulleted </v-icon>
               </v-btn>
@@ -378,10 +385,10 @@
 
         <!-- Home Page -->
       
-        <v-container v-if="page == 'message'">
+        <v-container v-if="page == 'loginSuccess'">
           <v-card>
-            <v-card-title>Subject Line</v-card-title>
-            <v-card-text> Maecenas nulla nunc, ornare vitae neque ac, bibendum laoreet magna. Donec ut imperdiet diam. Sed pulvinar elit eget neque placerat viverra. Integer vestibulum aliquet nunc non malesuada. Pellentesque commodo dui at tincidunt tempus. Donec et vehicula nunc.</v-card-text>
+            <v-card-title>Success</v-card-title>
+            <v-card-text> Your login was successful and you're now able to use Send It!</v-card-text>
           </v-card>
         </v-container>
 
