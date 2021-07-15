@@ -2,23 +2,21 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" app>
       <v-list>
-        <v-list-item @click="page = 'List'">
-          Text
-        </v-list-item>
         <NavigationItem
-          v-for="item in items"
-          :key="item.title"
-          :title="item.title"
-          :icon="item.icon"
+          v-for="page in pages"
+          :key="page.title"
+          :title="page.title"
+          :icon="page.icon"
           @changepage="changepage"
         />
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar color="orange darken-1" temporary app>
-      <v-app-bar-nav-icon class="d-md-none" @click="drawer = !drawer" />
-      <v-toolbar-title>SendIt</v-toolbar-title>
+    <v-app-bar class="primary" temporary app>
+      <v-app-bar-nav-icon class="d-lg-none" @click="drawer = !drawer" />
+      <v-app-bar-title>SendIt</v-app-bar-title>
       <v-spacer />
-      <AppBarContent />
+      <SignupDialog />
+      <LoginDialog />
     </v-app-bar>
     <v-main>
       <CalendarPage v-if="page == 'Calendar'" />
@@ -32,7 +30,8 @@
 // import HelloWorld from "./components/HelloWorld";
 // import Test from "./components/Test";
 import CalendarPage from "./components/CalendarPage.vue";
-import AppBarContent from "./components/AppBarContent.vue";
+import SignupDialog from "./components/SignupDialog.vue";
+import LoginDialog from "./components/LoginDialog.vue";
 import ListPage from "./components/ListPage.vue";
 import SettingsPage from "./components/SettingsPage.vue";
 import NavigationItem from "./components/NavigationItem.vue";
@@ -42,7 +41,8 @@ export default {
 
   components: {
     CalendarPage,
-    AppBarContent,
+    LoginDialog,
+    SignupDialog,
     ListPage,
     SettingsPage,
     NavigationItem,
@@ -51,11 +51,15 @@ export default {
   data: () => ({
     page: "Calendar",
     drawer: null,
-    items: [
+    pages: [
       { title: "Calendar", icon: "mdi-calendar-edit" },
       { title: "List", icon: "mdi-format-list-bulleted" },
       { title: "Settings", icon: "mdi-account-cog" },
     ],
+
+    notifications: false,
+    sound: true,
+    widgets: false,
   }),
 
   methods: {
@@ -66,3 +70,5 @@ export default {
   },
 };
 </script>
+
+<style scoped></style>

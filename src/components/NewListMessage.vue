@@ -1,8 +1,10 @@
 <template>
-  <v-dialog v-model="signupDialog" max-width="600px">
+  <v-dialog v-model="newMessage" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on">
-        SIGN-UP
+      <v-btn class="primary" v-bind="attrs" v-on="on" large bottom right fixed>
+        <v-icon>
+          mdi-plus
+        </v-icon>
       </v-btn>
     </template>
     <v-card>
@@ -41,7 +43,7 @@
             </v-col>
             <v-col cols="12" sm="6">
               <v-select
-                :items="['13-17', '18-29', '30-54', '54+']"
+                :items="['0-17', '18-29', '30-54', '54+']"
                 label="Age*"
                 required
               ></v-select>
@@ -49,15 +51,15 @@
             <v-col cols="12" sm="6">
               <v-autocomplete
                 :items="[
-                  'Snowboarding',
-                  'Computers',
-                  'Football',
-                  'Dirtbikes',
-                  'Skateboarding',
-                  'Video Games',
-                  'UFC',
+                  'Skiing',
+                  'Ice hockey',
+                  'Soccer',
+                  'Basketball',
+                  'Hockey',
+                  'Reading',
+                  'Writing',
                   'Coding',
-                  'Cooking',
+                  'Basejump',
                 ]"
                 label="Interests"
                 multiple
@@ -69,10 +71,10 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="orange darken-1" text @click="signupDialog = false">
+        <v-btn color="blue darken-1" text @click="newMessage = false">
           Close
         </v-btn>
-        <v-btn color="orange darken-1" text @click="signupDialog = true">
+        <v-btn color="blue darken-1" text @click="newMessage = false">
           Save
         </v-btn>
       </v-card-actions>
@@ -82,11 +84,9 @@
 
 <script>
 export default {
-  name: "SignupDialog",
+  name: "NewListMessage",
   data: () => ({
-    signupDialog: false,
+    newMessage: false,
   }),
 };
 </script>
-
-<style></style>
