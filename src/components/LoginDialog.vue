@@ -7,7 +7,7 @@
     </template>
     <v-card>
       <v-card-title>
-        Login
+        <span class="text-h5">Login</span>
       </v-card-title>
       <v-card-text>
         <v-container>

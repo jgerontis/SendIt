@@ -9,65 +9,33 @@
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">User Profile</span>
+        <span class="text-h5">New Message</span>
       </v-card-title>
       <v-card-text>
         <v-container>
           <v-row>
             <v-col cols="12" sm="6" md="4">
-              <v-text-field label="Legal first name*" required></v-text-field>
+              <v-radio-group v-model="radioGroup" mandatory>
+                <v-radio :label="`Email`" :value="email" />
+                <v-radio :label="`Text`" :value="text" />
+              </v-radio-group>
+              <date-time-picker />
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                label="Legal middle name"
-                hint="example of helper text only on focus"
+                label="Destination"
+                hint="Text: 1234567890
+                Email: bob@example.com"
               ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                label="Legal last name*"
-                hint="example of persistent helper text"
-                persistent-hint
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field label="Email*" required></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                label="Password*"
-                type="password"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-select
-                :items="['0-17', '18-29', '30-54', '54+']"
-                label="Age*"
-                required
-              ></v-select>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-autocomplete
-                :items="[
-                  'Skiing',
-                  'Ice hockey',
-                  'Soccer',
-                  'Basketball',
-                  'Hockey',
-                  'Reading',
-                  'Writing',
-                  'Coding',
-                  'Basejump',
-                ]"
-                label="Interests"
-                multiple
-              ></v-autocomplete>
+              <v-textarea
+                counter
+                clearable
+                clear-icon="mdi-close-circle"
+                label="Message"
+              ></v-textarea>
             </v-col>
           </v-row>
         </v-container>
-        <small>*indicates required field</small>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -83,10 +51,15 @@
 </template>
 
 <script>
+import DateTimePicker from "./DateTimePicker.vue";
 export default {
   name: "NewListMessage",
+  components: {
+    DateTimePicker,
+  },
   data: () => ({
     newMessage: false,
+    datetime: new Date(),
   }),
 };
 </script>

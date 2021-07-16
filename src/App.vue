@@ -15,8 +15,6 @@
       <v-app-bar-nav-icon class="d-lg-none" @click="drawer = !drawer" />
       <v-app-bar-title>SendIt</v-app-bar-title>
       <v-spacer />
-      <SignupDialog />
-      <LoginDialog />
     </v-app-bar>
     <v-main>
       <CalendarPage v-if="page == 'Calendar'" />
@@ -30,8 +28,6 @@
 // import HelloWorld from "./components/HelloWorld";
 // import Test from "./components/Test";
 import CalendarPage from "./components/CalendarPage.vue";
-import SignupDialog from "./components/SignupDialog.vue";
-import LoginDialog from "./components/LoginDialog.vue";
 import ListPage from "./components/ListPage.vue";
 import SettingsPage from "./components/SettingsPage.vue";
 import NavigationItem from "./components/NavigationItem.vue";
@@ -41,8 +37,6 @@ export default {
 
   components: {
     CalendarPage,
-    LoginDialog,
-    SignupDialog,
     ListPage,
     SettingsPage,
     NavigationItem,

@@ -1,24 +1,23 @@
 # sendit
 
-## Project setup
-```
-npm install
-```
+### Save Front-End Changes and Put Them in Static
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Live Test Front End without Backend
+
 ```
-npm run lint
+npm run build
+```
+
+### Start Full Server with Front End
+
+```
+npm start
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).

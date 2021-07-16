@@ -16,8 +16,7 @@ const messageSchema = mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     type: String,
-    destinationNum: String,
-    destinationAddr: String,
+    destination: String,
     sendTime: Date,
     body: String,
   },

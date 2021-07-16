@@ -18,16 +18,19 @@
           ></v-switch>
         </v-toolbar>
       </v-list-item>
-
       <v-list-item>
-        hi
+        <SignOutDialog />
       </v-list-item>
     </v-list>
   </v-container>
 </template>
 
 <script>
+import SignOutDialog from "./SignOutDialog.vue";
 export default {
   name: "SettingsPage",
+  components: {
+    SignOutDialog,
+  },
 };
 </script>

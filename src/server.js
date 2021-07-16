@@ -14,11 +14,11 @@ app.use(express.json({}));
 let propertyList = {
   userId: "",
   type: "",
-  destinationNum: 0,
-  destinationAddr: "",
+  destination: "",
   sendTime: Date.now(),
   body: "",
 };
+
 let userPropertyList = {
   fName: "",
   lName: "",
@@ -94,8 +94,7 @@ app.post("/message", (req, res) => {
     {
       userId: req.body.userId,
       type: req.body.type,
-      destinationNum: req.body.destinationNum,
-      destinationAddr: req.body.destinationAddr,
+      destination: req.body.destination,
       sendTime: req.body.sendTime,
       body: req.body.body,
     },
@@ -109,6 +108,22 @@ app.post("/message", (req, res) => {
       res.status(201).json(message);
     }
   );
+});
+
+// delete all messages testing only do not use delete when we deploy
+app.delete("/message/master", (req, res) => {
+  console.log(`deleting all messages...`);
+  res.setHeader("Content-Type", "application/json");
+  Message.remove({}, (err) => {
+    if (err) {
+      console.log(`unable to delete all the messages`);
+      res
+        .status(500)
+        .json({ errMessage: `Unable to delete message`, error: err });
+      return;
+    }
+    res.status(202).json({ message: `Deleted all messages` });
+  });
 });
 
 app.delete("/message/:id", (req, res) => {

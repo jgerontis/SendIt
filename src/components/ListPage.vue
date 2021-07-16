@@ -5,6 +5,8 @@
         v-for="message in messages"
         v-bind:key="message._id"
         :body="message.body"
+        :type="message.type"
+        :destination="message.destination"
       />
     </v-list>
     <NewListMessage />
