@@ -67,9 +67,8 @@ function getGooglePlusApi(auth) {
     // get the auth "tokens" from the request
     const auth = createConnection();
  
-    auth.getToken(code).then((err, data)=>{
-        console.log(err);
-        console.log(data);
+    auth.getToken(code).then((data)=>{
+        console.log("this is data number one", data);
         const tokens = data.tokens;
     
         // add the tokens to the google api so we have access to the account
@@ -77,7 +76,7 @@ function getGooglePlusApi(auth) {
         
         // connect to google plus - need this to get the user's email
         const plus = getGooglePlusApi(auth);
-        plus.people.get({ userId: 'me' }).then((err, me)=>{
+        plus.people.get({ userId: 'me' }).then((me)=>{
             // get the google id and email
             const userGoogleId = me.data.id;
             const userGoogleEmail = me.data.emails && me.data.emails.length && me.data.emails[0].value;
@@ -91,8 +90,8 @@ function getGooglePlusApi(auth) {
         });
         
         
-    }).then((err, obj)=>{
-        console.log(err);
+    }).then((obj)=>{
         console.log(obj);
     });
   }
+module.exports = {getGoogleAccountFromCode}
