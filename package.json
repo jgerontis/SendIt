@@ -23,6 +23,7 @@
     "googleapis": "^81.0.0",
     "mongoose": "^5.13.2",
     "node": "^16.4.0",
-    "nodemailer": "^6.6.3"
+    "nodemailer": "^6.6.3",
+    "v-calendar": "^2.3.1"
   }
 }

@@ -1,4 +1,13 @@
+
+
+
+
+
+
+
 // vue
+
+
 
 var app = new Vue({
   el: "#app",
@@ -8,6 +17,8 @@ var app = new Vue({
     drawer: true,
     login: false,
     signup: false,
+    senditDialog: false,
+    startedDialog: false,
     signupDialog: false,
     loginDialog: false,
     dialog: false,
@@ -15,6 +26,7 @@ var app = new Vue({
     sound: true,
     widgets: false,
 
+    selectedDate: null,
 
     value: '',
     events: [],
@@ -297,3 +309,12 @@ var app = new Vue({
     },
   },
 });
+
+export default {
+  components: {
+    Calendar,
+    DatePicker
+  }
+
+}
+

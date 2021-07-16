@@ -38,7 +38,8 @@ line-height: 30px;
 
 #hero-image{
     display:flex;
-    align-content:right;
+    max-width: 700;
+    max-height: 700;
 }
 #nav-bar{
     cursor: pointer;
@@ -47,6 +48,7 @@ line-height: 30px;
     .mobile-break {
          display: none; 
         }
+        
 }
 #card-section{
     padding-top:50px;
@@ -55,7 +57,7 @@ line-height: 30px;
     flex-direction: row;
     
 }
-@media (max-width: 1100px) {
+@media (max-width: 1350px) {
     #card-section {
         padding-top:20px;
         display:flex;
@@ -64,13 +66,8 @@ line-height: 30px;
         max-width: 600px;
         max-height: 600px;
     }  
-
 }
-@media (min-width: 1600px) {
-    #card-section {
 
-    }  
-}
 
 #card-section2{
     padding-top:30px;
@@ -79,7 +76,7 @@ line-height: 30px;
     flex-direction: row;
     
 }
-@media (max-width: 1100px) {
+@media (max-width: 1350px) {
     #card-section2 {
         padding-top:20px;
         display:flex;
@@ -88,35 +85,27 @@ line-height: 30px;
         max-width: 600px;
         max-height: 600px;
     }  
-
-}
-@media (min-width: 1600px) {
-    #card-section2 {
-
-    }  
-}
-
-#card-text{
     
-    
+
 }
+
 
 #card-section{
     text-align: center;
-    align-content: center;
+    align-items: center;
     margin:auto;
     width:75%;
     
 }
 #card-section2{
     text-align: center;
-    align-content: center;
+    align-items: center;
     margin:auto;
     width:75%;
 }
 
+
 hr.rounded {
-    
     border-top: 2px solid rgb(83, 83, 83);
     border-radius: 1px;
   }
@@ -125,9 +114,56 @@ hr.rounded {
       text-align: center;
       justify-content: space-around;
       word-break: break-word;
+      align-items: center;
   }
   #ad-title{
+    display: flex;
     text-align: center;
     justify-content: space-around;
     word-break: break-word;
+    align-items: center;
+}
+
+
+
+@media (min-width: 1350px) {
+    .adjusted-height {
+        height: 330px;
+    }  
+}
+
+@media (min-width: 1435px) {
+    .adjusted-height1 {
+        height: 175px;
+    }  
+}
+@media (min-width: 1425px) {
+    .adjusted-height {
+        height: 300px;
+    }  
+}
+@media (min-width: 1500px) {
+    .adjusted-height {
+        height: 200px;
+    }  
+}
+
+@media (min-width: 1450px) {
+    .adjusted-height1 {
+        height: 150px;
+    }  
+}
+
+
+
+
+#card-button{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+#card-button-size{
+max-width: 300px;
+justify-content: center;
 }
