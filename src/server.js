@@ -6,6 +6,7 @@ const { Model } = require("mongoose");
 const cors = require("cors")
  
 const googleCon = require("./google-util")
+const test = require("./test")
  
 const app = express();
 const {Message,User} = require("./model");
@@ -65,8 +66,17 @@ app.get('/message/:id', (req,res)=>{
  
 app.get('/loginsuccess', (req,res)=>{
     res.setHeader("Content-Type", "application/json");
-    console.log(req.query.code);
-    googleCon.getGoogleAccountFromCode(req.query.code)
+    googleCon.getAccessTokenFromCode(req.query.code).then((tokenData)=>{
+        //console.log(`this is the token ${token}`)
+
+        googleCon.getGoogleUserInfo(tokenData).then((data)=>{
+            //console.log("worked it is, ", data)
+            console.log("working til here")
+
+            test.sendingTheEmail(data, tokenData)
+        });
+    })
+    
 })
  
 app.post('/message', (req, res) => {
