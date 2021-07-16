@@ -5,12 +5,11 @@ const { access } = require('fs');
 var {google} = require('googleapis')
  
 var ignore = require("../ignoreMe")
-//console.log(ignore.web)
- 
+
 const googleConfig = {
   clientId: ignore.web.client_id, // e.g. asdfghjkljhgfdsghjk.apps.googleusercontent.com
   clientSecret: ignore.web.client_secret, // e.g. _ASDFA%DFASDFASDFASD#FAD-
-  redirect: 'http://localhost:8080/loginsuccess/' // this must match your google api settings
+  redirect: 'http://localhost:8080/loginsuccess' // this must match your google api settings
 };
 /**
  * Create the google auth object which gives us access to talk to google's apis.
@@ -112,13 +111,15 @@ async function getGoogleAccountFromCode(code) {
       data: {
         client_id: tid,
         client_secret: sec,
-        redirect_uri: 'http://localhost:8080/loginsuccess/',
+        redirect_uri: 'http://localhost:8080/loginsuccess',
         grant_type: 'authorization_code',
         code,
       },
     }).catch((err)=>{
-        console.log("did not work getting acces token from code")
+        console.log(err)
+        console.log("did not work getting access token from code")
     });
+      
     //console.log(data); // { access_token, expires_in, token_type, refresh_token }
     return data;
   };
@@ -134,5 +135,6 @@ async function getGoogleAccountFromCode(code) {
     //console.log(data); // { id, email, given_name, family_name }
     return data;
   };
-  
-module.exports = {getAccessTokenFromCode, getGoogleUserInfo}
+
+module.exports = {getAccessTokenFromCode, getGoogleUserInfo, getGoogleAccountFromCode, urlGoogle}
+//module.exports = {getGoogleAccountFromCode, urlGoogle}

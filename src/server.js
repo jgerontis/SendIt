@@ -1,3 +1,7 @@
+
+
+
+
 // server.js
 // API endpoints etc.
 const { application } = require("express");
@@ -10,6 +14,8 @@ const test = require("./test")
  
 const app = express();
 const {Message,User} = require("./model");
+
+users = {};
  
 app.use(cors())
  
@@ -26,10 +32,35 @@ app.use((req,res,next)=>{
  
 // Message things
  
+app.get('/loginsuccess', (req,res)=>{
+    res.setHeader("Content-Type", "application/json");
+    console.log(req.query.code)
+    googleCon.getAccessTokenFromCode(req.query.code).then((tokenData)=>{
+        //console.log(`this is the token ${token}`)
+
+        googleCon.getGoogleUserInfo(tokenData).then((data)=>{
+            //console.log("worked it is, ", data)
+            console.log("working til here")
+
+            users[data.email] = {data:data, token:tokenData};
+            var string = encodeURIComponent(req.query.code);
+            res.redirect('/?code=' + string);
+            //test.sendingNewMessage(data, tokenData)
+        });
+    })
+    
+})
+
+app.get('/', (req,res)=>{
+    console.log(req)
+})
+
 app.get("/message", (req, res)=>{
+    console.log(users);
+
     res.setHeader("Content-Type", "application/json");
     console.log("doing a get all for messages");    
-    
+    console.log(req.query.code);
     
     Message.find({}, function (err, messages) {
         // Check if there was an error
@@ -64,19 +95,11 @@ app.get('/message/:id', (req,res)=>{
  
 });
  
-app.get('/loginsuccess', (req,res)=>{
+
+
+app.get('/googleUrl', (req,res)=>{
     res.setHeader("Content-Type", "application/json");
-    googleCon.getAccessTokenFromCode(req.query.code).then((tokenData)=>{
-        //console.log(`this is the token ${token}`)
-
-        googleCon.getGoogleUserInfo(tokenData).then((data)=>{
-            //console.log("worked it is, ", data)
-            console.log("working til here")
-
-            test.sendingTheEmail(data, tokenData)
-        });
-    })
-    
+    res.status(200).json(googleCon.urlGoogle())
 })
  
 app.post('/message', (req, res) => {

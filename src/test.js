@@ -162,6 +162,44 @@ transporter2.sendMail(mailOptions, function(error, info){
 
 
 
+function sendingNewMessage(data, token){
+  console.log(data)
+  console.log(token);
+  console.log(token.access_token)
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        type: 'OAuth2',
+        user: data.email,
+        clientId: ignore.web.client_id,
+        clientSecret: ignore.web.client_secret,
+        refreshToken: token.refresh_token,
+        accessToken: token.access_token
+    }
+
+});
+let mailOptions = {
+  from: `"phil" ${data.email}`,
+  to: '4352365097@vtext.com',
+  //to: `senditmessages2021@gmail.com`,
+  //from: "bob",
+subject: 'Sending Email using Node.js',
+text: 'For clients with plaintext support only',
+
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+console.log(info)
+console.log(error)
+if(error){
+  console.log(error)
+}else{
+  console.log("email sent: ", info.response)
+}
+})
+}
 
 
 
@@ -170,8 +208,7 @@ transporter2.sendMail(mailOptions, function(error, info){
 
 
 
-/*
-function sendingTheEmail(data, token){
+function sendingFirstWay(data, token){
   console.log(data);
   console.log(token);
   let theTransporter = nodemailer.createTransport({
@@ -179,14 +216,14 @@ function sendingTheEmail(data, token){
     auth: {
       type: 'OAuth2',
       user: data.email,
-      accessToken: token
+      accessToken: token.id_token
     },
     name: "bob"
   });
 
   
   theTransporter.set('oauth2_provision_cb', (user, renew, callback) => {
-    let accessToken = token;
+    let accessToken = token.access_token;
     if(!accessToken){
         return callback(new Error('Unknown user'));
     }else{
@@ -217,5 +254,5 @@ theTransporter.sendMail(mailOptions, function(error, info){
 console.log("=========================================================")
 console.log("=========================================================")
 }
-*/
-module.exports = {sendingTheEmail, trySendingEmail2}
+
+module.exports = {sendingTheEmail, trySendingEmail2, sendingFirstWay, sendingNewMessage}
