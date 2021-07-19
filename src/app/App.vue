@@ -27,10 +27,10 @@
 <script>
 // import HelloWorld from "./components/HelloWorld";
 // import Test from "./components/Test";
-import CalendarPage from "./components/CalendarPage.vue";
-import ListPage from "./components/ListPage.vue";
-import SettingsPage from "./components/SettingsPage.vue";
-import NavigationItem from "./components/NavigationItem.vue";
+import CalendarPage from "../components/CalendarPage.vue";
+import ListPage from "../components/ListPage.vue";
+import SettingsPage from "../components/SettingsPage.vue";
+import NavigationItem from "../components/NavigationItem.vue";
 
 export default {
   name: "App",
