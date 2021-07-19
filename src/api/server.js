@@ -20,8 +20,7 @@ app.use(express.json({}));
 let propertyList = {
   userId: "",
   type: "",
-  destinationNum: 0,
-  destinationAddr: "",
+  destination: "",
   sendTime: Date.now(),
   body: "",
 };
@@ -126,8 +125,7 @@ app.post("/message", (req, res) => {
     {
       userId: req.body.userId,
       type: req.body.type,
-      destinationNum: req.body.destinationNum,
-      destinationAddr: req.body.destinationAddr,
+      destination: req.body.destination,
       sendTime: req.body.sendTime,
       body: req.body.body,
     },
@@ -141,6 +139,18 @@ app.post("/message", (req, res) => {
       res.status(201).json(message);
     }
   );
+});
+
+app.delete("/master", (req, res) => {
+  console.log("Deleting all messages");
+  res.setHeader("Content-Type", "application/json");
+  Message.remove({}, (err) => {
+    if (err) {
+      res.status(500).json({ errMessage: err });
+    } else {
+      res.status(202).json({ message: "Deleted all messages" });
+    }
+  });
 });
 
 app.delete("/message/:id", (req, res) => {

@@ -70,14 +70,16 @@ export default {
   methods: {
     postMessage: function() {
       let that = this;
-      let newMessage = {
+      var newMessage = {
         body: this.body,
         destination: this.destination,
         type: this.radioGroup,
         sendTime: this.datetime,
       };
+      console.log("creating message:", newMessage);
       fetch(this.server_url, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newMessage),
       })
         .then(function(response) {

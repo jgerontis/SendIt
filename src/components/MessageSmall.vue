@@ -4,7 +4,7 @@
       {{ destination }}
     </v-card-title>
     <v-card-subtitle>
-      {{ send_date }}
+      {{ sendTime }}
     </v-card-subtitle>
     <v-card-text>
       {{ body }}
@@ -15,6 +15,6 @@
 <script>
 export default {
   name: "MessageSmall",
-  props: ["destination", "send_date", "body"],
+  props: ["destination", "sendTime", "body"],
 };
 </script>
