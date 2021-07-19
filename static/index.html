@@ -13,716 +13,98 @@
   <div id="app" v-cloak>
     <v-app>
       <v-main>
+        <v-container class="hero-container" fluid v-if="page == 'home'">
 
-      <!-- HEADER -->
-        <v-app-bar dense color="orange darken-1" fixed app>
-          <v-app-bar-nav-icon @click="drawer =!drawer"></v-app-bar-nav-icon>
-          <v-toolbar-title id="nav-bar" @click="page = 'home'">SendIt</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-
-
-
-            <!-- Sign Up-->
-            <template>
-
-                      <v-dialog
-                        v-model="signupDialog"
-                        persistent
-                        max-width="600px"
-                      >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                            color="orange darken-1"
-                            v-bind="attrs"
-                            v-on="on"
-                          >
-                            SIGN-UP
-                          </v-btn>
-                        </template>
-                        <v-card>
-                          <v-card-title>
-                            <span class="text-h5">User Profile</span>
-                          </v-card-title>
-                          <v-card-text>
-                            <v-container>
-                              <v-row>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                  md="4"
-                                >
-                                  <v-text-field
-                                    label="Legal first name*"
-                                    required
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                  md="4"
-                                >
-                                  <v-text-field
-                                    label="Legal middle name"
-                                    hint="example of helper text only on focus"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                  md="4"
-                                >
-                                  <v-text-field
-                                    label="Legal last name*"
-                                    hint="example of persistent helper text"
-                                    persistent-hint
-                                    required
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="12">
-                                  <v-text-field
-                                    label="Email*"
-                                    required
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="12">
-                                  <v-text-field
-                                    label="Password*"
-                                    type="password"
-                                    required
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                >
-                                  <v-select
-                                    :items="['13-17', '18-29', '30-54', '54+']"
-                                    label="Age*"
-                                    required
-                                  ></v-select>
-                                </v-col>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                >
-                                  <v-autocomplete
-                                    :items="['Snowboarding', 'Computers', 'Football', 'Dirtbikes', 'Skateboarding', 'Video Games', 'UFC', 'Coding', 'Cooking']"
-                                    label="Interests"
-                                    multiple
-                                  ></v-autocomplete>
-                                </v-col>
-                              </v-row>
-                            </v-container>
-                            <small>*indicates required field</small>
-                          </v-card-text>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              color="orange darken-1"
-                              text
-                              @click="signupDialog = false"
-                            >
-                              Close
-                            </v-btn>
-                            <v-btn
-                              color="orange darken-1"
-                              text
-                              @click="signupDialog = true"
-                            >
-                              Save
-                            </v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </v-row>
-                  </template>
-            <!-- Log In -->
-            <template>
-
-                    <v-dialog
-                      v-model="loginDialog"
-                      persistent
-                      max-width="600px"
-                    >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                          color="orange darken-1"
-                          v-bind="attrs"
-                          v-on="on"
-                        >
-                          Login
-                        </v-btn>
-                      </template>
-                      <v-card>
-                        <v-card-title>
-                          <span class="text-h5">Sign In</span>
-                        </v-card-title>
-                        <v-card-text>
-                          <v-container>
-                            <v-row>
-                              <v-col cols="12">
-                                <v-text-field
-                                  label="Email*"
-                                  required
-                                ></v-text-field>
-                              </v-col>
-                              <v-col cols="12">
-                                <v-text-field
-                                  label="Password*"
-                                  type="password"
-                                  required
-                                ></v-text-field>
-                            </v-row>
-                          </v-container>
-                          <small>*indicates required field</small>
-                        </v-card-text>
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="loginDialog = false"
-                          >
-                            Close
-                          </v-btn>
-                          <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="loginDialog = true"
-                          >
-                            Save
-                          </v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
-                  </v-row>
-                </template>
-        
-
-
-
-
-          </v-toolbar-items>
-        </v-app-bar>
-                    <!-- GENERAL HOMEPAGE -->
-
-
-
-                    <v-container class="hero-container" fluid v-if="page == 'home'">
-                      
-                        <v-card id="hero-section">
-                            <v-img id="hero-image" src="https://i.ibb.co/GxxpbMY/office-sendit.png" alt="mockup">
-                            </v-card>
-                            <v-card-title class="hero-title">Message<br class="mobile-break"><br class="mobile-break"> Scheduler</v-card-title>
-                            <v-card-text class="hero-text"> Say "hello" to a different messaging experience.<br> Being able to send automated messages, so your clients and friends will always be in the loop! </v-card-text>
-
-                            <template>
-
-                                <v-dialog
-                                  v-model="senditDialog"
-                                  persistent
-                                  max-width="600px"
-                                >
-                                  <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                      id="hero-button"
-                                      color="orange darken-1"
-                                      v-bind="attrs"
-                                      v-on="on"
-                                    >
-                                      Try Send It!
-                                    </v-btn>
-                                  </template>
-                                  <v-card>
-                                    <v-card-title>
-                                      <span class="text-h5">User Profile</span>
-                                    </v-card-title>
-                                    <v-card-text>
-                                      <v-container>
-                                        <v-row>
-                                          <v-col
-                                            cols="12"
-                                            sm="6"
-                                            md="4"
-                                          >
-                                            <v-text-field
-                                              label="Legal first name*"
-                                              required
-                                            ></v-text-field>
-                                          </v-col>
-                                          <v-col
-                                            cols="12"
-                                            sm="6"
-                                            md="4"
-                                          >
-                                            <v-text-field
-                                              label="Legal middle name"
-                                              hint="example of helper text only on focus"
-                                            ></v-text-field>
-                                          </v-col>
-                                          <v-col
-                                            cols="12"
-                                            sm="6"
-                                            md="4"
-                                          >
-                                            <v-text-field
-                                              label="Legal last name*"
-                                              hint="example of persistent helper text"
-                                              persistent-hint
-                                              required
-                                            ></v-text-field>
-                                          </v-col>
-                                          <v-col cols="12">
-                                            <v-text-field
-                                              label="Email*"
-                                              required
-                                            ></v-text-field>
-                                          </v-col>
-                                          <v-col cols="12">
-                                            <v-text-field
-                                              label="Password*"
-                                              type="password"
-                                              required
-                                            ></v-text-field>
-                                          </v-col>
-                                          <v-col
-                                            cols="12"
-                                            sm="6"
-                                          >
-                                            <v-select
-                                              :items="['13-17', '18-29', '30-54', '54+']"
-                                              label="Age*"
-                                              required
-                                            ></v-select>
-                                          </v-col>
-                                          <v-col
-                                            cols="12"
-                                            sm="6"
-                                          >
-                                            <v-autocomplete
-                                              :items="['Snowboarding', 'Computers', 'Football', 'Dirtbikes', 'Skateboarding', 'Video Games', 'UFC', 'Coding', 'Cooking']"
-                                              label="Interests"
-                                              multiple
-                                            ></v-autocomplete>
-                                          </v-col>
-                                        </v-row>
-                                      </v-container>
-                                      <small>*indicates required field</small>
-                                    </v-card-text>
-                                    <v-card-actions>
-                                      <v-spacer></v-spacer>
-                                      <v-btn
-                                        color="orange darken-1"
-                                        text
-                                        @click="senditDialog = false"
-                                      >
-                                        Close
-                                      </v-btn>
-                                      <v-btn
-                                        color="orange darken-1"
-                                        text
-                                        @click="senditDialog = true"
-                                      >
-                                        Save
-                                      </v-btn>
-                                    </v-card-actions>
-                                  </v-card>
-                                </v-dialog>
-                              </v-row>
-                            </template>
-                          </v-card>
-                        <br> 
-                        <hr class="rounded">
-                        <br>
-              <div id="card-section">
-                <v-card>
-                    <v-img src="https://i.ibb.co/n164jK1/Nonprofit503-876fb51a00d7d9de8a2c23f94394278191947bd56a8048df5d0138cde497332f.png" alt="mockup">
-                </v-card>
-                <br>
-                <div class="adjusted-height1">
-                <v-card shaped class="adjusted-height1">
-                  <v-card-title id="free-title">Free for everyone!</v-card-title>
-                <v-card-text id="card-text">Send Messages around the globe completely free, Get started and schedule messages today!</v-card-text>
-              </v-card>
-            </div>
-            </div>
-            <br>
-            
-            <div id="card-section2">
-                <v-card shaped class="adjusted-height">
-                    <v-card-title id="ad-title">No ads. No trackers. No kidding.</v-card-title>
-                  <v-card-text id="card-text2">There are no ads, no affiliate marketers, and no creepy tracking in Send It. So focus on sending the messages that matter with the people who matter to you.</v-card-text>
-                </v-card>
-                <br>
-                <v-card>
-                  <v-img src="https://i.ibb.co/5LDHsHX/No-Ads-3d8c77d5daeadd4c02fd3f4343745812fd4f79406a01b4924cf53549957297e0.png" alt="mockup">
-              </v-card>
-              </div>
-              <br>
-              <br>
-                  <!--GET STARTED BUTTON-->
-                    <v-container id="card-button">
-                  <template>
-
-                    <v-dialog
-                      v-model="startedDialog"
-                      persistent
-                      max-width="600px"
-                    >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                          id="card-button-size"
-                          x-large
-                          color="orange darken-1"
-                          v-bind="attrs"
-                          v-on="on"
-                        >
-                          Get Started!
-                        </v-btn>
-                      </template>
-                      <v-card>
-                        <v-card-title>
-                          <span class="text-h5">User Profile</span>
-                        </v-card-title>
-                        <v-card-text>
-                          <v-container>
-                            <v-row>
-                              <v-col
-                                cols="12"
-                                sm="6"
-                                md="4"
-                              >
-                                <v-text-field
-                                  label="Legal first name*"
-                                  required
-                                ></v-text-field>
-                              </v-col>
-                              <v-col
-                                cols="12"
-                                sm="6"
-                                md="4"
-                              >
-                                <v-text-field
-                                  label="Legal middle name"
-                                  hint="example of helper text only on focus"
-                                ></v-text-field>
-                              </v-col>
-                              <v-col
-                                cols="12"
-                                sm="6"
-                                md="4"
-                              >
-                                <v-text-field
-                                  label="Legal last name*"
-                                  hint="example of persistent helper text"
-                                  persistent-hint
-                                  required
-                                ></v-text-field>
-                              </v-col>
-                              <v-col cols="12">
-                                <v-text-field
-                                  label="Email*"
-                                  required
-                                ></v-text-field>
-                              </v-col>
-                              <v-col cols="12">
-                                <v-text-field
-                                  label="Password*"
-                                  type="password"
-                                  required
-                                ></v-text-field>
-                              </v-col>
-                              <v-col
-                                cols="12"
-                                sm="6"
-                              >
-                                <v-select
-                                  :items="['13-17', '18-29', '30-54', '54+']"
-                                  label="Age*"
-                                  required
-                                ></v-select>
-                              </v-col>
-                              <v-col
-                                cols="12"
-                                sm="6"
-                              >
-                                <v-autocomplete
-                                  :items="['Snowboarding', 'Computers', 'Football', 'Dirtbikes', 'Skateboarding', 'Video Games', 'UFC', 'Coding', 'Cooking']"
-                                  label="Interests"
-                                  multiple
-                                ></v-autocomplete>
-                              </v-col>
-                            </v-row>
-                          </v-container>
-                          <small>*indicates required field</small>
-                        </v-card-text>
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            color="orange darken-1"
-                            text
-                            @click="startedDialog = false"
-                          >
-                            Close
-                          </v-btn>
-                          <v-btn
-                            color="orange darken-1"
-                            text
-                            @click="startedDialog = true"
-                          >
-                            Save
-                          </v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
-                  </v-row>
-                </template>
-              </v-container>
-              <br> 
-              <br>
-              <hr class="rounded">
-              <br>
-              <template>
-                <v-container id ="testimonial">
-                <v-carousel   id ="testimonial-text"
-                  justify="center"
-                  cycle
-                  height="300"
-                  hide-delimiter-background
-                  show-arrows-on-hover
-                >
-                  <v-carousel-item
-                  justify="center"
-                    v-for="(slide, i) in slides"
-                    :key="i"
-                  >
-                    <v-sheet
-                      :color="colors[i]"
-                      height="300"
-
-                    >
-                      <v-row
-                        class="fill-height"
-                        justify="center"
-                      >
-                        <div class="text-h2">
-                          {{ slide }} Slide
-                        </div>
-                      </v-row>
-                    </v-sheet>
-                  </v-carousel-item>
-                </v-carousel>
-              </v-container>
-              </template>
-              <hr class="rounded">
-
-              <br>
-        
-
-              
-            
-
-
-
-
-
-
-
-
-
-
-              
-              
-            </v-container>
-        <!-- Side Bar -->
-        <v-navigation-drawer app v-model="drawer" class="pt-5 d-flex justify-end flex-column">
-          <v-list>
-            <v-list-item class="pt-5">
-              <v-btn class="sideButton" @click="page = 'calendar'">
-                <v-list-item-title>Calendar</v-list-item-title>
-                <v-icon> mdi-calendar-edit </v-icon>
-              </v-btn>
-            </v-list-item>
-
-            <v-list-item class="pt-5">
-              <v-btn class="sideButton" @click="page = 'loginSuccess'">
-                <v-list-item-title>List</v-list-item-title>
-                <v-icon> mdi-format-list-bulleted </v-icon>
-              </v-btn>
-            </v-list-item>
-
-                <!--Settings-->
-
-
-
-            <v-list-item class="pt-5">
-              <v-btn  class="sideButton" @click="page = 'settings'">
-                <v-list-item-title>Settings</v-list-item-title>
-                <v-icon> mdi-account-cog </v-icon>
-              </v-btn>
-            </v-list-item>
-
-          </v-list>
-        </v-navigation-drawer>
-        <!-- End of Side Bar -->
-
-        <!-- Home Page -->
-      
-        <v-container v-if="page == 'loginSuccess'">
-          <v-card>
-            <v-card-title>Success</v-card-title>
-            <v-card-text> Your login was successful and you're now able to use Send It!</v-card-text>
+          <v-card id="hero-section">
+            <v-img id="hero-image" src="https://i.ibb.co/GxxpbMY/office-sendit.png" alt="mockup">
+              <v-card-title class="hero-title">Message<br class="mobile-break"><br class="mobile-break"> Scheduler
+              </v-card-title>
+              <v-card-text class="hero-text"> Say "hello" to a different messaging experience.<br> Being able to send
+                automated messages, so your clients and friends will always be in the loop! </v-card-text>
           </v-card>
-        </v-container>
-
-        <!-- End of Home Page -->
-
-
-        <!-- Calendar Page -->
-        <v-container v-else-if="page == 'calendar'">
-          <div>
-            <v-date-picker v-model='selectedDate'/>
+          <br>
+          <hr class="rounded">
+          <br>
+          <div id="card-section">
+            <v-card>
+              <v-img
+                src="https://i.ibb.co/n164jK1/Nonprofit503-876fb51a00d7d9de8a2c23f94394278191947bd56a8048df5d0138cde497332f.png"
+                alt="mockup">
+            </v-card>
           </div>
+          <br>
+          <div class="adjusted-height1">
+            <v-card shaped class="adjusted-height1">
+              <v-card-title id="free-title">Free for everyone!</v-card-title>
+              <v-card-text id="card-text">Send Messages around the globe completely free, Get started and schedule
+                messages today!</v-card-text>
+            </v-card>
+          </div>
+          <br>
+          <div id="card-section2">
+            <v-card shaped class="adjusted-height">
+              <v-card-title id="ad-title">No ads. No trackers. No kidding.</v-card-title>
+              <v-card-text id="card-text2">There are no ads, no affiliate marketers, and no creepy tracking in Send
+                It. So focus on sending the messages that matter with the people who matter to you.</v-card-text>
+            </v-card>
+            <br>
+            <v-card>
+              <v-img
+                src="https://i.ibb.co/5LDHsHX/No-Ads-3d8c77d5daeadd4c02fd3f4343745812fd4f79406a01b4924cf53549957297e0.png"
+                alt="mockup">
+            </v-card>
+          </div>
+          <br>
+
+          <br>
+          <hr class="rounded">
+          <br>
+          <template>
+            <v-container id="testimonial">
+              <v-carousel id="testimonial-text" justify="center" cycle height="300" hide-delimiter-background
+                show-arrows-on-hover>
+                <v-carousel-item justify="center" v-for="(slide, i) in slides" :key="i">
+                  <v-sheet :color="colors[i]" height="300">
+                    <v-row class="fill-height" justify="center">
+                      <div class="text-h2">
+                        {{ slide }} Slide
+                      </div>
+                    </v-row>
+                  </v-sheet>
+                </v-carousel-item>
+              </v-carousel>
+            </v-container>
+          </template>
+          <hr class="rounded">
+
+          <br>
+
+
         </v-container>
-        
 
-        <!-- End of Calendar Page -->
-
-        <!-- List Page -->
-
-        <!-- End of List Page -->
         <!-- Footer -->
         <template>
 
-          <v-footer
-          absolute
-          bottom
-            v-bind="localAttrs"
-            :padless="true"
-          >
-            <v-card
-              flat
-              tile
-              width="100%"
-              class="orange darken-1 text-center"
-            >
+          <v-footer absolute bottom v-bind="localAttrs" :padless="true">
+            <v-card flat tile width="100%" class="orange darken-1 text-center">
               <v-card-text>
-                <v-btn
-                  v-for="icon in icons"
-                  :key="icon"
-                  class="mx-4"
-                  icon
-                  @click="page = 'calendar'"
-                >
+                <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon @click="page = 'calendar'">
                   <v-icon size="24px">
                     {{ icon }}
                   </v-icon>
                 </v-btn>
               </v-card-text>
-      
+
               <v-divider></v-divider>
-      
+
               <v-card-text class="white--text">
                 {{ new Date().getFullYear() }} — <strong> © SendIt</strong>
               </v-card-text>
             </v-card>
           </v-footer>
-      </template>
-
-
-        <!-- END OF FOOTER -->
-
-
-        <!-- SETTINGS PAGE-->
-      <v-container v-else-if="page == 'settings'">
-        <template>
-          <v-row justify="center">
-            <v-dialog
-              v-model="dialog"
-              fullscreen
-              hide-overlay
-              transition="dialog-bottom-transition">
-              </template>
-              <v-card>
-
-                <v-list
-                  three-line
-                  subheader
-                >
-                  <v-subheader>User Controls</v-subheader>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>Content filtering</v-list-item-title>
-                      <v-list-item-subtitle>Set the content filtering level to restrict apps that can be downloaded</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>Password</v-list-item-title>
-                      <v-list-item-subtitle>Require password for purchase or use password to restrict purchase</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-                <v-divider></v-divider>
-                <v-list
-                  three-line
-                  subheader
-                >
-                  <v-subheader>General</v-subheader>
-                  <v-list-item>
-                    <v-list-item-action>
-                      <v-checkbox v-model="notifications"></v-checkbox>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                      <v-list-item-title>Notifications</v-list-item-title>
-                      <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-action>
-                      <v-checkbox v-model="sound"></v-checkbox>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                      <v-list-item-title>Sound</v-list-item-title>
-                      <v-list-item-subtitle>Auto-update apps at any time. Data charges may apply</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-action>
-                      <v-checkbox v-model="widgets"></v-checkbox>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                      <v-list-item-title>Auto-add widgets</v-list-item-title>
-                      <v-list-item-subtitle>Automatically add home screen widgets</v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-                <v-toolbar
-                dark
-                color="orange darken-1"
-              >
-                <v-toolbar-title>Settings</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                  <v-btn
-                    dark
-                    text
-                    @click="dialog = false"
-                  >
-                    Save
-                  </v-btn>
-                </v-toolbar-items>
-              </v-toolbar>
-              </v-card>
-            </v-dialog>
-          </v-row>
         </template>
-      </v-container>
-
-
-
-
+        <!-- END OF FOOTER -->
+        </v-container>
         <!-- END OF SETTIGNS PAGE-->
       </v-main>
     </v-app>
@@ -731,19 +113,6 @@
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <script src="app.js" type="module"></script>
   <script src='https://unpkg.com/v-calendar'></script>
-
-<!-- CALENDAR STYLING -->
-
-
-
-
-
-
-  <!-- CALENDAR SCRIPT -->
-
-  
-  <!-- END CALENDAR SCRIPT-->
-
 </body>
 
 </html>
