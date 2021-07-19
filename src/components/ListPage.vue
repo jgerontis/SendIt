@@ -7,6 +7,7 @@
         :body="message.body"
         :type="message.type"
         :destination="message.destination"
+        :sendTime="message.sendTime"
       />
     </v-list>
     <NewListMessage />
