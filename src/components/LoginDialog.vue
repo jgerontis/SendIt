@@ -28,6 +28,9 @@
         <v-btn text @click="loginDialog = false">
           Submit
         </v-btn>
+        <v-btn text @click="goToGoogle">
+          Login with google
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -39,5 +42,11 @@ export default {
   data: () => ({
     loginDialog: false,
   }),
+  methods: {
+    goToGoogle(){
+      loginDialog = false; 
+      console.log("going to google")
+    }
+  }
 };
 </script>
