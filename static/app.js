@@ -28,6 +28,39 @@ var app = new Vue({
 
     selectedDate: null,
 
+    icons: [
+      'mdi-home',
+      'mdi-email',
+      'mdi-calendar',
+      'mdi-delete',
+    ],
+    items: [
+      'default',
+      'absolute',
+      'fixed',
+    ],
+    padless: false,
+    variant: 'default',
+
+
+      colors: [
+        'indigo',
+        'warning',
+        'pink darken-2',
+        'red lighten-1',
+        'deep-purple accent-4',
+      ],
+      slides: [
+        'First',
+        'Second',
+        'Third',
+        'Fourth',
+        'Fifth',
+      ],
+  
+
+
+
     value: '',
     events: [],
     colors: ['#2196F3', '#3F51B5', '#673AB7', '#00BCD4', '#4CAF50', '#FF9800', '#757575'],
@@ -307,14 +340,24 @@ var app = new Vue({
         return sorted_messages;
       }
     },
+    localAttrs () {
+      const attrs = {}
+  
+      if (this.variant === 'default') {
+        attrs.absolute = false
+        attrs.fixed = false
+      } else {
+        attrs[this.variant] = true
+      }
+      return attrs
+    },
   },
+
+
+
+
+
 });
 
-export default {
-  components: {
-    Calendar,
-    DatePicker
-  }
 
-}
 
