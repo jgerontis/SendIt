@@ -17,6 +17,8 @@
         </div>
         <div class="subheading">
           Change month to see other news
+                    <button v-on:click="clicked">click me</button>
+
         </div>
         <ul class="ma-4">
           <li v-for="message in messages" :key="message">
@@ -63,6 +65,10 @@ export default {
       return d.toISOString().substr(0, 10);
     });
   },
-  methods: {},
+  methods: {
+    clicked(){
+      console.log("heelo")
+      },
+  },
 };
 </script>

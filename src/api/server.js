@@ -12,6 +12,8 @@ const { Message, User } = require("./model");
 
 let users = {};
 
+var picture = "";
+
 app.use(cors());
 
 app.use(express.static("static"));
@@ -49,10 +51,14 @@ app.use((req, res, next) => {
 });
 
 // Message things
+app.get("/picture", (req,res)=>{
+  res.send(picture);
+})
 
 app.get("/loginsuccess", (req, res) => {
   res.setHeader("Content-Type", "application/json");
   console.log(req.query.code);
+  let userEmail = "";
   googleCon.getAccessTokenFromCode(req.query.code).then((tokenData) => {
     //console.log(`this is the token ${token}`)
 
@@ -60,10 +66,19 @@ app.get("/loginsuccess", (req, res) => {
       //console.log("worked it is, ", data)
       console.log("working til here");
 
-      users[data.email] = { data: data, token: tokenData };
+      users[data.id] = { data: data, token: tokenData };
+      userEmail = data.email
       var string = encodeURIComponent(req.query.code);
-      res.redirect("/?code=" + string);
+
+      res.redirect("/app.html?code=" + string + "&id=" + data.id);
+      console.log(data)
+      picture = data.picture;
+      console.log(picture)
       //test.sendingNewMessage(data, tokenData)
+    }).then(()=>{
+
+    }).catch((err)=>{
+      console.log(err)
     });
   });
 });
