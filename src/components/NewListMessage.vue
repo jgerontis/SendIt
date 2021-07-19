@@ -16,8 +16,8 @@
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-radio-group v-model="radioGroup" mandatory>
-                <v-radio :label="`Email`" :value="email" />
-                <v-radio :label="`Text`" :value="text" />
+                <v-radio :label="`Email`" :value="'email'" />
+                <v-radio :label="`Text`" :value="'text'" />
               </v-radio-group>
               <date-time-picker />
             </v-col>
@@ -44,7 +44,7 @@
         <v-btn color="blue darken-1" text @click="display = false">
           Close
         </v-btn>
-        <v-btn color="blue darken-1" text @click="display = false">
+        <v-btn color="blue darken-1" text @click="postMessage">
           Save
         </v-btn>
       </v-card-actions>
@@ -69,7 +69,7 @@ export default {
   }),
   methods: {
     postMessage: function() {
-      // let that = this;
+      let that = this;
       let newMessage = {
         body: this.body,
         destination: this.destination,
@@ -78,13 +78,14 @@ export default {
       };
       fetch(this.server_url, {
         method: "POST",
-        body: JSON.parse(newMessage),
+        body: JSON.stringify(newMessage),
       })
         .then(function(response) {
           return response.json();
         })
         .then(function(data) {
           console.log("Created new message:", data);
+          that.display = false;
         });
     },
   },
