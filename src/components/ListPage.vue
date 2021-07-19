@@ -31,18 +31,20 @@ export default {
   },
   methods: {
     // message section WOWZA
-    getMessages: function() {},
+    getMessages: function() {
+      let that = this;
+      fetch(this.server_url + "/message").then((response) =>
+        response.json().then(function(data) {
+          console.log(data);
+          that.messages = data;
+          console.log(that.messages);
+        })
+      );
+    },
   },
   created() {
     console.log(this.messages);
-    let that = this;
-    fetch(this.server_url + "/message").then((response) =>
-      response.json().then(function(data) {
-        console.log(data);
-        that.messages = data;
-        console.log(that.messages);
-      })
-    );
+    this.getMessages();
   },
 
   computed: {

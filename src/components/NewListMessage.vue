@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="newMessage" persistent max-width="600px">
+  <v-dialog v-model="display" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn class="primary" v-bind="attrs" v-on="on" large bottom right fixed>
         <v-icon>
@@ -26,12 +26,14 @@
                 label="Destination"
                 hint="Text: 1234567890
                 Email: bob@example.com"
+                v-model="destination"
               ></v-text-field>
               <v-textarea
                 counter
                 clearable
                 clear-icon="mdi-close-circle"
                 label="Message"
+                v-model="body"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -39,10 +41,10 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="newMessage = false">
+        <v-btn color="blue darken-1" text @click="display = false">
           Close
         </v-btn>
-        <v-btn color="blue darken-1" text @click="newMessage = false">
+        <v-btn color="blue darken-1" text @click="display = false">
           Save
         </v-btn>
       </v-card-actions>
@@ -58,8 +60,33 @@ export default {
     DateTimePicker,
   },
   data: () => ({
-    newMessage: false,
+    server_url: "http://localhost:3000/message",
+    radioGroup: "",
+    body: "",
+    destination: "",
+    display: false,
     datetime: new Date(),
   }),
+  methods: {
+    postMessage: function() {
+      // let that = this;
+      let newMessage = {
+        body: this.body,
+        destination: this.destination,
+        type: this.radioGroup,
+        sendTime: this.datetime,
+      };
+      fetch(this.server_url, {
+        method: "POST",
+        body: JSON.parse(newMessage),
+      })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          console.log("Created new message:", data);
+        });
+    },
+  },
 };
 </script>
