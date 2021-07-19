@@ -10,7 +10,7 @@
         :sendTime="message.sendTime"
       />
     </v-list>
-    <NewListMessage />
+    <NewListMessage @update="getMessages" />
   </v-container>
 </template>
 

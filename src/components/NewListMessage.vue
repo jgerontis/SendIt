@@ -87,6 +87,7 @@ export default {
         })
         .then(function(data) {
           console.log("Created new message:", data);
+          that.$emit("update");
           that.display = false;
         });
     },
