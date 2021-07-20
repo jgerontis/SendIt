@@ -4,7 +4,9 @@
       {{ destination }}
     </v-card-title>
     <v-card-subtitle>
-      {{ sendTime }}
+      {{ date }}
+      <br />
+      {{ time }}
     </v-card-subtitle>
     <v-card-text>
       {{ body }}
@@ -23,7 +25,7 @@
 <script>
 export default {
   name: "MessageSmall",
-  props: ["destination", "sendTime", "body"],
+  props: ["destination", "date", "body", "time"],
   methods: {
     editMessage: function() {
       console.log("you clicked the pencil");

@@ -7,62 +7,96 @@
           v-model="date"
           :picker-date.sync="pickerDate"
           :event-color="(date) => (date[9] % 2 ? 'red' : 'yellow')"
-          :events="arrayEvents"
+          :events="events"
           full-width
         ></v-date-picker>
       </v-col>
       <v-col>
-        <div class="text-h6">
-          Month news ({{ pickerDate || "change month..." }})
-        </div>
-        <div class="subheading">
-          Change month to see other news
-        </div>
-        <ul class="ma-4">
-          <li v-for="message in messages" :key="message">
-            {{ message }}
-          </li>
-        </ul>
+        <h1>currentdate: {{ currentDate.toISOString().substr(0, 10) }}</h1>
+        <h1>currenttime: {{ currentDate.toISOString().substr(11, 5) }}</h1>
+        <v-list>
+          <MessageSmall
+            v-for="message in filteredMessages"
+            :key="message._id"
+            :destination="message.destination"
+            :body="message.body"
+            :time="
+              message.sendTime.getHours().toString() +
+                ':' +
+                message.sendTime.getMinutes().toString()
+            "
+          />
+        </v-list>
       </v-col>
     </v-row>
+    <NewListMessage @update="update" />
   </v-container>
 </template>
 
 <script>
+import MessageSmall from "./MessageSmall.vue";
+import NewListMessage from "./NewListMessage.vue";
 export default {
   name: "CalendarPage",
+  components: {
+    MessageSmall,
+    NewListMessage,
+  },
   data: () => ({
-    arrayEvents: null,
-    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-      .toISOString()
-      .substr(0, 10),
+    currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
+    date: null,
     pickerDate: null,
-    messages: [
-      "President met with prime minister",
-      "New power plant opened",
-      "Rocket launch announced",
-      "Global warming discussion cancelled",
-      "Company changed its location",
-    ],
+    messages: [],
+    server_url: "http://localhost:3000",
   }),
   watch: {
     pickerDate() {
-      this.notes = [
-        this.allNotes[Math.floor(Math.random() * 5)],
-        this.allNotes[Math.floor(Math.random() * 5)],
-        this.allNotes[Math.floor(Math.random() * 5)],
-      ].filter((value, index, self) => self.indexOf(value) === index);
+      this.messages.filter(
+        (value, index, self) => self.indexOf(value) === index
+      );
     },
   },
-  created() {},
-  mounted() {
-    this.arrayEvents = [...Array(6)].map(() => {
-      const day = Math.floor(Math.random() * 30);
-      const d = new Date();
-      d.setDate(day);
-      return d.toISOString().substr(0, 10);
-    });
+  created() {
+    this.getMessages();
+    this.date = this.currentDate.toISOString().substr(0, 10);
   },
-  methods: {},
+  mounted() {},
+  methods: {
+    getMessages: function() {
+      let that = this;
+      fetch(this.server_url + "/message").then((response) =>
+        response.json().then(function(data) {
+          that.messages = data;
+          that.messages.forEach((message) => {
+            message.sendTime = new Date(message.sendTime);
+          });
+        })
+      );
+    },
+    update: function() {
+      this.getMessages();
+      this.updateEvents();
+    },
+  },
+  computed: {
+    filteredMessages: function() {
+      return this.messages
+        .filter(
+          (message) =>
+            message.sendTime.toISOString().substr(0, 10) === this.date
+        )
+        .sort((a, b) =>
+          a.sendTime.toISOString().substr(11, 5) >
+          b.sendTime.toISOString().substr(11, 5)
+            ? 1
+            : -1
+        );
+    },
+    events: function() {
+      return this.messages.map((message) =>
+        message.sendTime.toISOString().substr(0, 10)
+      );
+    },
+  },
 };
 </script>
