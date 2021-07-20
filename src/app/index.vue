@@ -1,5 +1,12 @@
 <template>
   <v-app>
+    <v-app-bar class="primary" temporary app>
+      <v-app-bar-nav-icon class="d-lg-none" @click="drawer = !drawer" />
+      <v-app-bar-title>SendIt</v-app-bar-title>
+      <v-spacer />
+      <SignUpDialog />
+      <LoginDialog />
+    </v-app-bar>
     <v-main>
       <v-container>
         <v-card>
@@ -133,8 +140,15 @@
 </template>
 
 <script>
+import LoginDialog from "../components/LoginDialog.vue";
+import SignUpDialog from "../components/SignupDialog.vue";
+
 export default {
   name: "page",
+  components: {
+    LoginDialog,
+    SignUpDialog,
+  },
   data: () => ({
     model: 0,
     colors: ["primary", "secondary", "yellow darken-2", "red", "orange"],
