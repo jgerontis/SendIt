@@ -12,21 +12,6 @@
         ></v-date-picker>
       </v-col>
       <v-col>
-<<<<<<< HEAD
-        <div class="text-h6">
-          Month news ({{ pickerDate || "change month..." }})
-        </div>
-        <div class="subheading">
-          Change month to see other news
-                    <button v-on:click="clicked">click me</button>
-
-        </div>
-        <ul class="ma-4">
-          <li v-for="message in messages" :key="message">
-            {{ message }}
-          </li>
-        </ul>
-=======
         <v-list>
           <MessageSmall
             v-for="message in filteredMessages"
@@ -40,7 +25,6 @@
             "
           />
         </v-list>
->>>>>>> de984d651c8765b3188cb891dfac772414583ac7
       </v-col>
     </v-row>
     <NewListMessage @update="update" />
@@ -119,13 +103,5 @@ export default {
       );
     },
   },
-<<<<<<< HEAD
-  methods: {
-    clicked(){
-      console.log("heelo")
-      },
-  },
-=======
->>>>>>> de984d651c8765b3188cb891dfac772414583ac7
 };
 </script>
