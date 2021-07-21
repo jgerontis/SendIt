@@ -4,9 +4,9 @@
       <v-list>
         <v-list-item class="px-2">
           <v-list-item-avatar>
-            <v-img v-bind:src="pic" alt=""></v-img>
+            <v-img v-bind:src="user.picture" alt=""></v-img>
           </v-list-item-avatar>
-          <v-list-item-content>{{email}}
+          <v-list-item-content>{{user.email}}
         </v-list-item>
         <NavigationItem
           v-for="page in pages"
@@ -25,7 +25,7 @@
     <v-main>
       <CalendarPage v-if="page == 'Calendar'" />
       <ListPage v-else-if="page == 'List'" />
-      <SettingsPage v-else-if="page == 'Settings'" />
+      <SettingsPage v-else-if="page == 'Settings'" @signout="doSignOut"/>
     </v-main>
   </v-app>
 </template>
@@ -59,9 +59,8 @@ export default {
 
     notifications: false,
     sound: true,
-    pic: "",
+    user: {},
     userId: "",
-    email: "",
   }),
   created: function() {
     console.log("created");
@@ -71,16 +70,10 @@ export default {
   },
   methods: {
     changepage: function(page) {
-      console.log(page);
       this.page = page;
     },
     choosepic: function() {
-      console.log(this.userId);
-      console.log("pic = ", this.pic);
-      //let that = this;
-      //let num = this.userId;
-      console.log("===============================");
-      console.log(this);
+
       let url = `http://localhost:3000/guser/${this.userId}`;
       console.log(url);
       fetch(url)
@@ -89,8 +82,7 @@ export default {
           console.log("this is data", response);
           //this.pic = response;
           console.log(response);
-          this.pic = response[0].picture;
-          this.email = response[0].email;
+          this.user = response[0];
         });
 
       //this.pic = "https://lh3.googleusercontent.com/a/default-user=s96-c"
@@ -98,12 +90,16 @@ export default {
     getUserId: function() {
       const params = new URLSearchParams(window.location.search);
       if (params.has("id")) {
-        console.log(params.get("id"));
         this.userId = params.get("id");
       }
     },
+    doSignOut: function(){
+      this.user = {}
+      window.location.href = "http://localhost:3000";
+    }
   },
 };
 </script>
 
 <style scoped></style>
+
