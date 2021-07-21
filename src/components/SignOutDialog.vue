@@ -16,7 +16,7 @@
         <v-btn text @click="loginDialog = false">
           No
         </v-btn>
-        <v-btn text @click="loginDialog = false; signingOut">
+        <v-btn text @click="loginDialog = false; signingOut()">
           Yes
         </v-btn>
       </v-card-actions>
@@ -31,8 +31,9 @@ export default {
     loginDialog: false,
   }),
   methods:{
-    signingOut(){
+    signingOut: function(){
       console.log("trying to sign out")
+      this.$emit("signouting")
     },
   }
 };

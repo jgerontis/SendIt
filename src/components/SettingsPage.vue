@@ -19,7 +19,7 @@
         </v-toolbar>
       </v-list-item>
       <v-list-item>
-        <SignOutDialog />
+        <SignOutDialog @signouting="signingoutagain"/>
       </v-list-item>
     </v-list>
   </v-container>
@@ -32,5 +32,10 @@ export default {
   components: {
     SignOutDialog,
   },
+  methods:{
+    signingoutagain: function(){
+      this.$emit("signout")
+    }
+  }
 };
 </script>
