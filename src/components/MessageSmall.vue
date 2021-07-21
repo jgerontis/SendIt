@@ -15,7 +15,7 @@
       <v-btn @click="editMessage">
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
-      <v-btn>
+      <v-btn @click="deleteMessage">
         <v-icon>mdi-delete-forever</v-icon>
       </v-btn>
     </v-card-actions>
@@ -25,10 +25,28 @@
 <script>
 export default {
   name: "MessageSmall",
-  props: ["destination", "date", "body", "time"],
+  props: ["id", "destination", "date", "body", "time"],
+  data: () => ({
+    server_url: "http://localhost:3000",
+  }),
+
   methods: {
     editMessage: function() {
       console.log("you clicked the pencil");
+    },
+    deleteMessage: function() {
+      console.log(`${this.server_url}/message/${this.id}`);
+      fetch(`${this.server_url}/message/${this.id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        });
+      this.$emit("update");
     },
   },
 };
