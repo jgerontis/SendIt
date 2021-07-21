@@ -11,3 +11,5 @@ function myCleanUpProcess(){
 }
 module.exports = {myCountingProcess,
 myCleanUpProcess,};
+
+// SET UP THE ACTUAL APPLICATION
