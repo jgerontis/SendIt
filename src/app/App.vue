@@ -2,6 +2,12 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" app>
       <v-list>
+        <v-list-item class="px-2">
+          <v-list-item-avatar>
+            <v-img v-bind:src="user.picture" alt=""></v-img>
+          </v-list-item-avatar>
+          <v-list-item-content>{{user.email}}
+        </v-list-item>
         <NavigationItem
           v-for="page in pages"
           :key="page.title"
@@ -15,7 +21,6 @@
       <v-app-bar-nav-icon class="d-lg-none" @click="drawer = !drawer" />
       <v-app-bar-title>SendIt</v-app-bar-title>
       <v-spacer />
-      <v-img v-bind:src="pic" alt=""></v-img>
     </v-app-bar>
     <v-main>
       <CalendarPage v-if="page == 'Calendar'" />
@@ -54,9 +59,8 @@ export default {
 
     notifications: false,
     sound: true,
-    pic: "",
-    userId: "",
     user: {},
+    userId: "",
   }),
   created: function() {
     console.log("created");
@@ -78,8 +82,7 @@ export default {
           console.log("this is data", response);
           //this.pic = response;
           console.log(response);
-          this.user = response;
-          this.pic = response[0].picture;
+          this.user = response[0];
         });
 
       //this.pic = "https://lh3.googleusercontent.com/a/default-user=s96-c"
@@ -99,3 +102,4 @@ export default {
 </script>
 
 <style scoped></style>
+
