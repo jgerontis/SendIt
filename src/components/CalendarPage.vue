@@ -12,8 +12,6 @@
         ></v-date-picker>
       </v-col>
       <v-col>
-        <h1>currentdate: {{ currentDate.toISOString().substr(0, 10) }}</h1>
-        <h1>currenttime: {{ currentDate.toISOString().substr(11, 5) }}</h1>
         <v-list>
           <MessageSmall
             v-for="message in filteredMessages"
@@ -23,7 +21,7 @@
             :time="
               message.sendTime.getHours().toString() +
                 ':' +
-                message.sendTime.getMinutes().toString()
+                formatMinutes(message.sendTime.getMinutes())
             "
           />
         </v-list>
@@ -76,6 +74,13 @@ export default {
     update: function() {
       this.getMessages();
       this.updateEvents();
+    },
+    formatMinutes: function(minutes) {
+      minutes = minutes.toString();
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      return minutes;
     },
   },
   computed: {
