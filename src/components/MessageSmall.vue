@@ -15,7 +15,7 @@
       <v-btn @click="editMessage">
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
-      <v-btn @click="delete">
+      <v-btn @click="deleteMessage">
         <v-icon>mdi-delete-forever</v-icon>
       </v-btn>
     </v-card-actions>
@@ -34,7 +34,7 @@ export default {
     editMessage: function() {
       console.log("you clicked the pencil");
     },
-    delete: function() {
+    deleteMessage: function() {
       fetch(`${this.server_url}/message/${this.id}`, {
         headers: {
           METHOD: "DELETE",

@@ -15,6 +15,7 @@
         <v-list>
           <MessageSmall
             v-for="message in filteredMessages"
+            :id="message._id"
             :key="message._id"
             :destination="message.destination"
             :body="message.body"
