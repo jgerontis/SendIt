@@ -50,87 +50,86 @@ app.use((req, res, next) => {
 });
 
 // Message things
-app.get("/picture", (req,res)=>{
+app.get("/picture", (req, res) => {
   res.setHeader("Content-Type", "application/json");
 
   console.log(picture);
   res.send(picture);
-})
+});
 
 app.get("/guser/:goid", (req, res) => {
-  console.log("========================================")
+  console.log("========================================");
   console.log(req.params.goid);
-  GoogleUser.find({id: req.params.goid}, (err, guser)=>{
-    console.log(guser)
-    
-    res.send(guser)
-  })
-})
+  GoogleUser.find({ id: req.params.goid }, (err, guser) => {
+    console.log(guser);
+
+    res.send(guser);
+  });
+});
 
 app.get("/loginsuccess", (req, res) => {
   res.setHeader("Content-Type", "application/json");
   console.log(req.query.code);
-  let userEmail = "";
   googleCon.getAccessTokenFromCode(req.query.code).then((tokenData) => {
     //console.log(`this is the token ${token}`)
 
-    googleCon.getGoogleUserInfo(tokenData).then((data) => {
-      //console.log("worked it is, ", data)
-      console.log("working til here");
+    googleCon
+      .getGoogleUserInfo(tokenData)
+      .then((data) => {
+        //console.log("worked it is, ", data)
+        console.log("working til here");
 
-      users[data.id] = { data: data, token: tokenData };
-      userEmail = data.email
-      var string = encodeURIComponent(req.query.code);
-      checkId = {}
-      GoogleUser.findOne({id: data.id}, (err, guser)=>{
-        console.log("=============================")
-        checkId = guser;
-        console.log(checkId)
-      }).then((err, user)=>{
+        users[data.id] = { data: data, token: tokenData };
 
-        console.log(checkId);
-        console.log(user);
-        console.log("__________________________________________________")
-        if(checkId == null || checkId == undefined || checkId.id == ""){
-          GoogleUser.create(
-            {
-              access_token: tokenData.access_token,
-              refresh_token: tokenData.refresh_token,
-              scope: tokenData.scope,
-              id_token: tokenData.id_token,
-              id: data.id,
-              email: data.email,
-              picture: data.picture,
-            },
-            (err, message) => {
+        var string = encodeURIComponent(req.query.code);
+        let checkId = {};
+        GoogleUser.findOne({ id: data.id }, (err, guser) => {
+          console.log("=============================");
+          checkId = guser;
+          console.log(checkId);
+        }).then((err, user) => {
+          console.log(checkId);
+          console.log(user);
+          console.log("__________________________________________________");
+          if (checkId == null || checkId == undefined || checkId.id == "") {
+            GoogleUser.create(
+              {
+                access_token: tokenData.access_token,
+                refresh_token: tokenData.refresh_token,
+                scope: tokenData.scope,
+                id_token: tokenData.id_token,
+                id: data.id,
+                email: data.email,
+                picture: data.picture,
+              },
+              (err, message) => {
+                console.log(message);
+                //res.status(201).json(message);
+              }
+            );
+          } else {
+            console.log("already here");
+          }
+        });
 
-              console.log(message);
-              //res.status(201).json(message);
-            }
-          );
-        }else{
-          console.log("already here")
+        picture = data.picture;
+        console.log(picture);
+        res.redirect("/app.html?code=" + string + "&id=" + data.id);
 
-        }
+        //test.sendingNewMessage(data, tokenData)
       })
-
-      picture = data.picture;
-      console.log(picture)
-      res.redirect("/app.html?code=" + string + "&id=" + data.id);
-
-      
-      //test.sendingNewMessage(data, tokenData)
-    }).then(()=>{
-
-    }).catch((err)=>{
-      console.log(err)
-    });
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
   });
 });
 
 app.get("/message", (req, res) => {
   console.log(users);
-
+  // todo:
+  // put userid from googe inside req.body
+  // filter retrieved messages by userid
   res.setHeader("Content-Type", "application/json");
   console.log("doing a get all for messages");
   console.log(req.query.code);

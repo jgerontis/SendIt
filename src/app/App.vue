@@ -6,7 +6,7 @@
           <v-list-item-avatar>
             <v-img v-bind:src="user.picture" alt=""></v-img>
           </v-list-item-avatar>
-          <v-list-item-content>{{user.email}}
+          <v-list-item-content>{{ user.email }}</v-list-item-content>
         </v-list-item>
         <NavigationItem
           v-for="page in pages"
@@ -25,7 +25,7 @@
     <v-main>
       <CalendarPage v-if="page == 'Calendar'" />
       <ListPage v-else-if="page == 'List'" />
-      <SettingsPage v-else-if="page == 'Settings'" @signout="doSignOut"/>
+      <SettingsPage v-else-if="page == 'Settings'" @signout="doSignOut" />
     </v-main>
   </v-app>
 </template>
@@ -73,7 +73,6 @@ export default {
       this.page = page;
     },
     choosepic: function() {
-
       let url = `http://localhost:3000/guser/${this.userId}`;
       console.log(url);
       fetch(url)
@@ -93,13 +92,12 @@ export default {
         this.userId = params.get("id");
       }
     },
-    doSignOut: function(){
-      this.user = {}
+    doSignOut: function() {
+      this.user = {};
       window.location.href = "http://localhost:3000";
-    }
+    },
   },
 };
 </script>
 
 <style scoped></style>
-

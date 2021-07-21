@@ -9,6 +9,7 @@
         :type="message.type"
         :destination="message.destination"
         :sendTime="message.sendTime"
+        @update="getMessages"
       />
     </v-list>
     <NewListMessage @update="getMessages" />
