@@ -65,16 +65,10 @@ export default {
   },
   methods: {
     changepage: function(page) {
-      console.log(page);
       this.page = page;
     },
     choosepic: function() {
-      console.log(this.userId);
-      console.log("pic = ", this.pic);
-      //let that = this;
-      //let num = this.userId;
-      console.log("===============================");
-      console.log(this);
+
       let url = `http://localhost:3000/guser/${this.userId}`;
       console.log(url);
       fetch(url)
@@ -91,7 +85,6 @@ export default {
     getUserId: function() {
       const params = new URLSearchParams(window.location.search);
       if (params.has("id")) {
-        console.log(params.get("id"));
         this.userId = params.get("id");
       }
     },
