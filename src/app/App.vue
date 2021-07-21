@@ -2,12 +2,6 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" app>
       <v-list>
-        <v-list-item class="px-2">
-          <v-list-item-avatar>
-            <v-img v-bind:src="pic" alt=""></v-img>
-          </v-list-item-avatar>
-          <v-list-item-content>{{email}}
-        </v-list-item>
         <NavigationItem
           v-for="page in pages"
           :key="page.title"
@@ -21,11 +15,12 @@
       <v-app-bar-nav-icon class="d-lg-none" @click="drawer = !drawer" />
       <v-app-bar-title>SendIt</v-app-bar-title>
       <v-spacer />
+      <v-img v-bind:src="pic" alt=""></v-img>
     </v-app-bar>
     <v-main>
       <CalendarPage v-if="page == 'Calendar'" />
       <ListPage v-else-if="page == 'List'" />
-      <SettingsPage v-else-if="page == 'Settings'" />
+      <SettingsPage v-else-if="page == 'Settings'" @signout="doSignOut"/>
     </v-main>
   </v-app>
 </template>
@@ -61,7 +56,7 @@ export default {
     sound: true,
     pic: "",
     userId: "",
-    email: "",
+    user: {},
   }),
   created: function() {
     console.log("created");
@@ -83,8 +78,8 @@ export default {
           console.log("this is data", response);
           //this.pic = response;
           console.log(response);
+          this.user = response;
           this.pic = response[0].picture;
-          this.email = response[0].email;
         });
 
       //this.pic = "https://lh3.googleusercontent.com/a/default-user=s96-c"
@@ -95,6 +90,10 @@ export default {
         this.userId = params.get("id");
       }
     },
+    doSignOut: function(){
+      this.user = {}
+      window.location.href = "http://localhost:3000";
+    }
   },
 };
 </script>
