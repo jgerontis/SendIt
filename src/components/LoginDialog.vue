@@ -44,7 +44,13 @@ export default {
   }),
   methods: {
     goToGoogle(){
-      loginDialog = false; 
+      this.loginDialog = false; 
+      fetch("http://localhost:3000" + "/googleUrl").then((response) =>
+        response.json().then(function(data) {
+          console.log(data);
+          window.location.href = data;
+
+      }))
       console.log("going to google")
     }
   }

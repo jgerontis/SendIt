@@ -15,6 +15,8 @@
       <v-app-bar-nav-icon class="d-lg-none" @click="drawer = !drawer" />
       <v-app-bar-title>SendIt</v-app-bar-title>
       <v-spacer />
+      <v-img v-bind:src="pic" alt=""></v-img>
+
     </v-app-bar>
     <v-main>
       <CalendarPage v-if="page == 'Calendar'" />
@@ -54,13 +56,51 @@ export default {
     notifications: false,
     sound: true,
     widgets: false,
+    pic: "",
+    userId: "",
   }),
-
+  created: function(){
+    console.log("created");
+    
+    this.getUserId()
+    this.choosepic()
+  },
   methods: {
     changepage: function(page) {
       console.log(page);
       this.page = page;
     },
+    choosepic: function(){
+      
+      console.log(this.userId);
+      console.log("pic = ", this.pic);
+      //let that = this;
+      //let num = this.userId;
+      console.log("===============================")
+      console.log(this);
+      let url = `http://localhost:3000/guser/${this.userId}`
+      console.log(url);
+      fetch(url).then(response => response.json())
+      .then(response => {
+              console.log("this is data", response);
+              //this.pic = response;
+          console.log(response)
+          this.pic = response[0].picture;
+
+      })
+      
+    
+
+      //this.pic = "https://lh3.googleusercontent.com/a/default-user=s96-c"
+      
+    },
+    getUserId: function(){
+      const params = new URLSearchParams(window.location.search)
+      if(params.has("id")){
+        console.log(params.get("id"))
+        this.userId = params.get("id")
+      }
+    }
   },
 };
 </script>

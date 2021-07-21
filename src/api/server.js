@@ -8,7 +8,7 @@ const googleCon = require("./google-util");
 // const test = require("./test");
 
 const app = express();
-const { Message, User } = require("./model");
+const { Message, User, GoogleUser } = require("./model");
 
 let users = {};
 
@@ -51,7 +51,20 @@ app.use((req, res, next) => {
 
 // Message things
 app.get("/picture", (req,res)=>{
+  res.setHeader("Content-Type", "application/json");
+
+  console.log(picture);
   res.send(picture);
+})
+
+app.get("/guser/:goid", (req, res) => {
+  console.log("========================================")
+  console.log(req.params.goid);
+  GoogleUser.find({id: req.params.goid}, (err, guser)=>{
+    console.log(guser)
+    
+    res.send(guser)
+  })
 })
 
 app.get("/loginsuccess", (req, res) => {
@@ -68,11 +81,44 @@ app.get("/loginsuccess", (req, res) => {
       users[data.id] = { data: data, token: tokenData };
       userEmail = data.email
       var string = encodeURIComponent(req.query.code);
+      checkId = {}
+      GoogleUser.findOne({id: data.id}, (err, guser)=>{
+        console.log("=============================")
+        checkId = guser;
+        console.log(checkId)
+      }).then((err, user)=>{
 
-      res.redirect("/app.html?code=" + string + "&id=" + data.id);
-      console.log(data)
+        console.log(checkId);
+        console.log(user);
+        console.log("__________________________________________________")
+        if(checkId == null || checkId == undefined || checkId.id == ""){
+          GoogleUser.create(
+            {
+              access_token: tokenData.access_token,
+              refresh_token: tokenData.refresh_token,
+              scope: tokenData.scope,
+              id_token: tokenData.id_token,
+              id: data.id,
+              email: data.email,
+              picture: data.picture,
+            },
+            (err, message) => {
+
+              console.log(message);
+              //res.status(201).json(message);
+            }
+          );
+        }else{
+          console.log("already here")
+
+        }
+      })
+
       picture = data.picture;
       console.log(picture)
+      res.redirect("/app.html?code=" + string + "&id=" + data.id);
+
+      
       //test.sendingNewMessage(data, tokenData)
     }).then(()=>{
 

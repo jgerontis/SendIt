@@ -12,6 +12,18 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+const googleUser = mongoose.Schema({
+  access_token: String,
+  refresh_token: String,
+  scope: String,
+  id_token: String,
+  id: String,
+  email: String,
+  picture: String,
+},
+  { timestamps: true }
+);
+
 const messageSchema = mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -25,8 +37,10 @@ const messageSchema = mongoose.Schema(
 
 const Message = mongoose.model("Message", messageSchema);
 const User = mongoose.model("User", userSchema);
+const GoogleUser = mongoose.model("GoogleUser", googleUser);
 
 module.exports = {
   Message,
   User,
+  GoogleUser,
 };
