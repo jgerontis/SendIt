@@ -28,12 +28,12 @@
         <v-tabs fixed-tabs v-model="activeTab">
           <v-tab key="calendar">
             <slot name="dateIcon">
-              <v-icon>event</v-icon>
+              <v-icon>Day</v-icon>
             </slot>
           </v-tab>
           <v-tab key="timer" :disabled="dateSelected">
             <slot name="timeIcon">
-              <v-icon>access_time</v-icon>
+              <v-icon>Time</v-icon>
             </slot>
           </v-tab>
           <v-tab-item key="calendar">
@@ -41,16 +41,20 @@
               v-model="date"
               v-bind="datePickerProps"
               @input="showTimePicker"
+              :min="minDate"
               full-width
             ></v-date-picker>
           </v-tab-item>
           <v-tab-item key="timer">
             <v-time-picker
+              ampm-in-title
+              scrollable
               ref="timer"
               class="v-time-picker-custom"
               v-model="time"
               v-bind="timePickerProps"
               full-width
+              :min="minTime"
             ></v-time-picker>
           </v-tab-item>
         </v-tabs>
@@ -136,12 +140,24 @@ export default {
       activeTab: 0,
       date: DEFAULT_DATE,
       time: DEFAULT_TIME,
+      minDate: new Date().toISOString().substr(0, 10),
     };
   },
   mounted() {
     this.init();
   },
   computed: {
+    minTime: function() {
+      if (this.minDate === this.date) {
+        var time = new Date();
+        console.log(
+          time.getHours().toString() + ":" + time.getMinutes().toString()
+        );
+        return time.getHours().toString() + ":" + time.getMinutes().toString();
+      } else {
+        return "";
+      }
+    },
     dateTimeFormat() {
       return this.dateFormat + " " + this.timeFormat;
     },
@@ -186,6 +202,7 @@ export default {
       this.date = format(initDateTime, DEFAULT_DATE_FORMAT);
       this.time = format(initDateTime, DEFAULT_TIME_FORMAT);
     },
+
     okHandler() {
       this.resetPicker();
       this.$emit("input", this.selectedDatetime);

@@ -7,11 +7,12 @@
           v-model="date"
           :picker-date.sync="pickerDate"
           :event-color="(date) => (date[9] % 2 ? 'red' : 'yellow')"
-          :events="arrayEvents"
+          :events="events"
           full-width
         ></v-date-picker>
       </v-col>
       <v-col>
+<<<<<<< HEAD
         <div class="text-h6">
           Month news ({{ pickerDate || "change month..." }})
         </div>
@@ -25,50 +26,106 @@
             {{ message }}
           </li>
         </ul>
+=======
+        <v-list>
+          <MessageSmall
+            v-for="message in filteredMessages"
+            :key="message._id"
+            :destination="message.destination"
+            :body="message.body"
+            :time="
+              message.sendTime.getHours().toString() +
+                ':' +
+                formatMinutes(message.sendTime.getMinutes())
+            "
+          />
+        </v-list>
+>>>>>>> de984d651c8765b3188cb891dfac772414583ac7
       </v-col>
     </v-row>
+    <NewListMessage @update="update" />
   </v-container>
 </template>
 
 <script>
+import MessageSmall from "./MessageSmall.vue";
+import NewListMessage from "./NewListMessage.vue";
 export default {
   name: "CalendarPage",
+  components: {
+    MessageSmall,
+    NewListMessage,
+  },
   data: () => ({
-    arrayEvents: null,
-    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-      .toISOString()
-      .substr(0, 10),
+    currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
+    date: null,
     pickerDate: null,
-    messages: [
-      "President met with prime minister",
-      "New power plant opened",
-      "Rocket launch announced",
-      "Global warming discussion cancelled",
-      "Company changed its location",
-    ],
+    messages: [],
+    server_url: "http://localhost:3000",
   }),
   watch: {
     pickerDate() {
-      this.notes = [
-        this.allNotes[Math.floor(Math.random() * 5)],
-        this.allNotes[Math.floor(Math.random() * 5)],
-        this.allNotes[Math.floor(Math.random() * 5)],
-      ].filter((value, index, self) => self.indexOf(value) === index);
+      this.messages.filter(
+        (value, index, self) => self.indexOf(value) === index
+      );
     },
   },
-  created() {},
-  mounted() {
-    this.arrayEvents = [...Array(6)].map(() => {
-      const day = Math.floor(Math.random() * 30);
-      const d = new Date();
-      d.setDate(day);
-      return d.toISOString().substr(0, 10);
-    });
+  created() {
+    this.getMessages();
+    this.date = this.currentDate.toISOString().substr(0, 10);
   },
+  mounted() {},
+  methods: {
+    getMessages: function() {
+      let that = this;
+      fetch(this.server_url + "/message").then((response) =>
+        response.json().then(function(data) {
+          that.messages = data;
+          that.messages.forEach((message) => {
+            message.sendTime = new Date(message.sendTime);
+          });
+        })
+      );
+    },
+    update: function() {
+      this.getMessages();
+      this.updateEvents();
+    },
+    formatMinutes: function(minutes) {
+      minutes = minutes.toString();
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      return minutes;
+    },
+  },
+  computed: {
+    filteredMessages: function() {
+      return this.messages
+        .filter(
+          (message) =>
+            message.sendTime.toISOString().substr(0, 10) === this.date
+        )
+        .sort((a, b) =>
+          a.sendTime.toISOString().substr(11, 5) >
+          b.sendTime.toISOString().substr(11, 5)
+            ? 1
+            : -1
+        );
+    },
+    events: function() {
+      return this.messages.map((message) =>
+        message.sendTime.toISOString().substr(0, 10)
+      );
+    },
+  },
+<<<<<<< HEAD
   methods: {
     clicked(){
       console.log("heelo")
       },
   },
+=======
+>>>>>>> de984d651c8765b3188cb891dfac772414583ac7
 };
 </script>

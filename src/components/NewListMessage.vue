@@ -19,7 +19,9 @@
                 <v-radio :label="`Email`" :value="'email'" />
                 <v-radio :label="`Text`" :value="'text'" />
               </v-radio-group>
-              <date-time-picker />
+              <DateTimePicker v-model="datetime">
+                <v-icon>mdi-calendar</v-icon>
+              </DateTimePicker>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
