@@ -35,16 +35,18 @@ export default {
       console.log("you clicked the pencil");
     },
     deleteMessage: function() {
+      console.log(`${this.server_url}/message/${this.id}`);
       fetch(`${this.server_url}/message/${this.id}`, {
         headers: {
-          METHOD: "DELETE",
           "Content-Type": "application/json",
         },
+        method: "DELETE",
       })
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
         });
+      this.$emit("update");
     },
   },
 };

@@ -8,7 +8,8 @@
         :body="message.body"
         :type="message.type"
         :destination="message.destination"
-        :sendTime="message.sendTime"
+        :date="message.sendTime.toISOString().substr(0, 10)"
+        @update="getMessages"
       />
     </v-list>
     <NewListMessage @update="getMessages" />
@@ -37,11 +38,19 @@ export default {
       let that = this;
       fetch(this.server_url + "/message").then((response) =>
         response.json().then(function(data) {
-          console.log(data);
           that.messages = data;
-          console.log(that.messages);
+          that.messages.forEach((message) => {
+            message.sendTime = new Date(message.sendTime);
+          });
         })
       );
+    },
+    formatMinutes: function(minutes) {
+      minutes = minutes.toString();
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      return minutes;
     },
   },
   created() {

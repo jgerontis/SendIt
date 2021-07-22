@@ -24,6 +24,7 @@
                 ':' +
                 formatMinutes(message.sendTime.getMinutes())
             "
+            @update="update"
           />
         </v-list>
       </v-col>
