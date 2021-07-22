@@ -25,7 +25,7 @@
     <v-main>
       <CalendarPage v-if="page == 'Calendar'" />
       <ListPage v-else-if="page == 'List'" />
-      <SettingsPage v-else-if="page == 'Settings'" @signout="doSignOut" />
+      <SettingsPage v-else-if="page == 'Settings'" @signout="signOutUser" />
     </v-main>
   </v-app>
 </template>
@@ -92,7 +92,7 @@ export default {
         this.userId = params.get("id");
       }
     },
-    doSignOut: function() {
+    signOutUser: function() {
       this.user = {};
       window.location.href = "http://localhost:3000";
     },

@@ -12,15 +12,16 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const googleUser = mongoose.Schema({
-  access_token: String,
-  refresh_token: String,
-  scope: String,
-  id_token: String,
-  id: String,
-  email: String,
-  picture: String,
-},
+const googleUser = mongoose.Schema(
+  {
+    access_token: String,
+    refresh_token: String,
+    scope: String,
+    id_token: String,
+    id: String,
+    email: String,
+    picture: String,
+  },
   { timestamps: true }
 );
 
@@ -31,6 +32,7 @@ const messageSchema = mongoose.Schema(
     destination: String,
     sendTime: Date,
     body: String,
+    delivered: Boolean,
   },
   { timestamps: true }
 );

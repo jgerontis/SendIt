@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="signoutDialog" max-width="600px">
+  <v-dialog v-model="display" max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn v-bind="attrs" v-on="on">
         Sign Out
@@ -13,10 +13,16 @@
         Are you sure you want to sign out?
       </v-card-text>
       <v-card-actions>
-        <v-btn text @click="loginDialog = false">
+        <v-btn text @click="display = false">
           No
         </v-btn>
-        <v-btn text @click="loginDialog = false; signingOut()">
+        <v-btn
+          text
+          @click="
+            display = false;
+            signingOut();
+          "
+        >
           Yes
         </v-btn>
       </v-card-actions>
@@ -28,13 +34,13 @@
 export default {
   name: "SignOutDialog",
   data: () => ({
-    loginDialog: false,
+    display: false,
   }),
-  methods:{
-    signingOut: function(){
-      console.log("trying to sign out")
-      this.$emit("signouting")
+  methods: {
+    signingOut: function() {
+      console.log("trying to sign out");
+      this.$emit("signout");
     },
-  }
+  },
 };
 </script>

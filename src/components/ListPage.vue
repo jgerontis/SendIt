@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <h2>You have {{ messages.length }} scheduled message(s).</h2>
     <v-list>
       <MessageSmall
         v-for="message in messages"
@@ -8,8 +9,8 @@
         :body="message.body"
         :type="message.type"
         :destination="message.destination"
-        :date="message.sendTime.toISOString().substr(0, 10)"
-        @update="getMessages"
+        :sendTime="message.sendTime"
+        @update="update"
       />
     </v-list>
     <NewListMessage @update="getMessages" />
@@ -45,12 +46,8 @@ export default {
         })
       );
     },
-    formatMinutes: function(minutes) {
-      minutes = minutes.toString();
-      if (minutes < 10) {
-        minutes = "0" + minutes;
-      }
-      return minutes;
+    update: function() {
+      this.getMessages();
     },
   },
   created() {
