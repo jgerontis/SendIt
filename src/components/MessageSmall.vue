@@ -9,7 +9,10 @@
         required
       />
     </v-card-title>
-    <v-card-subtitle v-if="!editing">{{ formattedTime }}</v-card-subtitle>
+    <v-card-subtitle v-if="!editing">
+      <span v-if="page === 'calendar'">{{ formattedTime }} </span>
+      <span v-if="page === 'list'">{{ formattedDate }} </span>
+    </v-card-subtitle>
     <DateTimePicker v-else v-model="mSendTime">
       <v-icon>mdi-calendar</v-icon>
     </DateTimePicker>
@@ -37,9 +40,13 @@
 </template>
 
 <script>
+import DateTimePicker from "./DateTimePicker.vue";
 export default {
   name: "MessageSmall",
-  props: ["id", "body", "destination", "sendTime", "type"],
+  props: ["id", "body", "destination", "sendTime", "type", "page"],
+  components: {
+    DateTimePicker,
+  },
   data: () => ({
     server_url: "http://localhost:3000",
 
@@ -119,6 +126,15 @@ export default {
         hour: "2-digit",
         minute: "2-digit",
       });
+    },
+    formattedDate: function() {
+      return (
+        (this.sendTime.getMonth() + 1).toString() +
+        "-" +
+        (this.sendTime.getDate() + 1).toString() +
+        "  " +
+        this.formattedTime
+      );
     },
   },
 };

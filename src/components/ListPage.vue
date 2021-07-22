@@ -10,6 +10,7 @@
         :type="message.type"
         :destination="message.destination"
         :sendTime="message.sendTime"
+        :page="'list'"
         @update="update"
       />
     </v-list>

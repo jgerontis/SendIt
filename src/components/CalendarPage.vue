@@ -20,6 +20,7 @@
             :destination="message.destination"
             :body="message.body"
             :sendTime="message.sendTime"
+            :page="'calendar'"
             @update="update"
           />
         </v-list>
