@@ -9,7 +9,10 @@
         required
       />
     </v-card-title>
-    <v-card-subtitle>{{ formattedTime }}</v-card-subtitle>
+    <v-card-subtitle v-if="!editing">{{ formattedTime }}</v-card-subtitle>
+    <DateTimePicker v-else v-model="mSendTime">
+      <v-icon>mdi-calendar</v-icon>
+    </DateTimePicker>
     <v-card-text>
       <span v-if="!editing">{{ mBody }}</span>
       <div v-else>

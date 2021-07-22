@@ -124,7 +124,7 @@ async function getAccessTokenFromCode(code) {
 
 async function getGoogleUserInfo(tokens) {
   const { data } = await axios({
-    url: "https://www.googleapis.com/auth/gmail.compose",
+    url: "https://www.googleapis.com/oauth2/v2/userinfo",
     method: "get",
     headers: {
       Authorization: `Bearer ${tokens.access_token}`,

@@ -110,7 +110,6 @@ app.get("/loginsuccess", (req, res) => {
           } else {
             console.log("already here");
           }
-          test
         });
 
         picture = data.picture;
