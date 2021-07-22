@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <v-app-bar class="primary" temporary app>
-      <v-app-bar-nav-icon class="d-lg-none" @click="drawer = !drawer" />
       <v-app-bar-title>SendIt</v-app-bar-title>
       <v-spacer />
       <SignUpDialog />
