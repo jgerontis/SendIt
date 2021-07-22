@@ -110,6 +110,7 @@ app.get("/loginsuccess", (req, res) => {
           } else {
             console.log("already here");
           }
+          test
         });
 
         picture = data.picture;
@@ -188,6 +189,7 @@ app.post("/message", (req, res) => {
       destination: req.body.destination,
       sendTime: req.body.sendTime,
       body: req.body.body,
+      delivered: false,
     },
     (err, message) => {
       if (err) {

@@ -31,6 +31,7 @@ const messageSchema = mongoose.Schema(
     destination: String,
     sendTime: Date,
     body: String,
+    delivered: Boolean,
   },
   { timestamps: true }
 );
