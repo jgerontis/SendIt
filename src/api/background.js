@@ -26,14 +26,14 @@ function trySendMessage(){
         for(var i = 0; i < messages.length; i++){
             if(Date.parse(messages[i].sendTime) < Date.now()){
                 const transporter = nodemailer.createTransport({
+                    host: 'smtp.gmail.com', 
                     service: "gmail",
                     auth: {
                          type: "OAuth2",
-                         user: "senditmessages2021", 
-                         serviceClient: ignore.client_id,
-                         clientSecret: ignore.client_id,
-                         refreshToken: '1//04myvIB5pKKPqCgYIARAAGAQSNwF-L9IrnOGwZj-rNXHmLp1coQ6FHxDggMX4V3if10dpHT5YPnOYuMOb6hp8j08SjOJqxBgtrcc',
-                         accessToken: 'ya29.a0ARrdaM_JI_2ITdyPkzCIpv7IrgBeppL47eaw6n767k0zVPEIcScs5oL2otnvSrQlQ3_p2ABSA97_nmt4GOiqxf4yRf_-XABg-snKrP_AzgVpwySukdGFcKI9wyO0jiChEATaciQTg4khRk28XbI4yUuZo1eP',
+                         user: "senditmessages2021@gmail.com", 
+
+                         refreshToken: '1//04D8JKf2TLd3FCgYIARAAGAQSNwF-L9IrUxUlQPS2GhCl1CQLQ16qCsRIxOImp0yye1O9JOhs3PY-x1S8x9wv77deLYGA6jqDEjk',
+                         accessToken: 'ya29.a0ARrdaM8pNFDH6b4JHZ_U9oB6HwZTiZ1FBk0afFeohrfb4KphMYlyCLS8o0mk6MQ6cYdJnCIy13_FE3AocZILwjBiBkZVeQnoUFgXhGxmb0YaOUUZ2PJSBz5AwVhymC4-GB8mTyvru3OEZApy-QFszDFfQhcM',
                     },
                     tls: {
                       rejectUnauthorized: false
