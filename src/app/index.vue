@@ -147,12 +147,12 @@ export default {
   name: "page",
   components: {
     LoginDialog,
-    SignUpDialog,
+    SignUpDialog
   },
   data: () => ({
     model: 0,
-    colors: ["primary", "secondary", "yellow darken-2", "red", "orange"],
-  }),
+    colors: ["primary", "secondary", "yellow darken-2", "red", "orange"]
+  })
 };
 </script>
 

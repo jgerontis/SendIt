@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="signupDialog" max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on">
+      <v-btn class="mr-3" v-bind="attrs" v-on="on">
         SIGN-UP
       </v-btn>
     </template>
@@ -57,7 +57,7 @@
                   'Video Games',
                   'UFC',
                   'Coding',
-                  'Cooking',
+                  'Cooking'
                 ]"
                 label="Interests"
                 multiple
@@ -84,9 +84,13 @@
 export default {
   name: "SignupDialog",
   data: () => ({
-    signupDialog: false,
-  }),
+    signupDialog: false
+  })
 };
 </script>
 
-<style></style>
+<style>
+#signupMargin {
+  margin-right: 200px;
+}
+</style>
