@@ -1,18 +1,15 @@
 <template>
   <v-app>
     <v-app-bar class="primary" temporary app>
-      <v-app-bar-title>SendIt</v-app-bar-title>
+      <v-app-bar-title class="justify-center">SendIt</v-app-bar-title>
       <v-spacer />
       <SignUpDialog />
       <LoginDialog />
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container id="hero-card">
         <v-card>
-          <v-img
-            src="https://i.ibb.co/GxxpbMY/office-sendit.png"
-            alt="mockup"
-          />
+          <v-img src="../assets/SendItExample.png" alt="mockup" />
           <v-card-title class="hero-title">Message Scheduler</v-card-title>
           <v-card-text class="hero-text">
             Say "hello" to a different messaging experience.<br />
@@ -20,64 +17,94 @@
             will always be in the loop!
           </v-card-text>
         </v-card>
-
+      </v-container>
+      <v-container>
         <br />
-        <hr class="rounded" />
-        <br />
+        <v-row>
+          <v-col>
+            <v-card>
+              <v-img
+                src="https://i.ibb.co/n164jK1/Nonprofit503-876fb51a00d7d9de8a2c23f94394278191947bd56a8048df5d0138cde497332f.png"
+                alt="mockup"
+              />
+            </v-card>
 
-        <v-card>
-          <v-img
-            src="https://i.ibb.co/n164jK1/Nonprofit503-876fb51a00d7d9de8a2c23f94394278191947bd56a8048df5d0138cde497332f.png"
-            alt="mockup"
-          />
-        </v-card>
+            <br />
 
-        <br />
-        <hr class="rounded" />
-        <br />
-
-        <v-card shaped class="adjusted-height1">
-          <v-card-title id="free-title">Free for everyone!</v-card-title>
-          <v-card-text id="card-text"
-            >Send Messages around the globe completely free, Get started and
-            schedule messages today!</v-card-text
-          >
-        </v-card>
-
-        <br />
-
-        <v-card shaped class="adjusted-height">
-          <v-card-title id="ad-title"
-            >No ads. No trackers. No kidding.</v-card-title
-          >
-          <v-card-text id="card-text2"
-            >There are no ads, no affiliate marketers, and no creepy tracking in
-            Send It. So focus on sending the messages that matter with the
-            people who matter to you.</v-card-text
-          >
-        </v-card>
-        <br />
-        <v-card>
-          <v-img
-            src="https://i.ibb.co/5LDHsHX/No-Ads-3d8c77d5daeadd4c02fd3f4343745812fd4f79406a01b4924cf53549957297e0.png"
-            alt="mockup"
-          />
-        </v-card>
-
-        <br />
-        <hr class="rounded" />
+            <v-card class="adjusted-height1">
+              <v-card-title id="free-title">Free for everyone!</v-card-title>
+              <v-card-text id="card-text"
+                >Send Messages around the globe completely free, Get started and
+                schedule messages today!</v-card-text
+              >
+            </v-card>
+          </v-col>
+          <br />
+          <v-col>
+            <v-card>
+              <v-img
+                src="https://i.ibb.co/5LDHsHX/No-Ads-3d8c77d5daeadd4c02fd3f4343745812fd4f79406a01b4924cf53549957297e0.png"
+                alt="mockup"
+              />
+            </v-card>
+            <br />
+            <v-card class="adjusted-height">
+              <v-card-title id="ad-title"
+                >No ads. No trackers. No kidding.</v-card-title
+              >
+              <v-card-text id="card-text2"
+                >There are no ads, no affiliate marketers, and no creepy
+                tracking in Send It. So focus on sending the messages that
+                matter with the people who matter to you.</v-card-text
+              >
+            </v-card>
+          </v-col>
+        </v-row>
         <br />
 
-        <v-carousel v-model="model">
-          <v-carousel-item v-for="(color, i) in colors" :key="color">
-            <v-sheet :color="color" height="100%" tile>
-              <v-row class="fill-height" align="center" justify="center">
-                <div class="text-h2">Slide {{ i + 1 }}</div>
-              </v-row>
-            </v-sheet>
-          </v-carousel-item>
-        </v-carousel>
+        <v-container>
+          <v-card>
+            <v-card-title>
+              Meet the team!
+            </v-card-title>
 
+            <v-row>
+              <v-col>Josh Gerontis </v-col>
+              <v-col>Crew Spencer </v-col>
+              <v-col>Kayle Shurtliff</v-col>
+            </v-row>
+            <v-row id="positions">
+              <v-col>Full Stack Developer </v-col>
+              <v-col>Front End Developer </v-col>
+              <v-col>Back End Developer </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col>
+                <v-avatar @click="openProfile('josh')" color="teal">
+                  <v-icon dark>
+                    mdi-account-circle
+                  </v-icon>
+                </v-avatar>
+              </v-col>
+              <v-col>
+                <v-avatar @click="openProfile('crew')" color="blue">
+                  <v-icon dark>
+                    mdi-account-circle
+                  </v-icon>
+                </v-avatar></v-col
+              >
+              <v-col>
+                <v-avatar @click="openProfile('kayle')" color="green">
+                  <v-icon dark>
+                    mdi-account-circle
+                  </v-icon>
+                </v-avatar>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-container>
+        <br />
         <br />
         <br />
         <br />
@@ -106,34 +133,6 @@
           </v-card>
         </v-footer>
       </v-container>
-      <!--
-      <v-container class="hero-container" fluid v-if="page == 'home'">
-        
-        
-        <br />
-        <div class="adjusted-height1">
-          
-        </div>
-        <br />
-        <div id="card-section2">
-          
-        </div>
-        <br />
-
-        <br />
-        <hr class="rounded" />
-        <br />
-
-        <v-container id="testimonial">
-          
-        </v-container>
-        <hr class="rounded" />
-
-        <br />
-
-        
-      </v-container>
-       -->
     </v-main>
   </v-app>
 </template>
@@ -151,7 +150,22 @@ export default {
   data: () => ({
     model: 0,
     colors: ["primary", "secondary", "yellow darken-2", "red", "orange"]
-  })
+  }),
+  methods: {
+    openProfile: function(who) {
+      switch (who) {
+        case "josh":
+          window.open("https://www.linkedin.com/in/joshua-gerontis-65646920b/");
+          break;
+        case "crew":
+          window.open("https://www.linkedin.com/in/crew-spencer-204b981b8/");
+          break;
+        case "kayle":
+          window.open("https://www.linkedin.com/in/kayle-shurtliff-b962351ab/");
+          break;
+      }
+    }
+  }
 };
 </script>
 
@@ -163,5 +177,26 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.v-card__title {
+  justify-content: space-around;
+}
+
+#positions {
+  font-size: 10px;
+  margin-top: -20px;
+  color: gray;
+  font-weight: bold;
+}
+
+.v-avatar:hover {
+  cursor: pointer;
+}
+#card-text {
+  padding-bottom: 38px;
+}
+#hero-card {
+  margin-top: -50px;
 }
 </style>
