@@ -12,18 +12,15 @@
         ></v-date-picker>
       </v-col>
       <v-col>
-        <v-list>
+        <v-list v-if="filteredMessages.length > 0">
           <MessageSmall
             v-for="message in filteredMessages"
             :id="message._id"
             :key="message._id"
             :destination="message.destination"
             :body="message.body"
-            :time="
-              message.sendTime.getHours().toString() +
-                ':' +
-                formatMinutes(message.sendTime.getMinutes())
-            "
+            :sendTime="message.sendTime"
+            :page="'calendar'"
             @update="update"
           />
         </v-list>
@@ -75,14 +72,6 @@ export default {
     },
     update: function() {
       this.getMessages();
-      this.updateEvents();
-    },
-    formatMinutes: function(minutes) {
-      minutes = minutes.toString();
-      if (minutes < 10) {
-        minutes = "0" + minutes;
-      }
-      return minutes;
     },
   },
   computed: {

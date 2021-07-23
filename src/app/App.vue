@@ -25,7 +25,7 @@
     <v-main>
       <CalendarPage v-if="page == 'Calendar'" />
       <ListPage v-else-if="page == 'List'" />
-      <SettingsPage v-else-if="page == 'Settings'" @signout="doSignOut" />
+      <SettingsPage v-else-if="page == 'Settings'" @signout="signOutUser" />
     </v-main>
   </v-app>
 </template>
@@ -45,7 +45,7 @@ export default {
     CalendarPage,
     ListPage,
     SettingsPage,
-    NavigationItem
+    NavigationItem,
   },
 
   data: () => ({
@@ -54,13 +54,13 @@ export default {
     pages: [
       { title: "Calendar", icon: "mdi-calendar-edit" },
       { title: "List", icon: "mdi-format-list-bulleted" },
-      { title: "Settings", icon: "mdi-account-cog" }
+      { title: "Settings", icon: "mdi-account-cog" },
     ],
 
     notifications: false,
     sound: true,
     user: {},
-    userId: ""
+    userId: "",
   }),
   created: function() {
     console.log("created");
@@ -76,8 +76,10 @@ export default {
       let url = `http://localhost:3000/guser/${this.userId}`;
       console.log(url);
       fetch(url)
-        .then(response => response.json())
-        .then(response => {
+        .then((response) => response.json())
+        .then((response) => {
+          console.log("In choosepic()");
+          console.log(this.userId);
           console.log("this is data", response);
           //this.pic = response;
           console.log(response);
@@ -92,11 +94,11 @@ export default {
         this.userId = params.get("id");
       }
     },
-    doSignOut: function() {
+    signOutUser: function() {
       this.user = {};
       window.location.href = "http://localhost:3000";
-    }
-  }
+    },
+  },
 };
 </script>
 

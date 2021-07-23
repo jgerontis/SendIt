@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
-var theSender = require('../theSenderInfo')
-var ignore = require("../ignoreMe.json")
+//var theSender = require('../theSenderInfo')
+var ignore = require("../../ignoreMe.json")
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 

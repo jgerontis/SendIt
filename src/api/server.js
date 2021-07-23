@@ -188,6 +188,7 @@ app.post("/message", (req, res) => {
       destination: req.body.destination,
       sendTime: req.body.sendTime,
       body: req.body.body,
+      delivered: false,
     },
     (err, message) => {
       if (err) {
