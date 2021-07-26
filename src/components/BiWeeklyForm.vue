@@ -9,17 +9,17 @@
                 <v-menu :close-on-content-click="true" open-on-hover>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn v-bind="attrs" v-on="on">
-                      Day of the Month
+                      Day of the Week
                     </v-btn>
                   </template>
                   <v-list>
                     <v-radio-group>
-                      <v-radio label="1st" value="1" />
-                      <v-radio label="5th" value="5" />
-                      <v-radio label="10th" value="10" />
-                      <v-radio label="15th" value="15" />
-                      <v-radio label="20th" value="20" />
-                      <v-radio label="25th" value="25" />
+                      <v-radio
+                        v-for="day in days"
+                        v-bind:key="day.value"
+                        v-model="selectedDay"
+                        :label="day.name"
+                      />
                     </v-radio-group>
                   </v-list>
                 </v-menu>
@@ -41,9 +41,9 @@
               <v-slider
                 v-model="numWeeks"
                 color="orange"
-                label="Number of Months:"
+                label="How many times:"
                 min="1"
-                max="12"
+                max="6"
                 thumb-label
               ></v-slider>
             </v-row>
@@ -68,12 +68,19 @@
 
 <script>
 export default {
-  name: "MonthlyForm",
+  name: "BiWeeklyForm",
   props: ["userId"],
   data: () => ({
+    days: [
+      { name: "Monday", value: 1 },
+      { name: "Tuesday", value: 2 },
+      { name: "Wednesday", value: 3 },
+      { name: "Thursday", value: 4 },
+      { name: "Friday", value: 5 },
+      { name: "Saturday", value: 6 },
+      { name: "Sunday", value: 0 },
+    ],
     type: "",
-    body: "",
-    destination: "",
   }),
   methods: {
     submit: function() {

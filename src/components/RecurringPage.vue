@@ -15,6 +15,9 @@
           <WeeklyForm :userId="userId" />
         </v-tab-item>
         <v-tab-item>
+          <BiWeeklyForm :userId="userId" />
+        </v-tab-item>
+        <v-tab-item>
           <MonthlyForm :userId="userId" />
         </v-tab-item>
       </v-tabs-items>
@@ -25,14 +28,15 @@
 <script>
 import DailyForm from "./DailyForm.vue";
 import WeeklyForm from "./WeeklyForm.vue";
+import BiWeeklyForm from "./BiWeeklyForm.vue";
 import MonthlyForm from "./MonthlyForm.vue";
 export default {
   name: "RecurringPage",
-  components: { DailyForm, WeeklyForm, MonthlyForm },
+  components: { DailyForm, WeeklyForm, BiWeeklyForm, MonthlyForm },
   props: ["userId"],
   data: () => ({
     tab: null,
-    items: ["Daily", "Weekly", "Monthly"],
+    items: ["Daily", "Weekly", "BiWeekly", "Monthly"],
     messages: [],
     server_url: "http://localhost:3000",
   }),
