@@ -24,6 +24,7 @@
             @update="update"
           />
         </v-list>
+        <h2 v-else>No messages today.</h2>
       </v-col>
     </v-row>
     <NewListMessage @update="update" :userId="userId" />

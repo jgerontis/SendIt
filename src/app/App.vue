@@ -31,6 +31,7 @@
         :server_url="server_url"
         @signout="signOutUser"
       />
+      <RecurringPage v-else-if="page == 'Recurring'" :userId="userId" />
     </v-main>
   </v-app>
 </template>
@@ -41,6 +42,7 @@
 import CalendarPage from "../components/CalendarPage.vue";
 import ListPage from "../components/ListPage.vue";
 import SettingsPage from "../components/SettingsPage.vue";
+import RecurringPage from "../components/RecurringPage.vue";
 import NavigationItem from "../components/NavigationItem.vue";
 
 export default {
@@ -50,6 +52,7 @@ export default {
     CalendarPage,
     ListPage,
     SettingsPage,
+    RecurringPage,
     NavigationItem,
   },
 
@@ -59,6 +62,7 @@ export default {
     pages: [
       { title: "Calendar", icon: "mdi-calendar-edit" },
       { title: "List", icon: "mdi-format-list-bulleted" },
+      { title: "Recurring", icon: "mdi-calendar-refresh" },
       { title: "Settings", icon: "mdi-account-cog" },
     ],
 
