@@ -55,6 +55,7 @@
               v-bind="timePickerProps"
               full-width
               :min="minTime"
+              :allowed-minutes="allowedStep"
             ></v-time-picker>
           </v-tab-item>
         </v-tabs>
@@ -202,6 +203,7 @@ export default {
       this.date = format(initDateTime, DEFAULT_DATE_FORMAT);
       this.time = format(initDateTime, DEFAULT_TIME_FORMAT);
     },
+    allowedStep: (m) => m % 5 === 0,
 
     okHandler() {
       this.resetPicker();
