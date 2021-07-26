@@ -23,9 +23,14 @@
       <v-spacer />
     </v-app-bar>
     <v-main>
-      <CalendarPage v-if="page == 'Calendar'" />
-      <ListPage v-else-if="page == 'List'" />
-      <SettingsPage v-else-if="page == 'Settings'" @signout="signOutUser" />
+      <CalendarPage v-if="page == 'Calendar'" :userId="userId" />
+      <ListPage v-else-if="page == 'List'" :userId="userId" />
+      <SettingsPage
+        v-else-if="page == 'Settings'"
+        :userId="userId"
+        :server_url="server_url"
+        @signout="signOutUser"
+      />
     </v-main>
   </v-app>
 </template>
@@ -64,7 +69,6 @@ export default {
   }),
   created: function() {
     console.log("created");
-
     this.getUserId();
     this.choosepic();
   },
@@ -74,16 +78,20 @@ export default {
     },
     choosepic: function() {
       let url = `http://localhost:3000/guser/${this.userId}`;
+      let that = this;
       console.log(url);
       fetch(url)
         .then((response) => response.json())
         .then((response) => {
           console.log("In choosepic()");
-          console.log(this.userId);
+          console.log(that.userId);
           console.log("this is data", response);
           //this.pic = response;
-          console.log(response);
-          this.user = response[0];
+          that.user = response[0];
+          if (that.user.settings.darkTheme) {
+            that.$vuetify.theme.dark = true;
+          }
+          return response[0];
         });
 
       //this.pic = "https://lh3.googleusercontent.com/a/default-user=s96-c"
