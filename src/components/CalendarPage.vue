@@ -24,9 +24,10 @@
             @update="update"
           />
         </v-list>
+        <h2 v-else>No messages today.</h2>
       </v-col>
     </v-row>
-    <NewListMessage @update="update" />
+    <NewListMessage @update="update" :userId="userId" />
   </v-container>
 </template>
 
@@ -39,6 +40,7 @@ export default {
     MessageSmall,
     NewListMessage,
   },
+  props: ["userId"],
   data: () => ({
     currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
     date: null,
@@ -61,7 +63,7 @@ export default {
   methods: {
     getMessages: function() {
       let that = this;
-      fetch(this.server_url + "/message").then((response) =>
+      fetch(`${this.server_url}/message/${this.userId}`).then((response) =>
         response.json().then(function(data) {
           that.messages = data;
           that.messages.forEach((message) => {

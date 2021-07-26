@@ -8,7 +8,10 @@ const googleCon = require("./google-util");
 // const test = require("./test");
 
 const app = express();
-const { Message, User, GoogleUser } = require("./model");
+const { Message, GoogleUser } = require("./model");
+const { google } = require("googleapis");
+
+const tests = require("./test");
 
 let users = {};
 
@@ -25,13 +28,7 @@ let propertyList = {
   destination: "",
   sendTime: Date.now(),
   body: "",
-};
-let userPropertyList = {
-  fName: "",
-  lName: "",
-  pNumber: "",
-  emailAddr: "",
-  password: "",
+  delivered: false,
 };
 
 app.use((req, res, next) => {
@@ -59,39 +56,44 @@ app.get("/picture", (req, res) => {
 
 app.get("/guser/:goid", (req, res) => {
   console.log("========================================");
+  console.log("Signing In:");
   console.log(req.params.goid);
   GoogleUser.find({ id: req.params.goid }, (err, guser) => {
     console.log(guser);
-
     res.send(guser);
+  });
+});
+
+app.patch("/guser/:goid", (req, res) => {
+  console.log("patching guser");
+
+  const filter = { id: req.params.goid };
+
+  GoogleUser.findOneAndUpdate(filter, req.body, {}, (err, result) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(result);
+    }
   });
 });
 
 app.get("/loginsuccess", (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  console.log(req.query.code);
   googleCon.getAccessTokenFromCode(req.query.code).then((tokenData) => {
     //console.log(`this is the token ${token}`)
-
     googleCon
       .getGoogleUserInfo(tokenData)
       .then((data) => {
-        //console.log("worked it is, ", data)
-        console.log("working til here");
-
         users[data.id] = { data: data, token: tokenData };
-
         var string = encodeURIComponent(req.query.code);
         let checkId = {};
         GoogleUser.findOne({ id: data.id }, (err, guser) => {
-          console.log("=============================");
-          checkId = guser;
-          console.log(checkId);
+
         }).then((err, user) => {
-          console.log(checkId);
-          console.log(user);
-          console.log("__________________________________________________");
-          if (checkId == null || checkId == undefined || checkId.id == "") {
+          console.log("this is the check id", checkId)
+          //if (checkId == null || checkId == undefined || checkId.id == "" || checkId == {} || checkId == false) {
+            console.log("working til here")
             GoogleUser.create(
               {
                 access_token: tokenData.access_token,
@@ -101,19 +103,21 @@ app.get("/loginsuccess", (req, res) => {
                 id: data.id,
                 email: data.email,
                 picture: data.picture,
+                settings: {
+                  darkTheme: false,
+                },
+                code: req.query.code,
               },
               (err, message) => {
                 console.log(message);
                 //res.status(201).json(message);
               }
             );
-          } else {
-            console.log("already here");
-          }
+          //}
+
         });
 
         picture = data.picture;
-        console.log(picture);
         res.redirect("/app.html?code=" + string + "&id=" + data.id);
 
         //test.sendingNewMessage(data, tokenData)
@@ -125,11 +129,27 @@ app.get("/loginsuccess", (req, res) => {
   });
 });
 
-app.get("/message", (req, res) => {
-  console.log(users);
+app.get("/message/:requesterId", (req, res) => {
   // todo:
   // put userid from googe inside req.body
   // filter retrieved messages by userid
+  res.setHeader("Content-Type", "application/json");
+
+  Message.find({ userId: req.params.requesterId }, function(err, messages) {
+    // Check if there was an error
+    if (err) {
+      console.log(`there was an error in listing messages`, err);
+      res
+        .status(500)
+        .json({ errMessage: `unable to list messages`, error: err });
+      return;
+    }
+    res.status(200).send(messages);
+  });
+});
+
+app.get("/master", (req, res) => {
+  console.log(users);
   res.setHeader("Content-Type", "application/json");
   console.log("doing a get all for messages");
   console.log(req.query.code);
@@ -147,31 +167,6 @@ app.get("/message", (req, res) => {
   });
 });
 
-app.get("/message/:id", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  console.log("doing a get one for message");
-
-  console.log(`${req.params._id}`);
-
-  Message.findById(req.params._id, (err, message) => {
-    if (err) {
-      console.log(
-        `there was an error finding a message with id ${req.params._id}`,
-        err
-      );
-      res.status(500).json({
-        errMessage: `message with id ${req.params._id} not found`,
-        error: err,
-      });
-      return;
-    } else if (message === null) {
-      res.status(404).send(JSON.stringify({ error: "not found" }));
-      return;
-    }
-    res.status(200).json(message);
-  });
-});
-
 app.get("/googleUrl", (req, res) => {
   res.setHeader("Content-Type", "application/json");
   res.status(200).json(googleCon.urlGoogle());
@@ -179,16 +174,15 @@ app.get("/googleUrl", (req, res) => {
 
 app.post("/message", (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  console.log(`creating a message`);
-  console.log(`this is a thing body`, req.body);
+  console.log(`creating a message with body:`, req.body);
   Message.create(
     {
-      userId: req.body.userId,
       type: req.body.type,
       destination: req.body.destination,
       sendTime: req.body.sendTime,
       body: req.body.body,
       delivered: false,
+      userId: req.body.userId,
     },
     (err, message) => {
       if (err) {
@@ -202,6 +196,7 @@ app.post("/message", (req, res) => {
   );
 });
 
+// delete before live
 app.delete("/master", (req, res) => {
   console.log("Deleting all messages");
   res.setHeader("Content-Type", "application/json");
@@ -268,119 +263,6 @@ app.patch("/message/:id", (req, res) => {
 });
 
 // User things
-
-app.get("/user", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  console.log("doing a get all for user");
-
-  User.find({}, function(err, users) {
-    // Check if there was an error
-    if (err) {
-      console.log(`there was an error in listing users`, err);
-      res.status(500).json({ errMessage: `unable to list users`, error: err });
-      return;
-    }
-    res.status(200).send(users);
-  });
-});
-
-app.get("/user/:id", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  console.log("doing a get one for user");
-
-  console.log(`${req.params._id}`);
-
-  User.findById(req.params._id, (err, user) => {
-    if (err) {
-      console.log(
-        `there was an error finding a user with id ${req.params._id}`,
-        err
-      );
-      res.status(500).json({
-        errMessage: `user with id ${req.params._id} not found`,
-        error: err,
-      });
-      return;
-    } else if (user === null) {
-      res.status(404).send(JSON.stringify({ error: "not found" }));
-      return;
-    }
-    res.status(200).json(user);
-  });
-});
-
-app.post("/user", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  console.log(`creating a user`);
-  console.log(`this is a thing body`, req.body);
-  User.create(
-    {
-      fName: req.body.fName,
-      lName: req.body.lName,
-      pNumber: req.body.pNumber,
-      emailAddr: req.body.emailAddr,
-      password: req.body.password,
-    },
-    (err, user) => {
-      if (err) {
-        console.log(`unable to create user`);
-        res
-          .status(500)
-          .json({ errMessage: `Unable to create user`, error: err });
-      }
-      res.status(201).json(user);
-    }
-  );
-});
-
-app.delete("/user/:id", (req, res) => {
-  console.log(`deleting user with id ${req.params.id}`);
-  res.setHeader("Content-Type", "application/json");
-
-  User.findByIdAndDelete(req.params.id, (err, user) => {
-    if (err) {
-      console.log(`unable to delete user`);
-      res.status(500).json({ errMessage: `Unable to delete user`, error: err });
-    }
-    res.status(202).json(user);
-  });
-});
-// Patch - update
-app.patch("/user/:id", (req, res) => {
-  let updateUser = {};
-
-  User.findById(req.params.id, (err, user) => {
-    updateUser = user;
-  });
-
-  for (const property in userPropertyList) {
-    if (req.body[property] !== null && req.body[property] !== undefined) {
-      updateUser[property] = req.body[property];
-    }
-    console.log(updateUser);
-  }
-
-  User.updateOne(
-    { _id: req.params.id },
-    { $set: updateUser },
-    (err, updateOneResponse) => {
-      if (err) {
-        console.log(`unable to patch`);
-        res.status(500).json({ message: `Unable to patch user`, error: err });
-
-        return;
-      }
-      if (updateOneResponse.n === 0) {
-        res
-          .status(404)
-          .json({ message: `Unable to patch user: not found`, error: err });
-
-        return;
-      }
-      res.status(203).json(`${updateOneResponse.nModified} were modified`);
-    }
-  );
-});
 
 module.exports = app;
 

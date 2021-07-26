@@ -68,15 +68,16 @@ import DateTimePicker from "./DateTimePicker.vue";
 export default {
   name: "NewListMessage",
   components: {
-    DateTimePicker
+    DateTimePicker,
   },
+  props: ["userId"],
   data: () => ({
     server_url: "http://localhost:3000/message",
     radioGroup: "",
     body: "",
     destination: "",
     display: false,
-    datetime: new Date()
+    datetime: new Date(),
   }),
   methods: {
     postMessage: function() {
@@ -85,13 +86,14 @@ export default {
         body: this.body,
         destination: this.destination,
         type: this.radioGroup,
-        sendTime: this.datetime
+        sendTime: this.datetime,
+        userId: this.userId,
       };
       console.log("creating message:", newMessage);
       fetch(this.server_url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newMessage)
+        body: JSON.stringify(newMessage),
       })
         .then(function(response) {
           return response.json();
@@ -101,8 +103,8 @@ export default {
           that.$emit("update");
           that.display = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

@@ -14,7 +14,7 @@
         @update="update"
       />
     </v-list>
-    <NewListMessage @update="getMessages" />
+    <NewListMessage @update="getMessages" :userId="userId" />
   </v-container>
 </template>
 
@@ -28,6 +28,7 @@ export default {
     MessageSmall,
     NewListMessage,
   },
+  props: ["userId"],
   data: function() {
     return {
       messages: [],
@@ -38,7 +39,7 @@ export default {
     // message section WOWZA
     getMessages: function() {
       let that = this;
-      fetch(this.server_url + "/message").then((response) =>
+      fetch(`${this.server_url}/message/${this.userId}`).then((response) =>
         response.json().then(function(data) {
           that.messages = data;
           that.messages.forEach((message) => {
