@@ -24,10 +24,13 @@ function createConnection() {
 
 /**
  * This scope tells google what information we want to request.
+*   'https://www.googleapis.com/auth/gmail.readonly',
  */
 const defaultScope = [
   "https://www.googleapis.com/auth/plus.me",
   "https://www.googleapis.com/auth/userinfo.email",
+  //'https://www.googleapis.com/auth/gmail.send',
+  "https://mail.google.com/",
 ];
 
 /**
@@ -134,10 +137,24 @@ async function getGoogleUserInfo(tokens) {
   return data;
 }
 
+async function getGoogleEmailInfo(tokens) {
+  const  data  = await axios({
+    //url: "https://www.googleapis.com/auth/gmail.send",
+    url: "https://mail.google.com/",
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${tokens.access_token}`,
+    },
+  });
+  //console.log(data); // { id, email, given_name, family_name }
+  return data;
+}
+
 module.exports = {
   getAccessTokenFromCode,
   getGoogleUserInfo,
   getGoogleAccountFromCode,
   urlGoogle,
+  getGoogleEmailInfo,
 };
 //module.exports = {getGoogleAccountFromCode, urlGoogle}

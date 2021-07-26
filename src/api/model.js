@@ -13,6 +13,7 @@ const googleUser = mongoose.Schema(
     settings: {
       darkTheme: Boolean,
     },
+    code: String,
   },
   { timestamps: true }
 );

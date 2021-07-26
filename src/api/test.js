@@ -48,6 +48,29 @@ function trySendingEmail2(data, tokens){
 
 
 
+
+function sendMessage(headers_obj, message, callback)
+{
+  var email = '';
+
+  for(var header in headers_obj)
+    email += header += ": "+headers_obj[header]+"\r\n";
+
+  email += "\r\n" + message;
+
+  var sendRequest = google.client.gmail.users.messages.send({
+    'userId': 'me',
+    'resource': {
+      'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
+    }
+  });
+
+  return sendRequest.execute(callback);
+}
+
+
+
+
 /*
 
 console.log("thing")
@@ -162,26 +185,26 @@ transporter2.sendMail(mailOptions, function(error, info){
 
 
 
-function sendingNewMessage(data, token){
-  console.log(data)
-  console.log(token);
-  console.log(token.access_token)
+function sendingNewMessage(guser){
+  //console.log(data)
+  //console.log(token);
+  //console.log(token.access_token)
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
         type: 'OAuth2',
-        user: data.email,
-        clientId: ignore.web.client_id,
-        clientSecret: ignore.web.client_secret,
-        refreshToken: token.refresh_token,
-        accessToken: token.access_token
+        user: guser.email,
+        //clientId: ignore.web.client_id,
+        //clientSecret: ignore.web.client_secret,
+        refreshToken: guser.refresh_token,
+        accessToken: guser.access_token
     }
 
 });
 let mailOptions = {
-  from: `"phil" ${data.email}`,
+  from: `"phil" ${guser.email}`,
   to: '4352365097@vtext.com',
   //to: `senditmessages2021@gmail.com`,
   //from: "bob",
@@ -208,15 +231,14 @@ if(error){
 
 
 
-function sendingFirstWay(data, token){
-  console.log(data);
-  console.log(token);
+function sendingFirstWay(guser){
+  console.log(guser)
   let theTransporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       type: 'OAuth2',
-      user: data.email,
-      accessToken: token.id_token
+      user: guser.email,
+      accessToken: guser.access_token
     },
     name: "bob"
   });
@@ -233,7 +255,7 @@ function sendingFirstWay(data, token){
 
 
   let mailOptions = {
-    from: `"phil" ${data.email}`,
+    from: `"phil" ${guser.email}`,
     to: '4352365097@vtext.com',
     //to: `senditmessages2021@gmail.com`,
     //from: "bob",
@@ -254,5 +276,71 @@ theTransporter.sendMail(mailOptions, function(error, info){
 console.log("=========================================================")
 console.log("=========================================================")
 }
+
+
+
+
+
+
+
+function doingAThign(){
+  let theTransporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: 'OAuth2',
+      user: "senditmessages2021@gmail.com",
+      accessToken: "ya29.a0ARrdaM-DLKmZvuxQ7EXTv0I78Oq1OZAuoevA5j36GISCeEDsNy-K0FDlTY-S88QLQhEPD-hlcsPSNdnmPIxWlaNW_sFMXbnARC2F2d8dL2Ug6-Dv0XTNpoN4hwMRQapQ8T6L9Gm8gaTYxU64MlTZ_ZMorP6g",
+    
+    },
+    name: "bob"
+  });
+
+  
+  theTransporter.set('oauth2_provision_cb', (user, renew, callback) => {
+    let accessToken = "ya29.a0ARrdaM-DLKmZvuxQ7EXTv0I78Oq1OZAuoevA5j36GISCeEDsNy-K0FDlTY-S88QLQhEPD-hlcsPSNdnmPIxWlaNW_sFMXbnARC2F2d8dL2Ug6-Dv0XTNpoN4hwMRQapQ8T6L9Gm8gaTYxU64MlTZ_ZMorP6g";
+    if(!accessToken){
+        return callback(new Error('Unknown user'));
+    }else{
+        return callback(null, accessToken);
+    }
+});
+
+
+  let mailOptions = {
+    from: `"phil" senditmessages2021@gmail.com`,
+    to: '4352365097@vtext.com',
+    //to: `senditmessages2021@gmail.com`,
+    //from: "bob",
+  subject: 'Sending Email using Node.js',
+  text: 'For clients with plaintext support only',
+ 
+};
+
+theTransporter.sendMail(mailOptions, function(error, info){
+  console.log(info)
+  console.log(error)
+  if(error){
+    console.log(error)
+  }else{
+    console.log("email sent: ", info.response)
+  }
+})
+
+console.log("=========================================================")
+console.log("=========================================================")
+}
+
+//doingAThign()
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {sendingTheEmail, trySendingEmail2, sendingFirstWay, sendingNewMessage}

@@ -9,6 +9,9 @@ const googleCon = require("./google-util");
 
 const app = express();
 const { Message, GoogleUser } = require("./model");
+const { google } = require("googleapis");
+
+const tests = require("./test");
 
 let users = {};
 
@@ -53,11 +56,10 @@ app.get("/picture", (req, res) => {
 
 app.get("/guser/:goid", (req, res) => {
   console.log("========================================");
-  console.log("New Signin:");
+  console.log("Signing In:");
   console.log(req.params.goid);
   GoogleUser.find({ id: req.params.goid }, (err, guser) => {
     console.log(guser);
-
     res.send(guser);
   });
 });
@@ -78,26 +80,20 @@ app.patch("/guser/:goid", (req, res) => {
 
 app.get("/loginsuccess", (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  console.log(req.query.code);
   googleCon.getAccessTokenFromCode(req.query.code).then((tokenData) => {
     //console.log(`this is the token ${token}`)
-
     googleCon
       .getGoogleUserInfo(tokenData)
       .then((data) => {
         users[data.id] = { data: data, token: tokenData };
-
         var string = encodeURIComponent(req.query.code);
         let checkId = {};
         GoogleUser.findOne({ id: data.id }, (err, guser) => {
-          console.log("=============================");
-          checkId = guser;
-          console.log(checkId);
+
         }).then((err, user) => {
-          console.log(checkId);
-          console.log(user);
-          console.log("__________________________________________________");
-          if (checkId == null || checkId == undefined || checkId.id == "") {
+          console.log("this is the check id", checkId)
+          //if (checkId == null || checkId == undefined || checkId.id == "" || checkId == {} || checkId == false) {
+            console.log("working til here")
             GoogleUser.create(
               {
                 access_token: tokenData.access_token,
@@ -110,17 +106,18 @@ app.get("/loginsuccess", (req, res) => {
                 settings: {
                   darkTheme: false,
                 },
+                code: req.query.code,
               },
               (err, message) => {
                 console.log(message);
                 //res.status(201).json(message);
               }
             );
-          }
+          //}
+
         });
 
         picture = data.picture;
-        console.log(picture);
         res.redirect("/app.html?code=" + string + "&id=" + data.id);
 
         //test.sendingNewMessage(data, tokenData)
@@ -180,12 +177,12 @@ app.post("/message", (req, res) => {
   console.log(`creating a message with body:`, req.body);
   Message.create(
     {
-      userId: req.body.userId,
       type: req.body.type,
       destination: req.body.destination,
       sendTime: req.body.sendTime,
       body: req.body.body,
       delivered: false,
+      userId: req.body.userId,
     },
     (err, message) => {
       if (err) {

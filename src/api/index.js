@@ -12,7 +12,7 @@ console.log(portNumber);
 persist.connect(() => {
   //start the server
   server.listen(portNumber, () => {
-    console.log(`running on ${portNumber}...`);
+    console.log(`running on ${portNumber} ...`);
   });
 });
 
