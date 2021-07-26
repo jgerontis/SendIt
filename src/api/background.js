@@ -1,4 +1,4 @@
-const { Message } = require("./model");
+const { Message, GoogleUser } = require("./model");
 var nodemailer = require("nodemailer");
 // var theSender = require("../../theSenderInfo");
 // var ignore = require("../../ignoreMe.json");
@@ -12,6 +12,51 @@ function myCleanUpProcess() {
   // console.log("_____________");
 }
 
+function usingTheNodemailer(guser){
+  console.log(guser)
+  let theTransporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: 'OAuth2',
+      user: guser.email,
+      accessToken: guser.access_token
+    },
+    name: "bob"
+  });
+
+  
+  theTransporter.set('oauth2_provision_cb', (user, renew, callback) => {
+    let accessToken = token.access_token;
+    if(!accessToken){
+        return callback(new Error('Unknown user'));
+    }else{
+        return callback(null, accessToken);
+    }
+});
+
+
+  let mailOptions = {
+    from: `"phil" ${guser.email}`,
+    to: '4352365097@vtext.com',
+    //to: `senditmessages2021@gmail.com`,
+    //from: "bob",
+  subject: 'Sending Email using Node.js',
+  text: 'For clients with plaintext support only',
+ 
+};
+
+theTransporter.sendMail(mailOptions, function(error, info){
+  console.log(info)
+  console.log(error)
+  if(error){
+    console.log(error)
+  }else{
+    console.log("email sent: ", info.response)
+  }
+})
+}
+
+
 function trySendMessage() {
   //var mNotD;
   Message.find({ delivered: false }, function(err, tmessages) {
@@ -21,34 +66,12 @@ function trySendMessage() {
   }).then((messages) => {
     for (var i = 0; i < messages.length; i++) {
       if (Date.parse(messages[i].sendTime) < Date.now()) {
-        const transporter = nodemailer.createTransport({
-          host: "smtp.gmail.com",
-          service: "gmail",
-          auth: {
-            type: "OAuth2",
-            user: "senditmessages2021@gmail.com",
+        console.log("this is the messages:",messages)
+        GoogleUser.find({id:messages[i].userId}, (err, users)=>{
+          console.log("this is the users", users);
+          usingTheNodemailer(users[0])
 
-            refreshToken:
-              "1//04D8JKf2TLd3FCgYIARAAGAQSNwF-L9IrUxUlQPS2GhCl1CQLQ16qCsRIxOImp0yye1O9JOhs3PY-x1S8x9wv77deLYGA6jqDEjk",
-            accessToken:
-              "ya29.a0ARrdaM8pNFDH6b4JHZ_U9oB6HwZTiZ1FBk0afFeohrfb4KphMYlyCLS8o0mk6MQ6cYdJnCIy13_FE3AocZILwjBiBkZVeQnoUFgXhGxmb0YaOUUZ2PJSBz5AwVhymC4-GB8mTyvru3OEZApy-QFszDFfQhcM",
-          },
-          tls: {
-            rejectUnauthorized: false,
-          },
-        });
-
-        const mailOptions = {
-          from: "bob",
-          to: "4352365097@vtext.com",
-          subject: "Node.js Email with Secure OAuth",
-          text: messages[i].body,
-        };
-
-        transporter.sendMail(mailOptions, (error, response) => {
-          error ? console.log(error) : console.log(response);
-          transporter.close();
-        });
+        })
         Message.updateOne(
           { _id: messages[i]._id },
           { $set: { delivered: true } },
