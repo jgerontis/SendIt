@@ -2,6 +2,14 @@
   <v-app>
     <v-app-bar class="primary" temporary app>
       <v-app-bar-title class="justify-center">SendIt</v-app-bar-title>
+      <img
+        id="sendItLogo"
+        src="../assets/Small.png"
+        alt="icon"
+        height="30px"
+        width="40px"
+      />
+
       <v-spacer />
       <SignUpDialog />
       <LoginDialog />
@@ -198,5 +206,18 @@ export default {
 }
 #hero-card {
   margin-top: -50px;
+}
+
+#sendItLogo {
+  padding-left: 10px;
+  padding-bottom: 2px;
+}
+
+@media (min-width: 1025px) {
+  #hero-card {
+    height: 600px;
+    width: 1200px;
+    padding-bottom: 800px;
+  }
 }
 </style>
