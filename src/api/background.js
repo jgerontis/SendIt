@@ -4,14 +4,6 @@ var nodemailer = require("nodemailer");
 var ignore = require("../../ignoreMe.json");
 // const { google } = require("googleapis");
 
-function myCountingProcess() {
-  // console.log(`fancy man ${counter}`);
-  trySendMessage();
-}
-function myCleanUpProcess() {
-  // console.log("_____________");
-}
-
 function usingTheNodemailer(guser, message){
   console.log("this is the user,", guser)
   console.log("this is the message,", message);
@@ -39,16 +31,13 @@ function usingTheNodemailer(guser, message){
     }
 });
 
-
   let mailOptions = {
     from: `"phil" ${guser.email}`,
     to: '4352365097@vtext.com',
-    //to: `senditmessages2021@gmail.com`,
-    //from: "bob",
-  //subject: message.body,
-  text: message.body,
+    text: message.body,
  
 };
+let returnThing = ""
 console.log(mailOptions)
 theTransporter.sendMail(mailOptions, function(error, info){
   console.log(info)
@@ -57,45 +46,56 @@ theTransporter.sendMail(mailOptions, function(error, info){
     console.log(error)
   }else{
     console.log("email sent: ", info.response)
+    returnThing = info.response
   }
 })
+return returnThing
+
 }
 
 function trySendMessage() {
   //var mNotD;
-  Message.find({ delivered: false }, function(err, tmessages) {
+  Message.find({ hasdelivered: false }, function(err, tmessages) {
+    //console.log(tmessages)
     if (err || !tmessages) {
-      console.log("failed");
+      console.log(err);
     }
     
   }).then((messages) => {
+
     for (var i = 0; i < messages.length; i++) {
+      console.log("messages ",messages)
 
-      if (Date.parse(messages[i].sendTime) < Date.now()) {
-        console.log("this is the other message,", messages[i])
-        let sendMessage = messages[i]
-        GoogleUser.find({id:messages[i].userId}, (err, users)=>{
-          console.log("working until here)")
-          usingTheNodemailer(users[0], sendMessage)
-
+      let sendMessage = messages[i]
+      var theUser = ""
+      console.log(Date.parse(messages[i].sendTime) - Date.now())
+      console.log(Date.parse(messages[i].sendTime) < Date.now());
+      
+      if (Date.parse(sendMessage.sendTime) - Date.now() < 0) {
+        GoogleUser.find({id:sendMessage.userId}, (err, users)=>{
+          theUser = users[0]
         }).then(()=>{
-          console.log("hmmm")
-          /*Message.updateOne(
-            { _id: messages[i]._id },
-            { $set: { delivered: true } },
+          usingTheNodemailer(theUser, sendMessage)
+          Message.updateOne(
+            { _id: sendMessage._id },
+            { $set: { hasdelivered: true } },
             (error, updateOneResponse) => {
               console.log(error);
               console.log("==========================================");
               console.log(updateOneResponse);
             }
-          );*/
+          );
         })
+        
+        
+          
+        
         
       }
     }
   });
 }
 
-module.exports = { myCountingProcess, myCleanUpProcess, trySendMessage };
+module.exports = { trySendMessage };
 
 // SET UP THE ACTUAL APPLICATION
