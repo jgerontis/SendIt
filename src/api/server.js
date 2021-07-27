@@ -11,7 +11,7 @@ const app = express();
 const { Message, GoogleUser } = require("./model");
 const { google } = require("googleapis");
 
-const tests = require("./test");
+// const tests = require("./test");
 
 let users = {};
 
@@ -28,7 +28,7 @@ let propertyList = {
   destination: "",
   sendTime: Date.now(),
   body: "",
-  delivered: false,
+  hasdelivered: false,
 };
 
 app.use((req, res, next) => {
@@ -87,12 +87,14 @@ app.get("/loginsuccess", (req, res) => {
       .then((data) => {
         users[data.id] = { data: data, token: tokenData };
         var string = encodeURIComponent(req.query.code);
-        let checkId = {};
+        let checkId = null;
         GoogleUser.findOne({ id: data.id }, (err, guser) => {
-
+          if(guser){
+            checkId = guser.id;
+          }
         }).then((err, user) => {
           console.log("this is the check id", checkId)
-          //if (checkId == null || checkId == undefined || checkId.id == "" || checkId == {} || checkId == false) {
+          if (checkId == null) {
             console.log("working til here")
             GoogleUser.create(
               {
@@ -113,7 +115,7 @@ app.get("/loginsuccess", (req, res) => {
                 //res.status(201).json(message);
               }
             );
-          //}
+          }
 
         });
 
@@ -181,7 +183,7 @@ app.post("/message", (req, res) => {
       destination: req.body.destination,
       sendTime: req.body.sendTime,
       body: req.body.body,
-      delivered: false,
+      hasdelivered: false,
       userId: req.body.userId,
     },
     (err, message) => {

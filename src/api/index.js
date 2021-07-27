@@ -18,8 +18,6 @@ persist.connect(() => {
 
 //start background process
 setInterval(() => {
-  background.myCountingProcess();
-}, 1000);
-setInterval(() => {
-  background.myCleanUpProcess();
-}, 1000);
+  background.trySendMessage();
+}, 5000);
+
