@@ -4,6 +4,59 @@ var ignore = require("../../ignoreMe.json")
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 
+var parsePhoneNumber = require('libphonenumber-js')
+
+const phoneNumber = parsePhoneNumber('+14352365097')
+if (phoneNumber) {
+  
+}
+
+console.log("test");
+
+googleNumAPI = require("libphonenumber");
+//phoneUtil = require("libphonenumber.PhoneNumberUtil")
+
+console.log(googleNumAPI)
+console.log(parsePhoneNumber)
+
+var swissMobileNumber = googleNumAPI.formatNumber("798765432", "CH");
+console.log(swissMobileNumber.getCountryCallingCode)
+var carrierMapper = parsePhoneNumber.getNumberType("798765432", "CH")
+// Outputs "Swisscom"
+console.log("thing",carrierMapper)
+//console.log(carrierMapper.getNameForNumber(swissMobileNumber, Locale.ENGLISH)); PhoneNumberSearch
+
+/**
+ * 
+  parsePhoneNumber: [Function: parsePhoneNumberWithError],
+  parsePhoneNumberWithError: [Function: parsePhoneNumberWithError],
+  parsePhoneNumberFromString: [Circular *1],
+  getExampleNumber: [Function: getExampleNumber],
+  formatIncompletePhoneNumber: [Function: formatIncompletePhoneNumber],
+  parseIncompletePhoneNumber: [Function: parseIncompletePhoneNumber],
+  parsePhoneNumberCharacter: [Function: parsePhoneNumberCharacter],
+  parseDigits: [Function: parseDigits],
+  DIGIT_PLACEHOLDER: 'x',
+  parseRFC3966: [Function: parseRFC3966],
+  formatRFC3966: [Function: formatRFC3966],
+  parse: [Function: parse],
+  parseNumber: [Function: parse],
+  format: [Function: format],
+  formatNumber: [Function: format],
+  getNumberType: [Function: getNumberType],
+  isPossibleNumber: [Function: isPossibleNumber],
+  isValidNumber: [Function: isValidNumber],
+  isValidNumberForRegion: [Function: isValidNumberForRegion],
+  findPhoneNumbers: [Function: findPhoneNumbers],
+  searchPhoneNumbers: [Function: searchPhoneNumbers],
+  PhoneNumberSearch: [Function: PhoneNumberSearch],} data 
+ * @param {*} tokens 
+ */
+
+
+
+
+
 function trySendingEmail2(data, tokens){
   const oauth2Client = new OAuth2(
     ignore.web.client_id, // ClientID,
