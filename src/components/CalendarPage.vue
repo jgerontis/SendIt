@@ -12,6 +12,13 @@
         ></v-date-picker>
       </v-col>
       <v-col>
+        <h2>
+          {{ filteredMessages.length }} message<span
+            v-if="filteredMessages.length != 1"
+            >s</span
+          >
+          today.
+        </h2>
         <v-list v-if="filteredMessages.length > 0">
           <MessageSmall
             v-for="message in filteredMessages"
@@ -24,7 +31,6 @@
             @update="update"
           />
         </v-list>
-        <h2 v-else>No messages today.</h2>
       </v-col>
     </v-row>
     <NewListMessage @update="update" :userId="userId" />

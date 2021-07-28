@@ -150,7 +150,7 @@ export default {
   computed: {
     minTime: function() {
       if (this.minDate === this.date) {
-        var time = new Date();
+        let time = new Date();
         console.log(
           time.getHours().toString() + ":" + time.getMinutes().toString()
         );

@@ -23,15 +23,27 @@
       <v-spacer />
     </v-app-bar>
     <v-main>
-      <CalendarPage v-if="page == 'Calendar'" :userId="userId" />
-      <ListPage v-else-if="page == 'List'" :userId="userId" />
+      <CalendarPage
+        v-if="page == 'Calendar'"
+        :userId="userId"
+        :server_url="server_url"
+      />
+      <ListPage
+        v-else-if="page == 'List'"
+        :userId="userId"
+        :server_url="server_url"
+      />
       <SettingsPage
         v-else-if="page == 'Settings'"
         :userId="userId"
         :server_url="server_url"
         @signout="signOutUser"
       />
-      <RecurringPage v-else-if="page == 'Recurring'" :userId="userId" />
+      <RecurringPage
+        v-else-if="page == 'Recurring'"
+        :userId="userId"
+        :server_url="server_url"
+      />
     </v-main>
   </v-app>
 </template>
@@ -67,6 +79,7 @@ export default {
     ],
 
     notifications: false,
+    server_url: "http://localhost:3000",
     sound: true,
     user: {},
     userId: "",

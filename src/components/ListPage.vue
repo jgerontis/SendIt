@@ -1,6 +1,11 @@
 <template>
   <v-container>
-    <h2>You have {{ messages.length }} scheduled message(s).</h2>
+    <h2>
+      You have {{ messages.length }} scheduled message<span
+        v-if="messages.length != 1"
+        >s</span
+      >.
+    </h2>
     <v-list>
       <MessageSmall
         v-for="message in messages"
