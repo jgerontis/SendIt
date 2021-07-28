@@ -3,6 +3,7 @@ var nodemailer = require("nodemailer");
 // var theSender = require("../../theSenderInfo");
 var ignore = require("../../ignoreMe.json");
 // const { google } = require("googleapis");
+var providerList = [ "sms.alltelwireless.com", "mms.alltelwireless.com", "txt.att.net", "mms.att.net", "sms.myboostmobile.com", "myboostmobile.com", "txt.att.net", "mms.att.net", "mymetropcs.com", "mymetropcs.com", "msg.fi.google.com", "text.republicwireless.com", "messaging.sprintpcs.com", "pm.sprint.com", "message.ting.com", "tmomail.net", "email.uscc.net", "mms.uscc.net", "vtext.com", "vzwpix.com", "mypixmessages.com", "vmobl.com", "vmpix.com"]
 
 function usingTheNodemailer(guser, message){
   console.log("this is the user,", guser)
@@ -30,26 +31,41 @@ function usingTheNodemailer(guser, message){
         return callback(null, accessToken);
     }
 });
-
-  let mailOptions = {
-    from: `"phil" ${guser.email}`,
-    to: '4352365097@vtext.com',
-    text: message.body,
- 
-};
-let returnThing = ""
-console.log(mailOptions)
-theTransporter.sendMail(mailOptions, function(error, info){
-  console.log(info)
-  console.log(error)
-  if(error){
+if(message.type === "email"){
+  let destistring = message.destination
+    let mailOptions = {
+      from: `"phil" ${guser.email}`,
+      to: destistring,
+      text: message.body,
+   
+  };
+}else{
+  for(var i = 0; i < providerList.length; i++){
+    console.log("this is a thing" + message.destination + "@" + providerList[i])
+    let destistring = message.destination + "@" + providerList[i]
+    let mailOptions = {
+      from: `"phil" ${guser.email}`,
+      to: destistring,
+      text: message.body,
+   
+  };
+  console.log(mailOptions)
+  theTransporter.sendMail(mailOptions, function(error, info){
+    console.log(info)
     console.log(error)
-  }else{
-    console.log("email sent: ", info.response)
-    returnThing = info.response
+    if(error){
+      console.log(error)
+    }else{
+      console.log("email sent: ", info.response)
+      console.log("this is the message", message)
+
+      return
+    }
+  })
+  console.log("this is the message", message)
+
   }
-})
-return returnThing
+}
 
 }
 
