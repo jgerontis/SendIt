@@ -105,6 +105,7 @@ export default {
         };
         console.log("Creating Message:", newMessage);
         // send the message to the server
+        console.log("the server url:", this.server_url);
         fetch(`${this.server_url}/message`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -9,16 +9,16 @@
 
       <v-tabs-items v-model="tab">
         <v-tab-item>
-          <DailyForm :userId="userId" />
+          <DailyForm :userId="userId" :server_url="server_url" />
         </v-tab-item>
         <v-tab-item>
-          <WeeklyForm :userId="userId" />
+          <WeeklyForm :userId="userId" :server_url="server_url" />
         </v-tab-item>
         <v-tab-item>
-          <BiWeeklyForm :userId="userId" />
+          <BiWeeklyForm :userId="userId" :server_url="server_url" />
         </v-tab-item>
         <v-tab-item>
-          <MonthlyForm :userId="userId" />
+          <MonthlyForm :userId="userId" :server_url="server_url" />
         </v-tab-item>
       </v-tabs-items>
     </v-card>
@@ -33,7 +33,7 @@ import MonthlyForm from "./MonthlyForm.vue";
 export default {
   name: "RecurringPage",
   components: { DailyForm, WeeklyForm, BiWeeklyForm, MonthlyForm },
-  props: ["userId"],
+  props: ["userId", "server_url"],
   data: () => ({
     tab: null,
     items: ["Daily", "Weekly", "BiWeekly", "Monthly"],

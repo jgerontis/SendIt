@@ -131,7 +131,7 @@ export default {
       return (
         (this.sendTime.getMonth() + 1).toString() +
         "-" +
-        (this.sendTime.getDate() + 1).toString() +
+        this.sendTime.getDate().toString() +
         "  " +
         this.formattedTime
       );
