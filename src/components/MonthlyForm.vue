@@ -90,7 +90,7 @@ export default {
         newDate.setMonth(newDate.getMonth() + 1); // january is 0
       }
       // change the day
-      newDate.setDate(this.dayOfMonth);
+      newDate.setDate(this.dayOfMonth); // the first is 1
 
       // change the time
       newDate.setHours(this.time.toString().substr(0, 2));
