@@ -31,9 +31,6 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 function usingTheNodemailer(guser, message) {
-  console.log("this is the user,", guser);
-  console.log("this is the message,", message);
-  console.log(ignore);
   let theTransporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -63,8 +60,6 @@ function usingTheNodemailer(guser, message) {
       text: message.body,
     };
     theTransporter.sendMail(mailOptions, function(error, info) {
-      console.log(info);
-      console.log(error);
       if (error) {
         console.log(error);
       } else {
@@ -72,21 +67,16 @@ function usingTheNodemailer(guser, message) {
         console.log("this is the message", message);
       }
     });
-    console.log("this is the message", message);
   } else {
     let sent = false;
     for (var i = 0; i < providerList.length; i++) {
       if (sent == false) {
-        console.log(
-          "this is a thing" + message.destination + "@" + providerList[i]
-        );
         let destistring = message.destination + "@" + providerList[i];
         let mailOptions = {
           from: `${guser.email}`,
           to: destistring,
           text: message.body,
         };
-        console.log(mailOptions);
         theTransporter.sendMail(mailOptions, function(error, info) {
           console.log(info);
           console.log(error);
@@ -97,14 +87,7 @@ function usingTheNodemailer(guser, message) {
             console.log("this is the message", message);
             sent = true;
           }
-        }).then((err, data)=>{
-          console.log("this is the stuff,", data)
-          console.log(err)
-          if(!err){
-            sent = true;
-          }
         });
-        console.log("this is the message", message);
       }
       sleep(1000);
     }
@@ -114,7 +97,6 @@ function usingTheNodemailer(guser, message) {
 function trySendMessage() {
   //var mNotD;
   Message.find({ hasdelivered: false }, function(err, tmessages) {
-    //console.log(tmessages)
     if (err || !tmessages) {
       console.log(err);
     }
