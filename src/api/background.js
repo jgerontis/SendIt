@@ -5,14 +5,9 @@ var ignore = require("../../ignoreMe.json");
 // const { google } = require("googleapis");
 var providerList = [
   "sms.alltelwireless.com",
-  "mms.alltelwireless.com",
-  "txt.att.net",
-  "mms.att.net",
   "sms.myboostmobile.com",
   "myboostmobile.com",
   "txt.att.net",
-  "mms.att.net",
-  "mymetropcs.com",
   "mymetropcs.com",
   "msg.fi.google.com",
   "text.republicwireless.com",
@@ -147,5 +142,3 @@ function trySendMessage() {
 }
 
 module.exports = { trySendMessage };
-
-// SET UP THE ACTUAL APPLICATION
