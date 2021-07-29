@@ -44,17 +44,13 @@ export default {
         },
       };
       console.log("Request body?:", requestBody);
-      fetch(
-        `
-      http://localhost:3000/guser/${this.userId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
+      fetch(`${this.server_url}/guser/${this.userId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
     },
   },
 };
