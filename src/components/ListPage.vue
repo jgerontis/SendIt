@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <h2 v-if="showPrevious">
-      You have {{ messages.length }} scheduled message<span
+      You have {{ filteredMessages.length }} scheduled message<span
         v-if="messages.length != 1"
         >s</span
       >.
     </h2>
-    <h2 v-else>Showing All Messages ({{ this.messages.length }} total).</h2>
+    <h2 v-else>Showing All Messages ({{ messages.length }} total).</h2>
     <v-switch
       v-model="showPrevious"
       :label="`Include Previous Messages: ${showPrevious.toString()}`"
