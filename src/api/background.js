@@ -120,8 +120,6 @@ function trySendMessage() {
     }
   }).then((messages) => {
     for (var i = 0; i < messages.length; i++) {
-      console.log("messages ", messages);
-
       let sendMessage = messages[i];
       var theUser = "";
       console.log(Date.parse(messages[i].sendTime) - Date.now());
