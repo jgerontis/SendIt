@@ -98,7 +98,7 @@ export default {
       // now that we have the correct date and time, repeat for as many months as selected
       for (let i = 0; i < this.duration; i++) {
         let sendTime = newDate;
-        sendTime.setMonth(sendTime.getMonth() + i);
+        sendTime.setMonth(sendTime.getMonth() + 1);
         console.log("It's supposed to send at:", sendTime);
         let newMessage = {
           userId: this.userId,
