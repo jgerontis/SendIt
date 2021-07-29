@@ -9,7 +9,7 @@ var ignore = require("../../ignoreMe");
 const googleConfig = {
   clientId: ignore.web.client_id, // e.g. asdfghjkljhgfdsghjk.apps.googleusercontent.com
   clientSecret: ignore.web.client_secret, // e.g. _ASDFA%DFASDFASDFASD#FAD-
-  redirect: "https://jg-send-it.herokuapp.com/app.html/loginsuccess", // this must match your google api settings
+  redirect: "https://jg-send-it.herokuapp.com/loginsuccess", // this must match your google api settings
 };
 /**
  * Create the google auth object which gives us access to talk to google's apis.
@@ -112,7 +112,7 @@ async function getAccessTokenFromCode(code) {
     data: {
       client_id: tid,
       client_secret: sec,
-      redirect_uri: "https://jg-send-it.herokuapp.com/app.html/loginsuccess",
+      redirect_uri: "https://jg-send-it.herokuapp.com/loginsuccess",
       grant_type: "authorization_code",
       code,
     },
