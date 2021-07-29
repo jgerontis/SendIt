@@ -1,14 +1,15 @@
 <template>
   <v-container>
-    <h2>
+    <h2 v-if="showAll">
       You have {{ messages.length }} scheduled message<span
         v-if="messages.length != 1"
         >s</span
       >.
     </h2>
+    <h2 v-else>Showing All Messages</h2>
     <v-switch
       v-model="showAll"
-      :label="`Show Past Messages: ${switch1.toString()}`"
+      :label="`Include Previous Messages: ${showAll.toString()}`"
     ></v-switch>
     <v-list>
       <MessageSmall
