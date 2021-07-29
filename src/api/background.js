@@ -97,6 +97,12 @@ function usingTheNodemailer(guser, message) {
             console.log("this is the message", message);
             sent = true;
           }
+        }).then((err, data)=>{
+          console.log("this is the stuff,", data)
+          console.log(err)
+          if(!err){
+            sent = true;
+          }
         });
         console.log("this is the message", message);
       }
