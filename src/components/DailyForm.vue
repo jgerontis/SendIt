@@ -12,11 +12,15 @@
               </v-radio-group>
             </v-row>
             <v-row>
-              <v-text-field label="Destination" hide-details="auto" />
+              <v-text-field
+                v-model="destination"
+                label="Destination"
+                hide-details="auto"
+              />
             </v-row>
             <v-row>
               <v-slider
-                v-model="numDays"
+                v-model="duration"
                 color="orange"
                 label="Number of Days:"
                 min="1"
@@ -49,10 +53,54 @@ export default {
   props: ["userId"],
   data: () => ({
     type: "",
+    body: "",
+    duration: "",
+    destination: "",
   }),
   methods: {
-    submit: function() {
-      // do stuff
+    submit() {
+      let newDate = new Date(); // get current date and time
+      // if they picked a time of the day that has already passed, we start with tomorrow
+      if (
+        newDate.getHours() > this.time.toString().substr(0, 2) &&
+        newDate.getMinutes() > this.time.toString().substr(3, 2)
+      ) {
+        newDate.setDate(newDate.getDate() + 1); // the first is 1
+      }
+
+      // change the time
+      newDate.setHours(this.time.toString().substr(0, 2));
+      newDate.setMinutes(this.time.toString().substr(3, 2));
+      // now that we have the correct date and time, repeat for as many days as selected
+      for (let i = 0; i < this.duration; i++) {
+        let sendTime = newDate;
+        sendTime.setDate(sendTime.getDate() + 1);
+        console.log("It's supposed to send at:", sendTime);
+        let newMessage = {
+          userId: this.userId,
+          type: this.type,
+          body: this.body,
+          destination: this.destination,
+          sendTime: sendTime.toISOString(),
+        };
+        console.log("Creating Message:", newMessage);
+        // send the message to the server
+        console.log("the server url:", this.server_url);
+        fetch(`${this.server_url}/message`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newMessage),
+        })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            console.log("Created new message:", data);
+          });
+      }
+      this.destination = "";
+      this.body = "";
+      alert("Success!");
     },
   },
 };
