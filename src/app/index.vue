@@ -11,7 +11,9 @@
       />
 
       <v-spacer />
-      <LoginDialog />
+      <v-btn text @click="goToGoogle">
+        Login with Google
+      </v-btn>
     </v-app-bar>
     <v-main>
       <v-container id="hero-card">
@@ -145,19 +147,25 @@
 </template>
 
 <script>
-import LoginDialog from "../components/LoginDialog.vue";
-
 export default {
   name: "page",
-  components: {
-    LoginDialog,
-  },
+  components: {},
   data: () => ({
     model: 0,
     colors: ["primary", "secondary", "yellow darken-2", "red", "orange"],
     server_url: "https://jg-send-it.herokuapp.com",
   }),
   methods: {
+    goToGoogle() {
+      fetch(`${this.server_url}/googleUrl`).then((response) =>
+        response.json().then(function(data) {
+          console.log(data);
+          window.location.href = data;
+        })
+      );
+      console.log("going to google");
+    },
+
     openProfile: function(who) {
       switch (who) {
         case "josh":
