@@ -89,7 +89,7 @@ export default {
         userId: this.userId,
       };
       console.log("creating message:", newMessage);
-      fetch(this.server_url+"/message", {
+      fetch(this.server_url+"/  message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newMessage),
