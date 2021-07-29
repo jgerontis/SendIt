@@ -6,7 +6,7 @@
         >s</span
       >.
     </h2>
-    <h2 v-else>Showing All Messages</h2>
+    <h2 v-else>Showing All Messages ({{ this.messages.length }} total).</h2>
     <v-switch
       v-model="showPrevious"
       :label="`Include Previous Messages: ${showPrevious.toString()}`"
@@ -81,7 +81,7 @@ export default {
         );
       }
       return filteredMessages
-        .filter((message) => !message.hasDelivered)
+        .filter((message) => message.sendTime.getTime() > Date.now().getTime())
         .sort((a, b) => (a.sendTime.getTime() > b.sendTime.getTime() ? 1 : -1));
     },
   },
