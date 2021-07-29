@@ -87,7 +87,7 @@ function usingTheNodemailer(guser, message) {
         );
         let destistring = message.destination + "@" + providerList[i];
         let mailOptions = {
-          from: `"phil" ${guser.email}`,
+          from: `${guser.email}`,
           to: destistring,
           text: message.body,
         };
