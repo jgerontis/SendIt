@@ -16,10 +16,15 @@
         :destination="message.destination"
         :sendTime="message.sendTime"
         :page="'list'"
+        :server_url="server_url"
         @update="update"
       />
     </v-list>
-    <NewListMessage @update="getMessages" :userId="userId" />
+    <NewListMessage
+      @update="getMessages"
+      :userId="userId"
+      :server_url="server_url"
+    />
   </v-container>
 </template>
 

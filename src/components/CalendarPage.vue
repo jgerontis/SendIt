@@ -28,12 +28,17 @@
             :body="message.body"
             :sendTime="message.sendTime"
             :page="'calendar'"
+            :server_url="server_url"
             @update="update"
           />
         </v-list>
       </v-col>
     </v-row>
-    <NewListMessage @update="update" :userId="userId" />
+    <NewListMessage
+      @update="update"
+      :userId="userId"
+      :server_url="server_url"
+    />
   </v-container>
 </template>
 

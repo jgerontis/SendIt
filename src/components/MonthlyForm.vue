@@ -122,6 +122,9 @@ export default {
             console.log("Created new message:", data);
           });
       }
+      this.destination = "";
+      this.body = "";
+      alert("Success!");
     },
   },
 };
