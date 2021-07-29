@@ -74,6 +74,7 @@ export default {
 
   computed: {
     filteredMessages: function() {
+      let now = new Date();
       let filteredMessages = this.messages;
       if (this.showPrevious) {
         return filteredMessages.sort((a, b) =>
@@ -81,7 +82,7 @@ export default {
         );
       }
       return filteredMessages
-        .filter((message) => message.sendTime.getTime() > Date.now().getTime())
+        .filter((message) => message.sendTime.getTime() > now.getTime())
         .sort((a, b) => (a.sendTime.getTime() > b.sendTime.getTime() ? 1 : -1));
     },
   },
