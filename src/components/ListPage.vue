@@ -74,16 +74,14 @@ export default {
 
   computed: {
     filteredMessages: function() {
-      if (this.showAll) {
+      if (!this.showAll) {
         return this.messages
           .filter((message) => message.hasDelivered)
           .sort((a, b) =>
             a.sendTime.getTime() > b.sendTime.getTime() ? 1 : -1
           );
       }
-      return this.messages
-        .filter()
-        .sort((a, b) => (a.sendTime.getTime() > b.sendTime.getTime() ? 1 : -1));
+      return this.messages;
     },
   },
 };
