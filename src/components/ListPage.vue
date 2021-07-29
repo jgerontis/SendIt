@@ -6,9 +6,13 @@
         >s</span
       >.
     </h2>
+    <v-switch
+      v-model="showAll"
+      :label="`Show Past Messages: ${switch1.toString()}`"
+    ></v-switch>
     <v-list>
       <MessageSmall
-        v-for="message in messages"
+        v-for="message in filteredMessages"
         v-bind:key="message._id"
         :id="message._id"
         :body="message.body"
@@ -42,6 +46,7 @@ export default {
   data: function() {
     return {
       messages: [],
+      showAll: false,
     };
   },
   methods: {
@@ -67,8 +72,17 @@ export default {
   },
 
   computed: {
-    filtered_messages: function() {
-      return this.messages;
+    filteredMessages: function() {
+      if (this.showAll) {
+        return this.messages
+          .filter((message) => message.hasDelivered)
+          .sort((a, b) =>
+            a.sendTime.getTime() > b.sendTime.getTime() ? 1 : -1
+          );
+      }
+      return this.messages
+        .filter()
+        .sort((a, b) => (a.sendTime.getTime() > b.sendTime.getTime() ? 1 : -1));
     },
   },
 };
