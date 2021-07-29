@@ -153,11 +153,11 @@ export default {
   data: () => ({
     model: 0,
     colors: ["primary", "secondary", "yellow darken-2", "red", "orange"],
-    server_url: "https://jg-send-it.herokuapp.com",
+    server_url: "https://jg-send-it.herokuapp.com"
   }),
   methods: {
     goToGoogle() {
-      fetch(`${this.server_url}/googleUrl`).then((response) =>
+      fetch(`${this.server_url}/googleUrl`).then(response =>
         response.json().then(function(data) {
           console.log(data);
           window.location.href = data;
@@ -178,8 +178,8 @@ export default {
           window.open("https://www.linkedin.com/in/kayle-shurtliff-b962351ab/");
           break;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -217,13 +217,5 @@ export default {
 #sendItLogo {
   padding-left: 10px;
   padding-bottom: 2px;
-}
-
-@media (min-width: 1025px) {
-  #hero-card {
-    height: 600px;
-    width: 1200px;
-    padding-bottom: 800px;
-  }
 }
 </style>

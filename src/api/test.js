@@ -16,7 +16,9 @@ console.log("test");
 googleNumAPI = require("libphonenumber");
 //phoneUtil = require("libphonenumber.PhoneNumberUtil")
 
+var num = googleNumAPI.setCountryCode(41).setNationalNumber(798765432);
 
+console.log(num.PhoneNumberToCarrierMapper);
 function sleep(milliseconds) {
   const date = Date.now();
   let currentDate = null;
@@ -30,7 +32,7 @@ for(var i = 0; i < 6; i++){
 }
 
 
-providerList[ "sms.alltelwireless.com", "mms.alltelwireless.com", "txt.att.net", "mms.att.net", "sms.myboostmobile.com", "myboostmobile.com", "txt.att.net", "mms.att.net", "mymetropcs.com", "mymetropcs.com", "msg.fi.google.com", "text.republicwireless.com", "messaging.sprintpcs.com", "pm.sprint.com", "message.ting.com", "tmomail.net", "email.uscc.net", "mms.uscc.net", "vtext.com", "vzwpix.com", "mypixmessages.com", "vmobl.com", "vmpix.com"]
+//providerList[ "sms.alltelwireless.com", "mms.alltelwireless.com", "txt.att.net", "mms.att.net", "sms.myboostmobile.com", "myboostmobile.com", "txt.att.net", "mms.att.net", "mymetropcs.com", "mymetropcs.com", "msg.fi.google.com", "text.republicwireless.com", "messaging.sprintpcs.com", "pm.sprint.com", "message.ting.com", "tmomail.net", "email.uscc.net", "mms.uscc.net", "vtext.com", "vzwpix.com", "mypixmessages.com", "vmobl.com", "vmpix.com"]
 
 
 
