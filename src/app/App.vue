@@ -79,7 +79,7 @@ export default {
     ],
 
     notifications: false,
-    server_url: "http://localhost:3000",
+    server_url: "https://jg-send-it.herokuapp.com",
     sound: true,
     user: {},
     userId: "",
@@ -94,7 +94,7 @@ export default {
       this.page = page;
     },
     choosepic: function() {
-      let url = `http://localhost:3000/guser/${this.userId}`;
+      let url = `https://jg-send-it.herokuapp.com/guser/${this.userId}`;
       let that = this;
       console.log(url);
       fetch(url)
@@ -121,7 +121,7 @@ export default {
     },
     signOutUser: function() {
       this.user = {};
-      window.location.href = "http://localhost:3000";
+      window.location.href = "https://jg-send-it.herokuapp.com";
     },
   },
 };

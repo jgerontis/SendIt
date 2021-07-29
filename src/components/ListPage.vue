@@ -33,11 +33,10 @@ export default {
     MessageSmall,
     NewListMessage,
   },
-  props: ["userId"],
+  props: ["userId", "server_url"],
   data: function() {
     return {
       messages: [],
-      server_url: "http://localhost:3000",
     };
   },
   methods: {

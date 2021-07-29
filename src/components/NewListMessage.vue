@@ -70,9 +70,8 @@ export default {
   components: {
     DateTimePicker,
   },
-  props: ["userId"],
+  props: ["userId", "server_url"],
   data: () => ({
-    server_url: "http://localhost:3000/message",
     radioGroup: "",
     body: "",
     destination: "",

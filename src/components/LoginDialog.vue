@@ -39,20 +39,21 @@
 <script>
 export default {
   name: "LoginDialog",
+  props: ["server_url"],
   data: () => ({
     loginDialog: false,
   }),
   methods: {
-    goToGoogle(){
-      this.loginDialog = false; 
-      fetch("http://localhost:3000" + "/googleUrl").then((response) =>
+    goToGoogle() {
+      this.loginDialog = false;
+      fetch(`${this.server_url}/googleUrl`).then((response) =>
         response.json().then(function(data) {
           console.log(data);
           window.location.href = data;
-
-      }))
-      console.log("going to google")
-    }
-  }
+        })
+      );
+      console.log("going to google");
+    },
+  },
 };
 </script>

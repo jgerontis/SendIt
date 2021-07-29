@@ -115,6 +115,16 @@ app.get("/loginsuccess", (req, res) => {
                 //res.status(201).json(message);
               }
             );
+          }else{
+            GoogleUser.findOneAndUpdate({id:data.id},{
+              access_token: tokenData.access_token,
+              refresh_token: tokenData.refresh_token,
+              scope: tokenData.scope,
+              id_token: tokenData.id_token,
+              id: data.id,
+              email: data.email,
+              picture: data.picture,
+            })
           }
 
         });

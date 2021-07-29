@@ -9,10 +9,10 @@ npm run build
 ### Live Test Front End without Backend
 
 ```
-npm run build
+npm run serve
 ```
 
-### Start Full Server with Front End
+### Start Full Server with static folder Front End
 
 ```
 npm start

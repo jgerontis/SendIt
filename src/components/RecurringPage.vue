@@ -38,7 +38,6 @@ export default {
     tab: null,
     items: ["Daily", "Weekly", "BiWeekly", "Monthly"],
     messages: [],
-    server_url: "http://localhost:3000",
   }),
   methods: {},
 };

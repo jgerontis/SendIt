@@ -35,7 +35,11 @@
               </v-radio-group>
             </v-row>
             <v-row>
-              <v-text-field label="Destination" hide-details="auto" />
+              <v-text-field
+                v-model="destination"
+                label="Destination"
+                hide-details="auto"
+              />
             </v-row>
             <v-row>
               <v-slider
