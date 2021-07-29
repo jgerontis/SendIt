@@ -46,13 +46,12 @@ export default {
     MessageSmall,
     NewListMessage,
   },
-  props: ["userId"],
+  props: ["userId", "server_url"],
   data: () => ({
     currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
     date: null,
     pickerDate: null,
     messages: [],
-    server_url: "http://localhost:3000",
   }),
   watch: {
     pickerDate() {

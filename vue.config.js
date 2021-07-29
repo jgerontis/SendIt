@@ -4,7 +4,6 @@ module.exports = {
   outputDir: "./static/",
   pages: {
     index: "src/entry/index.js",
-    about: "src/entry/about.js",
     app: "src/entry/app.js",
   },
 };

@@ -11,7 +11,6 @@
       />
 
       <v-spacer />
-      <SignUpDialog />
       <LoginDialog />
     </v-app-bar>
     <v-main>
@@ -147,17 +146,16 @@
 
 <script>
 import LoginDialog from "../components/LoginDialog.vue";
-import SignUpDialog from "../components/SignupDialog.vue";
 
 export default {
   name: "page",
   components: {
     LoginDialog,
-    SignUpDialog
   },
   data: () => ({
     model: 0,
-    colors: ["primary", "secondary", "yellow darken-2", "red", "orange"]
+    colors: ["primary", "secondary", "yellow darken-2", "red", "orange"],
+    server_url: "https://jg-send-it.herokuapp.com",
   }),
   methods: {
     openProfile: function(who) {
@@ -172,8 +170,8 @@ export default {
           window.open("https://www.linkedin.com/in/kayle-shurtliff-b962351ab/");
           break;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

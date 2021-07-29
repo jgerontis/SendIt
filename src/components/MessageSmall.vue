@@ -43,13 +43,19 @@
 import DateTimePicker from "./DateTimePicker.vue";
 export default {
   name: "MessageSmall",
-  props: ["id", "body", "destination", "sendTime", "type", "page"],
+  props: [
+    "id",
+    "body",
+    "destination",
+    "sendTime",
+    "type",
+    "page",
+    "server_url",
+  ],
   components: {
     DateTimePicker,
   },
   data: () => ({
-    server_url: "http://localhost:3000",
-
     editing: false,
 
     mBody: "",
