@@ -20,6 +20,7 @@
     <v-app-bar class="primary" temporary app>
       <v-app-bar-nav-icon class="d-lg-none" @click="drawer = !drawer" />
       <v-app-bar-title>SendIt</v-app-bar-title>
+
       <v-spacer />
     </v-app-bar>
     <v-main>
@@ -65,7 +66,7 @@ export default {
     ListPage,
     SettingsPage,
     RecurringPage,
-    NavigationItem,
+    NavigationItem
   },
 
   data: () => ({
@@ -75,14 +76,14 @@ export default {
       { title: "Calendar", icon: "mdi-calendar-edit" },
       { title: "List", icon: "mdi-format-list-bulleted" },
       { title: "Recurring", icon: "mdi-calendar-refresh" },
-      { title: "Settings", icon: "mdi-account-cog" },
+      { title: "Settings", icon: "mdi-account-cog" }
     ],
 
     notifications: false,
     server_url: "https://jg-send-it.herokuapp.com",
     sound: true,
     user: {},
-    userId: "",
+    userId: ""
   }),
   created: function() {
     console.log("created");
@@ -98,8 +99,8 @@ export default {
       let that = this;
       console.log(url);
       fetch(url)
-        .then((response) => response.json())
-        .then((response) => {
+        .then(response => response.json())
+        .then(response => {
           console.log("In choosepic()");
           console.log(that.userId);
           console.log("this is data", response);
@@ -122,8 +123,8 @@ export default {
     signOutUser: function() {
       this.user = {};
       window.location.href = "https://jg-send-it.herokuapp.com";
-    },
-  },
+    }
+  }
 };
 </script>
 
