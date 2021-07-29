@@ -68,7 +68,7 @@ export default {
   methods: {
     getMessages: function() {
       let that = this;
-      fetch(`${this.server_url}/message/${this.userId}`).then((response) =>
+      fetch(`${this.server_url}/${this.userId}`).then((response) =>
         response.json().then(function(data) {
           that.messages = data;
           that.messages.forEach((message) => {
