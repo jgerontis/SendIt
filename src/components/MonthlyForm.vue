@@ -86,8 +86,8 @@ export default {
     submit: function() {
       let newDate = new Date();
       // if they picked a day of the month that has already passed, we start next month
-      if (newDate.getDate() < this.dayOfMonth) {
-        newDate.setMonth(newDate.getMonth() + 1);
+      if (newDate.getDate() > this.dayOfMonth) {
+        newDate.setMonth(newDate.getMonth() + 1); // january is 0
       }
       // change the day
       newDate.setDate(this.dayOfMonth);
