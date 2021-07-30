@@ -141,13 +141,16 @@ export default {
       activeTab: 0,
       date: DEFAULT_DATE,
       time: DEFAULT_TIME,
-      minDate: new Date().toISOString().substr(0, 10),
     };
   },
   mounted() {
     this.init();
   },
   computed: {
+    minDate: function() {
+      let date = new Date();
+      return `${date.getFullYear().toString()}-${(date.getMonth()+1).toString()}-${date.getDate().toString()}`
+    },
     minTime: function() {
       if (this.minDate === this.date) {
         let time = new Date();

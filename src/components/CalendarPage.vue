@@ -5,11 +5,10 @@
         <v-date-picker
           ref="picker"
           v-model="date"
-          :picker-date.sync="pickerDate"
           :event-color="(date) => (date[9] % 2 ? 'red' : 'yellow')"
           :events="events"
           full-width
-        ></v-date-picker>
+        />
       </v-col>
       <v-col>
         <h2>
@@ -76,6 +75,7 @@ export default {
       fetch(`${this.server_url}/message/${this.userId}`).then((response) =>
         response.json().then(function(data) {
           that.messages = data;
+          console.log("data from fetch:",data)
           that.messages.forEach((message) => {
             message.sendTime = new Date(message.sendTime);
           });

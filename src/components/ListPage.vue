@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2 v-if="showPrevious">
+    <h2 v-if="!showPrevious">
       You have {{ filteredMessages.length }} scheduled message<span
         v-if="messages.length != 1"
         >s</span
