@@ -17,11 +17,19 @@
             <v-col id="destination" align="right">To:</v-col>
             <v-col>
               <v-text-field
+                v-if="type === 'text'"
                 label="Destination"
-                hint="Text: 1234567890
-                Email: bob@example.com"
+                hint="1234567890"
+                :rules="[rules.required]"
                 v-model="destination"
-              ></v-text-field>
+              />
+              <v-text-field
+                else
+                label="Destination"
+                hint="bob@example.com"
+                :rules="[rules.required, rules.email]"
+                v-model="destination"
+              />
             </v-col>
             <v-col>
               <v-radio-group v-model="radioGroup" mandatory>
@@ -46,6 +54,7 @@
               clear-icon="mdi-close-circle"
               label="Message"
               v-model="body"
+              :rules="[rules.required, rules.counter]"
             ></v-textarea>
           </v-row>
         </v-container>
@@ -77,6 +86,14 @@ export default {
     destination: "",
     display: false,
     datetime: new Date(),
+    rules: {
+      required: (value) => !!value || "Required.",
+      counter: (value) => value.length <= 60 || "Max 60 characters",
+      email: (value) => {
+        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(value) || "Invalid e-mail.";
+      },
+    },
   }),
   methods: {
     postMessage: function() {
@@ -89,7 +106,7 @@ export default {
         userId: this.userId,
       };
       console.log("creating message:", newMessage);
-      fetch(this.server_url+"/message", {
+      fetch(this.server_url + "/message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newMessage),

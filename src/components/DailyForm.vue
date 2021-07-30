@@ -35,6 +35,7 @@
                 clear-icon="mdi-close-circle"
                 label="Message"
                 v-model="body"
+                :rules="[rules.required, rules.counter]"
               />
             </v-row>
             <v-row>
@@ -56,6 +57,14 @@ export default {
     body: "",
     duration: "",
     destination: "",
+    rules: {
+      required: (value) => !!value || "Required.",
+      counter: (value) => value.length <= 60 || "Max 60 characters",
+      email: (value) => {
+        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(value) || "Invalid e-mail.";
+      },
+    },
   }),
   methods: {
     submit() {
