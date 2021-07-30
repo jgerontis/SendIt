@@ -73,14 +73,21 @@ export default {
       );
     },
     formatDate: function(date){
+      /* this is necessary because vuetify datepicker
+      sends out a string in yyyy-mm-dd format. Javascript
+      date objects are finnicky, and this adds the necessary
+      leading zeroes to the month and date. */
       let year = date.getFullYear().toString();
       let month = (date.getMonth()+1).toString();
       let day = date.getDate().toString();
+      if (month.length == 1) {
+        mmonth = "0" + month;
+      }
       if (day.length == 1){
         day = "0" + day;
       }
-      console.log(date)
-      console.log(`${year}-${month}-${day}`)
+      console.log("before:",date)
+      console.log(`after: ${year}-${month}-${day}`)
       return  `${year}-${month}-${day}`
     },
     update: function() {
