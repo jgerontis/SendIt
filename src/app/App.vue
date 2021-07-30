@@ -20,6 +20,13 @@
     <v-app-bar class="primary" temporary app>
       <v-app-bar-nav-icon class="d-lg-none" @click="drawer = !drawer" />
       <v-app-bar-title>SendIt</v-app-bar-title>
+      <img
+        id="sendItLogo"
+        src="../assets/Small.png"
+        alt="icon"
+        height="30px"
+        width="40px"
+      />
 
       <v-spacer />
     </v-app-bar>
@@ -128,4 +135,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+#sendItLogo {
+  padding-left: 10px;
+  padding-bottom: 2px;
+}
+</style>
