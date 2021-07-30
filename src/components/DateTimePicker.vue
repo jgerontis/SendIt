@@ -141,16 +141,16 @@ export default {
       activeTab: 0,
       date: DEFAULT_DATE,
       time: DEFAULT_TIME,
+      minDate: null,
     };
   },
   mounted() {
     this.init();
   },
+  created: function() {
+    this.minDate = this.formatDate(new Date());
+  },
   computed: {
-    minDate: function() {
-      let date = new Date();
-      return `${date.getFullYear().toString()}-${(date.getMonth()+1).toString()}-${date.getDate().toString()}`
-    },
     minTime: function() {
       if (this.minDate === this.date) {
         let time = new Date();
@@ -207,6 +207,23 @@ export default {
       this.time = format(initDateTime, DEFAULT_TIME_FORMAT);
     },
     allowedStep: (m) => m % 5 === 0,
+
+    formatDate: function(date) {
+      /* this is necessary because vuetify datepicker
+      sends out a string in yyyy-mm-dd format. Javascript
+      date objects are finnicky, and this adds the necessary
+      leading zeroes to the month and date. */
+      let year = date.getFullYear().toString();
+      let month = (date.getMonth() + 1).toString();
+      let day = date.getDate().toString();
+      if (month.length == 1) {
+        month = "0" + month;
+      }
+      if (day.length == 1) {
+        day = "0" + day;
+      }
+      return `${year}-${month}-${day}`;
+    },
 
     okHandler() {
       this.resetPicker();
