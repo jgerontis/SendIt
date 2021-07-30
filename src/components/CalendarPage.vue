@@ -71,6 +71,13 @@ export default {
         })
       );
     },
+    formatDate: function(date){
+      return date.getFullYear().toString() + "-" + (date.getMonth()+1).toString() + "-" + date.getDate().toString()
+    },
+    update: function() {
+      this.getMessages();
+    },
+  },
   watch: {
     pickerDate() {
       this.messages.filter(
@@ -81,15 +88,6 @@ export default {
   created() {
     this.getMessages();
     this.date = this.formatDate(new Date())
-  },
-  mounted() {},
-  
-    update: function() {
-      this.getMessages();
-    },
-    formatDate: function(date){
-      return date.getFullYear().toString() + "-" + (date.getMonth()+1).toString() + "-" + date.getDate().toString()
-    }
   },
   computed: {
     filteredMessages: function() {
