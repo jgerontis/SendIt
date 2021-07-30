@@ -53,7 +53,7 @@ export default {
   props: ["userId", "server_url"],
   data: () => ({
     currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
-    date: null,
+    date: formatDate(new Date()),
     pickerDate: null,
     messages: [],
   }),
@@ -66,7 +66,6 @@ export default {
   },
   created() {
     this.getMessages();
-    this.date = this.currentDate.toISOString().substr(0, 10);
   },
   mounted() {},
   methods: {
@@ -85,13 +84,16 @@ export default {
     update: function() {
       this.getMessages();
     },
+    formatDate: function(date){
+      return date.getFullYear().toString() + "-" + (date.getMonth()+1).toString() + "-" + date.getDate().toString()
+    }
   },
   computed: {
     filteredMessages: function() {
       return this.messages
         .filter(
           (message) =>
-            message.sendTime.toISOString().substr(0, 10) === this.date
+            this.formatDate(message.sendTime) === this.date
         )
         .sort((a, b) =>
           a.sendTime.toISOString().substr(11, 5) >
