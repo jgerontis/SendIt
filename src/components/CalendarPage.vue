@@ -64,11 +64,9 @@ export default {
       fetch(`${this.server_url}/message/${this.userId}`).then((response) =>
         response.json().then(function(data) {
           that.messages = data;
-          console.log("data from fetch:",data)
           that.messages.forEach((message) => {
             message.sendTime = new Date(message.sendTime);
           });
-          console.log("messages after date fix:",that.messages)
         })
       );
     },
@@ -81,13 +79,11 @@ export default {
       let month = (date.getMonth()+1).toString();
       let day = date.getDate().toString();
       if (month.length == 1) {
-        mmonth = "0" + month;
+        month = "0" + month;
       }
       if (day.length == 1){
         day = "0" + day;
       }
-      console.log("before:",date)
-      console.log(`after: ${year}-${month}-${day}`)
       return  `${year}-${month}-${day}`
     },
     update: function() {
