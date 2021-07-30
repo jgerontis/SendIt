@@ -8,6 +8,7 @@
           :event-color="(date) => (date[9] % 2 ? 'red' : 'yellow')"
           :events="events"
           full-width
+          :picker-date.sync="pickerDate"
         />
       </v-col>
       <v-col>
