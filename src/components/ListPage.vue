@@ -1,14 +1,15 @@
 <template>
   <v-container>
-    <h2>
-      You have {{ messages.length }} scheduled message<span
+    <h2 v-if="!showPrevious">
+      You have {{ filteredMessages.length }} scheduled message<span
         v-if="messages.length != 1"
         >s</span
       >.
     </h2>
+    <h2 v-else>Showing All Messages ({{ messages.length }} total).</h2>
     <v-switch
-      v-model="showAll"
-      :label="`Show Past Messages: ${switch1.toString()}`"
+      v-model="showPrevious"
+      :label="`Include Previous Messages: ${showPrevious.toString()}`"
     ></v-switch>
     <v-list>
       <MessageSmall
@@ -46,7 +47,7 @@ export default {
   data: function() {
     return {
       messages: [],
-      showAll: false,
+      showPrevious: false,
     };
   },
   methods: {
@@ -73,15 +74,15 @@ export default {
 
   computed: {
     filteredMessages: function() {
-      if (this.showAll) {
-        return this.messages
-          .filter((message) => message.hasDelivered)
-          .sort((a, b) =>
-            a.sendTime.getTime() > b.sendTime.getTime() ? 1 : -1
-          );
+      let now = new Date();
+      let filteredMessages = this.messages;
+      if (this.showPrevious) {
+        return filteredMessages.sort((a, b) =>
+          a.sendTime.getTime() > b.sendTime.getTime() ? 1 : -1
+        );
       }
-      return this.messages
-        .filter()
+      return filteredMessages
+        .filter((message) => message.sendTime.getTime() > now.getTime())
         .sort((a, b) => (a.sendTime.getTime() > b.sendTime.getTime() ? 1 : -1));
     },
   },

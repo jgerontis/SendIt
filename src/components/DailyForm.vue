@@ -50,7 +50,7 @@
 <script>
 export default {
   name: "DailyForm",
-  props: ["userId"],
+  props: ["userId", "server_url"],
   data: () => ({
     type: "",
     body: "",

@@ -5,11 +5,11 @@
         <v-date-picker
           ref="picker"
           v-model="date"
-          :picker-date.sync="pickerDate"
           :event-color="(date) => (date[9] % 2 ? 'red' : 'yellow')"
           :events="events"
           full-width
-        ></v-date-picker>
+          :picker-date.sync="pickerDate"
+        />
       </v-col>
       <v-col>
         <h2>
@@ -58,18 +58,6 @@ export default {
     pickerDate: null,
     messages: [],
   }),
-  watch: {
-    pickerDate() {
-      this.messages.filter(
-        (value, index, self) => self.indexOf(value) === index
-      );
-    },
-  },
-  created() {
-    this.getMessages();
-    this.date = this.currentDate.toISOString().substr(0, 10);
-  },
-  mounted() {},
   methods: {
     getMessages: function() {
       let that = this;
@@ -82,16 +70,43 @@ export default {
         })
       );
     },
+    formatDate: function(date){
+      /* this is necessary because vuetify datepicker
+      sends out a string in yyyy-mm-dd format. Javascript
+      date objects are finnicky, and this adds the necessary
+      leading zeroes to the month and date. */
+      let year = date.getFullYear().toString();
+      let month = (date.getMonth()+1).toString();
+      let day = date.getDate().toString();
+      if (month.length == 1) {
+        month = "0" + month;
+      }
+      if (day.length == 1){
+        day = "0" + day;
+      }
+      return  `${year}-${month}-${day}`
+    },
     update: function() {
       this.getMessages();
     },
+  },
+  watch: {
+    pickerDate() {
+      this.messages.filter(
+        (value, index, self) => self.indexOf(value) === index
+      );
+    },
+  },
+  created() {
+    this.getMessages();
+    this.date = this.formatDate(new Date())
   },
   computed: {
     filteredMessages: function() {
       return this.messages
         .filter(
           (message) =>
-            message.sendTime.toISOString().substr(0, 10) === this.date
+            this.formatDate(message.sendTime) === this.date
         )
         .sort((a, b) =>
           a.sendTime.toISOString().substr(11, 5) >
@@ -105,6 +120,9 @@ export default {
         message.sendTime.toISOString().substr(0, 10)
       );
     },
+    formattedCalendarDate: function() {
+      return this.date
+    }
   },
 };
 </script>
