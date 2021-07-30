@@ -17,17 +17,9 @@
             <v-col id="destination" align="right">To:</v-col>
             <v-col>
               <v-text-field
-                v-if="type === 'text'"
                 label="Destination"
                 hint="1234567890"
                 :rules="[rules.required]"
-                v-model="destination"
-              />
-              <v-text-field
-                else
-                label="Destination"
-                hint="bob@example.com"
-                :rules="[rules.required, rules.email]"
                 v-model="destination"
               />
             </v-col>
