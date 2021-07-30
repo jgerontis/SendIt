@@ -53,21 +53,10 @@ export default {
   props: ["userId", "server_url"],
   data: () => ({
     currentDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
-    date: formatDate(new Date()),
+    date: null,
     pickerDate: null,
     messages: [],
   }),
-  watch: {
-    pickerDate() {
-      this.messages.filter(
-        (value, index, self) => self.indexOf(value) === index
-      );
-    },
-  },
-  created() {
-    this.getMessages();
-  },
-  mounted() {},
   methods: {
     getMessages: function() {
       let that = this;
@@ -78,9 +67,23 @@ export default {
           that.messages.forEach((message) => {
             message.sendTime = new Date(message.sendTime);
           });
+          console.log("messages after date fix:",that.messages)
         })
       );
     },
+  watch: {
+    pickerDate() {
+      this.messages.filter(
+        (value, index, self) => self.indexOf(value) === index
+      );
+    },
+  },
+  created() {
+    this.getMessages();
+    this.date = this.formatDate(new Date())
+  },
+  mounted() {},
+  
     update: function() {
       this.getMessages();
     },
