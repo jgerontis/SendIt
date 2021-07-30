@@ -79,6 +79,8 @@ export default {
       if (day.length == 1){
         day = "0" + day;
       }
+      console.log(date)
+      console.log(`${year}-${month}-${day}`)
       return  `${year}-${month}-${day}`
     },
     update: function() {
