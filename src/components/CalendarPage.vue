@@ -73,7 +73,13 @@ export default {
       );
     },
     formatDate: function(date){
-      return date.getFullYear().toString() + "-" + (date.getMonth()+1).toString() + "-" + date.getDate().toString()
+      let year = date.getFullYear().toString();
+      let month = (date.getMonth()+1).toString();
+      let day = date.getDate().toString();
+      if (day.length == 1){
+        day = "0" + day;
+      }
+      return  `${year}-${month}-${day}`
     },
     update: function() {
       this.getMessages();
@@ -109,6 +115,9 @@ export default {
         message.sendTime.toISOString().substr(0, 10)
       );
     },
+    formattedCalendarDate: function() {
+      return this.date
+    }
   },
 };
 </script>
